@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="MOVIMENTACAO">
-    <METHOD NAME="NOTA_EMISSAO_PROPRIA" DESCRIPTION="Emiss&#227;o de Nota Pr&#243;pria" VERSION="191" INTFTYPE="1" THREADSAFE="0">
+    <METHOD NAME="NOTA_EMISSAO_PROPRIA" DESCRIPTION="Emiss&#227;o de Nota Pr&#243;pria" VERSION="192" INTFTYPE="1" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP/>
@@ -603,7 +603,6 @@ LEFT JOIN NF_MODELOS NM ON NM.CODIGO=N.COD_MODELO;
   ,ACERTO                    = :ACERTO
   ,V_ACERTO                  = :V_ACERTO
 );
-
 
 //Retornando campos chave do resultado do processo
 SELECT

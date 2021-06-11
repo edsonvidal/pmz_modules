@@ -1,15 +1,22 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="MOVIMENTACAO">
-    <METHOD NAME="Estoque_Entrada_Inicial" DESCRIPTION="M&#233;todo respons&#225;vel em atribuir estoque inicial dos SKUs atrav&#233;s do c&#243;digo de barras do produto." VERSION="78" CATEGORY="inculada uma tabela B2B, ser&#225; retornado nos campos PRECO3 e PRECO4 os pre&#231;os &#34;POR&#34; e &#34;DE&#34; para B2B associados &#224; vitrine. Este m&#233;todo pode ser usado para atualizar os pre&#231;os regularmente j&#225; que retorna apenas as mudan&#231;as desde a &#250;ltima chamada." THREADSAFE="1">
+    <METHOD NAME="Estoque_Entrada_Inicial" DESCRIPTION="M&#233;todo respons&#225;vel em atribuir estoque inicial dos SKUs atrav&#233;s do c&#243;digo de barras do produto." VERSION="89" CATEGORY="inculada uma tabela B2B, ser&#225; retornado nos campos PRECO3 e PRECO4 os pre&#231;os &#34;POR&#34; e &#34;DE&#34; para B2B associados &#224; vitrine. Este m&#233;todo pode ser usado para atualizar os pre&#231;os regularmente j&#225; que retorna apenas as mudan&#231;as desde a &#250;ltima chamada." THREADSAFE="1">
       <PARAMS>
         <GROUPS>
           <GROUP/>
         </GROUPS>
-        <PARAM NAME="PRODUTOS" FORMAT="R" FLAGS="1" PROJECTION="0" HINT="Registro de skus com seus respectivos itens" ORDER="3" FIELDLABEL="Itens" NESTEDNAME="MILLENIUM!PMZ_INTEGRATION.MOVIMENTACAO.ITEM" CTAB="0"/>
+        <PARAM NAME="PRODUTOS" FORMAT="R" FLAGS="1" PROJECTION="0" HINT="Registro de skus com seus respectivos itens" ORDER="2" FIELDLABEL="Itens" NESTEDNAME="MILLENIUM!PMZ_INTEGRATION.MOVIMENTACAO.ITEM" CTAB="0"/>
         <PARAM NAME="COD_FILIAL" SIZE="10" FLAGS="1" PROJECTION="0" HINT="C&#243;digo da filial" ORDER="1" FIELDLABEL="C&#243;digo da Filial" CTAB="0"/>
       </PARAMS>
-      <FIELDS/>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="COD_OPERACAO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="4" FIELDLABEL="Cod Operacao" CTAB="0"/>
+        <FIELD NAME="TIPO_OPERACAO" SIZE="1" FLAGS="1" PROJECTION="0" ORDER="6" FIELDLABEL="Tipo Operacao" CTAB="0"/>
+        <FIELD NAME="ROMANEIO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="5" FIELDLABEL="Romaneio" CTAB="0"/>
+      </FIELDS>
       <ACTIONSCRIPT>//M&#233;todo respons&#225;vel pela inclus&#227;o inicial das lojas para o ERP Millennium(Edson Vidal/Magdiel Araujo 09-06-2021)
 
 #PRIVATE() SELECT:TODAY #DATE() AS D FROM DUAL;
@@ -20,7 +27,7 @@
     EVENTO
   FROM EVENTOS
     WHERE CODIGO ='9999';
-  #SELECT(EV._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Evento n&#227;o encontrado!")},ELSE:{});
+  #SELECT(EV._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Evento 9999 n&#227;o encontrado!")},ELSE:{});
 
 #PRIVATE()
   SELECT:FL
@@ -77,6 +84,7 @@ GROUP BY
  ,E.LOCAL
  
   #BEGIN
+  
     #CALL:LC MILLENIUM.LOCAIS_ESTOQUE.LISTA(FILIAL=:FL.FILIAL,LOCAL=:P.LOCAL);
       #SELECT(LC._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Local n&#227;o econtrado !!!")},ELSE:{});
 
@@ -149,7 +157,14 @@ FROM #REPLACE(TBPROD) P
   );
 
 
-
+//Retornando campos chave do resultado do processo
+SELECT
+  M.COD_OPERACAO  AS COD_OPERACAO
+ ,M.TIPO_OPERACAO AS TIPO_OPERACAO
+ ,M.ROMANEIO      AS ROMANEIO
+FROM MOVIMENTO M
+WHERE M.COD_OPERACAO = :MOV.COD_OPERACAO
+  AND M.TIPO_OPERACAO = :MOV.TIPO_OPERACAO;
 </ACTIONSCRIPT>
     </METHOD>
   </OBJECT>
