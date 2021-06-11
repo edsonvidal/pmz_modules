@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="PRODUTOS">
+    <METHOD NAME="ConsultarPMZ" DESCRIPTION="Consulta do Cadastro do Produto" VERSION="29" INTFTYPE="6" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="COD_PRODUTO" SIZE="60" FLAGS="1033" PROJECTION="0" FIELDLABEL="Produtoac" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="PRODUTO" FORMAT="+" SIZE="8" FLAGS="1032" PROJECTION="0" FIELDLABEL="Produtoac" CTAB="0"/>
+        <FIELD NAME="COD_PRODUTO" SIZE="60" FLAGS="1041" PROJECTION="0" HINT="VALOR PMZ &#xA;CPA077.EMPRESA-CPA077.FORNECEDOR-CPA077.CODIGO" FIELDLABEL="Cod Produto" CTAB="0"/>
+        <FIELD NAME="COD_FORNECEDOR" SIZE="10" FLAGS="17" PROJECTION="0" HINT="BUSCAR: FORNECEDORES.COD_FORNECEDOR GRAVAR: FORNECEDORES.FORNECEDOR" FIELDLABEL="Fornecedor" CTAB="0"/>
+        <FIELD NAME="CLASSIFICACAO_FISCAL" SIZE="8" FLAGS="17" PROJECTION="0" HINT="BUSCAR: CLASSIFICACAO.DESCRICAO GRAVAR: CLASSIFICACAO_FIS.CLASSIFICACAO_FIS" FIELDLABEL="Classificacao Fis" CTAB="0"/>
+        <FIELD NAME="CEST" SIZE="7" FLAGS="17" PROJECTION="0" HINT="BUSCAR: CEST.DESCRICAO GRAVAR: CEST.CEST" FIELDLABEL="Cest" CTAB="0"/>
+        <FIELD NAME="PERFIL_IMPOSTO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" HINT="LIGA&#199;&#195;O TABELA perfil_impostos - Vaor Defaul 201 - GERAL" FIELDLABEL="Perfil Imposto" CTAB="0"/>
+        <FIELD NAME="ID_CLASS_PROD" FORMAT="N" SIZE="8" PROJECTION="0" HINT="BUSCAR: classificacoes_produtos.class_prod  GRAVAR: classificacoes_produtos.CLASSIFICACAO_PRODUTO" FIELDLABEL="Dcre" CTAB="0"/>
+        <FIELD NAME="CLASS_PROD" SIZE="1" FLAGS="17" PROJECTION="0" HINT="VALORES: R-REVENDA; L -MATERIAL DE CONSUMO; I - Importado; M - Monofasico" FIELDLABEL="Fotos" CTAB="0"/>
+        <FIELD NAME="PRODUTO_CLASS_SEFAZ" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" HINT="LGA&#199;&#195;O TABELA GRUPOS PRODUTO_CLASS_SEFAZ &#xA;VALORES VALIDOS PMZ: &#xA; 33 - Combust&#237;veis e Lubrificantes &#xA;100 - Pe&#231;as e acess&#243;rios para ve&#237;culos &#xA;101 - Pe&#231;as e acess&#243;rios para ve&#237;culos - Bateria &#xA;102 - Pe&#231;as e acess&#243;rios para ve&#237;culos - C&#226;mara de ar &#xA;103 - Pe&#231;as e acess&#243;rios para ve&#237;culos - Pneus &#xA;133 - Produtos de inform&#225;tica &#xA;151 - Sucata &#xA;146 - Servi&#231;o" FIELDLABEL="Produto Class Sefaz" CTAB="0"/>
+        <FIELD NAME="DESCRICAO_NFE" SIZE="255" FLAGS="17" PROJECTION="0" HINT="Descri&#231;&#227;o Fict&#237;cia para a NFe (Quando preenchida, substitui a descri&#231;&#227;o principal do produto na Emiss&#227;o da NFe)" FIELDLABEL="Descricao Nfe" CTAB="0"/>
+        <FIELD NAME="DESCRICAO_COMPLETA" SIZE="100" FLAGS="17" PROJECTION="0" HINT="VALOR PMZ : &#xA;CPA077.DESCRICAO_COMPL &#xA; &#xA;VALOR LINX: &#xA; &#xA;DESCRICAO2 &#xA;DESCRICAO_LITERAL &#xA;DESCRICAO_ETIQ &#xA;DESCRICAO_ORIGINAL &#xA;DESCRICAO_TRADUZIDA &#xA;DESCRICAO1" FIELDLABEL="Descricao1" CTAB="0"/>
+        <FIELD NAME="OBS" FLAGS="1" PROJECTION="0" HINT="VALOR PMZ: &#xA;CPA077.OBSERVACAO + CPA077.COMPLEMENTO" FIELDLABEL="Obs" CTAB="0"/>
+        <FIELD NAME="DATA_CADASTRO" FORMAT="D" SIZE="14" FLAGS="17" PROJECTION="0" FIELDLABEL="Data Cadastro" CTAB="0"/>
+        <FIELD NAME="DATA_ATUALIZACAO" FORMAT="D" SIZE="14" FLAGS="17" PROJECTION="0" FIELDLABEL="Data Atualizacao" CTAB="0"/>
+        <FIELD NAME="COD_PRODUTO_FORNEC" SIZE="20" FLAGS="1" PROJECTION="0" FIELDLABEL="Cod Produto Fornec" CTAB="0"/>
+        <FIELD NAME="REFERENCIA" SIZE="50" FLAGS="1" PROJECTION="0" FIELDLABEL="Referencia" CTAB="0"/>
+        <FIELD NAME="CLASS_PROD_SPED" SIZE="2" FLAGS="1" PROJECTION="0" HINT="Informar o tipo do item aplic&#225;vel. Nas situa&#231;&#245;es de um mesmo c&#243;digo de item possuir mais de um tipo de item (destina&#231;&#227;o), deve ser informado o tipo de maior relev&#226;ncia na movimenta&#231;&#227;o f&#237;sica, observadas, no que couberem, as regras de escritura&#231;&#227;o do Bloco K. &#xA;Tipo do item - Atividades Industriais, Comerciais e Servi&#231;os: &#xA;00: Mercadoria para Revenda; &#xA;01: Mat&#233;ria-Prima; &#xA;02: Embalagem; &#xA;03: Produto em Processo; &#xA;04: Produto Acabado; &#xA;05: Subproduto; &#xA;06: Produto Intermedi&#225;rio; &#xA;07: Material de Uso e Consumo; &#xA;08: Ativo Imobilizado; &#xA;09: Servi&#231;os; &#xA;10: Outros insumos; &#xA;99: Outras." FIELDLABEL="Class Prod Sped" CTAB="0"/>
+        <FIELD NAME="COD_BENEF_FISCAL" SIZE="10" FLAGS="1" PROJECTION="0" HINT="C&#243;digo do Benef&#237;cio Fiscal utilizado na UF. (Geral: ver Cadastro de Filiais)&lt;p> &#xA;Necess&#225;rio informar para Isen&#231;&#227;o de Substitui&#231;&#227;o Tribuit&#225;rio - Fabrica&#231;&#227;o Industrial em Escala N&#227;o Relevante (NFe)" FIELDLABEL="Cod Benef Fiscal" CTAB="0"/>
+        <FIELD NAME="ORIGEM_PROD" SIZE="1" FLAGS="17" PROJECTION="0" HINT="ORIGEM DO PRODUTO (NACIONAL OU EXTERIOR)" FIELDLABEL="Origem Prod" CTAB="0"/>
+        <FIELD NAME="PESO" FORMAT="N" SIZE="15" FLAGS="1" DECIMALS="7" PROJECTION="0" FIELDLABEL="Peso" CTAB="0"/>
+        <FIELD NAME="PESO_BRUTO_MEDIO" FORMAT="N" SIZE="15" FLAGS="1" DECIMALS="7" PROJECTION="0" HINT="Peso Bruto m&#233;dio para o Produto" FIELDLABEL="Peso Bruto Medio" CTAB="0"/>
+        <FIELD NAME="PESO_REAL" FORMAT="N" SIZE="15" FLAGS="1" DECIMALS="7" PROJECTION="0" FIELDLABEL="Comprimento Real" CTAB="0"/>
+        <FIELD NAME="TIPO_PROD" FLAGS="1" PROJECTION="0" HINT="ACABADO OU MATERIA PRIMA" FIELDLABEL="Tipo Prod" CTAB="0"/>
+        <FIELD NAME="QUANTIDADE_CAIXA" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Quantidade Caixa" CTAB="0"/>
+        <FIELD NAME="QUANTIDADES_MULTIPLAS" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Quantidades Multiplas" CTAB="0"/>
+        <FIELD NAME="UNIDADE_COMPRA" SIZE="2" FLAGS="17" PROJECTION="0" FIELDLABEL="Unidade Compra" CTAB="0"/>
+        <FIELD NAME="UNIDADE_USO" SIZE="2" FLAGS="17" PROJECTION="0" FIELDLABEL="Unidade Venda" CTAB="0"/>
+        <FIELD NAME="UNIDADE_ARMAZEN" SIZE="2" FLAGS="1" PROJECTION="0" FIELDLABEL="Unidade Armazen" CTAB="0"/>
+        <FIELD NAME="UNIDADE_TRIB" SIZE="2" FLAGS="17" PROJECTION="0" FIELDLABEL="Unidade Trib" CTAB="0"/>
+        <FIELD NAME="FATOR_TRIB" FORMAT="N" SIZE="15" FLAGS="1" DECIMALS="7" PROJECTION="0" FIELDLABEL="Fator Trib" CTAB="0"/>
+        <FIELD NAME="INTEIRO" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" HINT="MARCA PARA DIZER SE PODE VENDER FRACIONADO" FIELDLABEL="Cores" CTAB="0"/>
+        <FIELD NAME="WEB" SIZE="1" FLAGS="1" PROJECTION="0" HINT="MARCA PARA DISPONIBILIZAR NA WEB" FIELDLABEL="Local" CTAB="0"/>
+        <FIELD NAME="STATUS" FORMAT="N" SIZE="8" FLAGS="17" PROJECTION="0" HINT="IDENTIFICA&#199;&#195;O DO STATUS DO PRODUTO" FIELDLABEL="Status" CTAB="0"/>
+        <FIELD NAME="WMS" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" HINT="STATUS WMS (0-NENHUM 1-LIBERADO 2-ENVIADO)" FIELDLABEL="Wms" CTAB="0"/>
+        <FIELD NAME="BLOQUEIA_VENDA" FORMAT="B" SIZE="1" FLAGS="17" PROJECTION="0" FIELDLABEL="Bloqueia Venda" CTAB="0"/>
+        <FIELD NAME="BLOQUEIA_PV" FORMAT="B" SIZE="1" FLAGS="17" PROJECTION="0" FIELDLABEL="Bloqueia Pv" CTAB="0"/>
+        <FIELD NAME="BLOQUEIA_PED_COMPRA" FORMAT="B" SIZE="1" FLAGS="17" PROJECTION="0" HINT="O produto n&#227;o estar&#225; dispon&#237;vel para pedido de compra" FIELDLABEL="Bloqueia Ped Compra" CTAB="0"/>
+        <FIELD NAME="NAO_CONTROLA_ESTOQUE" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" FIELDLABEL="Nao Controla Estoque" CTAB="0"/>
+        <FIELD NAME="BLOQUEIA_COMPRA" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" HINT="O produto n&#227;o estar&#225; dispon&#237;vel para compra em eventos de entrada do tipo compra" FIELDLABEL="Bloqueia Compra" CTAB="0"/>
+        <FIELD NAME="KIT" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" FIELDLABEL="Kit" CTAB="0"/>
+        <FIELD NAME="PERMITE_PEDIDO_SEM_ESTOQUE" FORMAT="B" SIZE="1" FLAGS="17" PROJECTION="0" HINT="Este par&#226;metro trabalha em conjunto com o par&#226;metro &lt;b>Permite Vendas Sem Estoque&lt;/b> no cadastro de &lt;b>Tipos de Pedido&lt;/b>." FIELDLABEL="Permite Pedido Sem Estoque" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>
+SELECT  PRODUTO,
+COD_PRODUTO,
+'' as COD_FORNECEDOR,
+'' as CLASSIFICACAO_FISCAL,
+'' as CEST,
+PERFIL_IMPOSTO,
+ID_CLASS_PROD,
+CLASS_PROD,
+PRODUTO_CLASS_SEFAZ,
+DESCRICAO_NFE,
+'' as DESCRICAO_COMPLETA,
+OBS,
+DATA_CADASTRO,
+DATA_ATUALIZACAO,
+COD_PRODUTO_FORNEC,
+REFERENCIA,
+CLASS_PROD_SPED,
+COD_BENEF_FISCAL,
+ORIGEM_PROD,
+PESO,
+PESO_BRUTO_MEDIO,
+PESO_REAL,
+TIPO_PROD,
+QUANTIDADE_CAIXA,
+QUANTIDADES_MULTIPLAS,
+UNIDADE_COMPRA,
+UNIDADE_USO,
+UNIDADE_ARMAZEN,
+UNIDADE_TRIB,
+FATOR_TRIB,
+INTEIRO,
+WEB,
+STATUS,
+WMS,
+BLOQUEIA_VENDA,
+BLOQUEIA_PV,
+BLOQUEIA_PED_COMPRA,
+NAO_CONTROLA_ESTOQUE,
+BLOQUEIA_COMPRA,
+KIT,
+PERMITE_PEDIDO_SEM_ESTOQUE
+FROM PRODUTOS
+WHERE ( COD_PRODUTO=:COD_PRODUTO);
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

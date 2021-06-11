@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="FUNCIONARIOSFILIAL">
+    <METHOD NAME="Incluir" DESCRIPTION="Inclusao basica dos funcionarios com cargo da Filial (vendedor,gerentes,estoquistas,sub-gerentes) - REF PMZ AGS011" VERSION="89" INTFTYPE="1" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="COD_FUNCIONARIO" SIZE="7" FLAGS="17" DEFAULT="millenium.utils.default(['COD_FUNCIONARIO',6],'Result',True)" SOURCEEXPRESSION=" " PROJECTION="0" ORDER="4" FIELDLABEL="C&#243;digo" CTAB="0"/>
+        <PARAM NAME="COD_CARGO" SIZE="3" FLAGS="17" SOURCEEXPRESSION=" " PROJECTION="0" ORDER="2" FIELDLABEL="Cargo" CTAB="0"/>
+        <PARAM NAME="DESATIVADO" FORMAT="B" SIZE="1" FLAGS="17" PROJECTION="0" ORDER="1" FIELDLABEL="Ativo" CTAB="0"/>
+        <PARAM NAME="GERADOR_ORIGEM" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="3" FIELDLABEL="Gerador Origem" CTAB="0"/>
+        <PARAM NAME="GERADORES" FORMAT="R" FLAGS="17" VISIBILITYRULE=" " STYLE="8" PROJECTION="0" ORDER="5" FIELDLABEL="Geradores" NESTEDNAME="millenium.GERADORES.GERADORES" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="FUNCIONARIO" FORMAT="N" SIZE="8" FLAGS="1" SOURCEEXPRESSION=" " PROJECTION="0" ORDER="7" FIELDLABEL="Funcionario" CTAB="0"/>
+        <FIELD NAME="GERADOR" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="8" FIELDLABEL="Gerador" CTAB="0"/>
+        <FIELD NAME="TRANS_ID" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="9" FIELDLABEL="Trans Id" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>//Executando uma query para localizar o id da filial
+#PRIVATE()
+SELECT:CG CARGO FROM CARGOS WHERE COD_CARGO = :COD_CARGO;
+
+#PRIVATE()
+#call:FUN millenium.funcionarios.inclui(
+            COD_FUNCIONARIO       = :COD_FUNCIONARIO,
+            CARGO                 = :CG.CARGO,
+            NAO_MOSTRAR_NO_EVENTO = :DESATIVADO,
+            INATIVO               = :DESATIVADO,
+            AFASTADO              = :DESATIVADO,
+            GERADOR_ORIGEM        = :GERADOR_ORIGEM,
+            GERADORES             = :GERADORES);
+#RETURN(FUNCIONARIO);
+
+
+//Retornando campos chave do resultado do processo
+SELECT FUNCIONARIO, GERADOR, TRANS_ID FROM FUNCIONARIOS WHERE FUNCIONARIO = :FUN.FUNCIONARIO;
+
+
+
+
+
+
+
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

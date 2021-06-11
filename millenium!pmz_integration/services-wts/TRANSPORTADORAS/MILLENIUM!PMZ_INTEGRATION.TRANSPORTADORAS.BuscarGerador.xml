@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="TRANSPORTADORAS">
+    <METHOD NAME="BuscarGerador" DESCRIPTION="Buscar o codigo do gerador para altera&#231;&#227;o do transportadora" VERSION="15" INTFTYPE="5" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="CPF_CNPJ" SIZE="20" FLAGS="1" PROJECTION="0" ORDER="2" FIELDLABEL="Cpf Cnpf" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="GERADOR" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="4" FIELDLABEL="Gerador" CTAB="0"/>
+        <FIELD NAME="gerador_origem" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Gerador Origem" CTAB="0"/>
+        <FIELD NAME="transportadora" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Transportadora" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>  SELECT:GER gr.GERADOR, gr.GERADOR as GERADOR_ORIGEM,  COALESCE(  tr.transportadora,0) as transportadora
+    FROM geradores gr
+    left join transportadoras tr on tr.gerador = gr.gerador
+  WHERE ( ( gr.PF_PJ = 'PF' and  gr.CPF  = :CPF_CNPJ ) or
+          ( gr.PF_PJ = 'PJ' and  gr.CNPJ = :CPF_CNPJ ) or
+          ( gr.PF_PJ = 'PJ' and  gr.CGC  = :CPF_CNPJ ) );
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

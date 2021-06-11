@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="TABELAS_PRECO">
+    <METHOD NAME="Atualizar_Preco_de_Tabela" DESCRIPTION="Atualizar Pre&#231;o de Tabela de Pre&#231;o" VERSION="24" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="COD_PRODUTO" SIZE="15" FLAGS="1" DEFAULT="1-550-MMJ50569" PROJECTION="0" HINT="C&#243;digo externo do produto" ORDER="1" FIELDLABEL="C&#243;digo do Produto" CTAB="0"/>
+        <PARAM NAME="COD_TPRECO" SIZE="5" FLAGS="1" DEFAULT="001AM" PROJECTION="0" HINT="C&#243;digo externo da tabela de pre&#231;o" ORDER="2" FIELDLABEL="Codigo da Tabela de Preco" CTAB="0"/>
+        <PARAM NAME="DATA_VALIDADE_INICIAL" FORMAT="D" SIZE="10" FLAGS="1" DEFAULT="01/01/2021" PROJECTION="0" HINT="Data de validade inicial" ORDER="4" FIELDLABEL="Data Validade Inicial" CTAB="0"/>
+        <PARAM NAME="DATA_VALIDADE_FINAL" FORMAT="D" SIZE="10" FLAGS="1" DEFAULT="31/12/2021" PROJECTION="0" HINT="Data de validade final" ORDER="3" FIELDLABEL="Data Validade Final" CTAB="0"/>
+        <PARAM NAME="PRECO" FORMAT="M" SIZE="17" FLAGS="1" DECIMALS="4" DEFAULT="100" PROJECTION="0" ORDER="5" FIELDLABEL="Preco" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT>//M&#233;todo respons&#225;vel pela atualiza&#231;&#227;o de pre&#231;os via sistema legado da PMZ(Edson Vidal 11-03-2021
+
+#CHECK("select count(*) as n from TABELAS_PRECO T WHERE COD_TPRECO=:COD_TPRECO",n=0,"Tabela de pre&#231;o nao encontrada!");
+SELECT:T TABELA FROM TABELAS_PRECO WHERE COD_TPRECO=:COD_TPRECO;
+
+SELECT:R
+  SKU.PRODUTO
+ ,SKU.COR
+ ,SKU.ESTAMPA
+ ,SKU.TAMANHO
+FROM PRODUTOS P
+INNER JOIN PRODUTO_SKU SKU ON SKU.PRODUTO = P.PRODUTO
+WHERE P.PRODUTO = P.PRODUTO
+AND P.COD_PRODUTO = :COD_PRODUTO
+;
+
+#SELECT(R._EOF
+    ,TRUE:{#CHECK("select 1 as n from dual",n=1,"Produto n&#227;o encontrado!");}
+    ,ELSE:{#CALL MILLENIUM.PRECOS.ALTERA_PRECO_PRODUTO(
+              PRODUTO=:R.PRODUTO,
+              COR=:R.COR,
+              ESTAMPA=:R.ESTAMPA,
+              TAMANHO=:R.TAMANHO,
+              TABELA=:T.TABELA,
+              PRECO=:PRECO,
+              VALIDADE_INICIAL=:DATA_VALIDADE_INICIAL,
+              VALIDADE_FINAL=:DATA_VALIDADE_FINAL
+    );
+   }
+  );
+
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

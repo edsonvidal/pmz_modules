@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="OPERADORAS">
+    <METHOD NAME="Excuir" DESCRIPTION="Excluir Operadora" VERSION="87" INTFTYPE="3" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="OPERADORA" FORMAT="+" SIZE="8" FLAGS="1024" PROJECTION="0" FIELDLABEL="Operadora" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+          <GROUP NAME="Concilia&#231;&#227;o de Cart&#227;o"/>
+        </GROUPS>
+      </FIELDS>
+      <ACTIONSCRIPT>DELETE FROM OPERADORAS WHERE (OPERADORA=:OPERADORA);
+
+DELETE FROM OPERADORAS_FILIAIS WHERE ( OPERADORA = :OPERADORA );
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

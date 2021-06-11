@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="TRANSPORTADORAS">
+    <METHOD NAME="Incluir" DESCRIPTION="Incluir Transportadora para nota fiscal emissao propria" VERSION="55" INTFTYPE="1" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+          <GROUP NAME="Dados da Transportadora" STYLE="1"/>
+          <GROUP NAME="Frete e Seguro" STYLE="1"/>
+          <GROUP NAME="Gateway Frete"/>
+          <GROUP NAME="EDI" STYLE="1"/>
+        </GROUPS>
+        <PARAM NAME="COD_TRANSPORTADORA" SIZE="15" FLAGS="17" DEFAULT="millenium.utils.default(['COD_TRANSPORTADORA',5],'Result',True)" PROJECTION="0" ORDER="2" FIELDLABEL="C&#243;digo" CTAB="0"/>
+        <PARAM NAME="REGIAO_ATUA" SIZE="60" FLAGS="1" STYLE="8" PROJECTION="0" ORDER="3" FIELDLABEL="Geradores" CTAB="0"/>
+        <PARAM NAME="RNTC" SIZE="6" FLAGS="1" PROJECTION="0" ORDER="6" FIELDLABEL="Registro Nacional de Transporte de Cargas" GROUPNAME="Dados da Transportadora" CTAB="0"/>
+        <PARAM NAME="SEGURO" FORMAT="M" SIZE="17" FLAGS="1" DECIMALS="4" PROJECTION="0" ORDER="9" FIELDLABEL="Seguro" GROUPNAME="Frete e Seguro" CTAB="0"/>
+        <PARAM NAME="PLACA" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="10" FIELDLABEL="Placa do Ve&#237;culo" GROUPNAME="Frete e Seguro" CTAB="0"/>
+        <PARAM NAME="PLACA_UF" SIZE="2" FLAGS="1" PROJECTION="0" ORDER="11" LOOKUP="MUNICIPIOS.ListaEstados" LOOKUPKEY="UF" LOOKUPDISPLAY="UF" FIELDLABEL="Estado da Placa" GROUPNAME="Frete e Seguro" CTAB="0"/>
+        <PARAM NAME="TIPO_VEICULO" SIZE="1" FLAGS="1" DEFAULT="P" PROJECTION="0" HINT="Tipo do ve&#237;culo a ser utilizado no transporte dos produtos" ORDER="7" LOOKUP="list:'P','Pr&#243;prio';'T','Terceiro';" FIELDLABEL="Tipo Veiculo" GROUPNAME="Dados da Transportadora" CTAB="0"/>
+        <PARAM NAME="GATEWAY_FRETE" SIZE="30" FLAGS="17" PROJECTION="0" ORDER="5" FIELDLABEL="Regi&#227;o que Atua" GROUPNAME="Dados da Transportadora" CTAB="0"/>
+        <PARAM NAME="TRANSP_GATEWAY_FRETE" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="0" PROJECTION="0" HINT="Indica que a transportadora &#233; um gateway de frete" ORDER="14" LOOKUP="list:'0','Nenhum';" FIELDLABEL="M&#243;dulo" GROUPNAME="Gateway Frete" CTAB="0"/>
+        <PARAM NAME="EXIBE_NA_GRADE_PEDIDO" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="0" PROJECTION="0" HINT="Quando utilizado &lt;b>Agendamento de Entrega Por Item&lt;/b> e &lt;b>Local de entrega por produto&lt;/b> no pedido de venda, as transportadoras s&#227;o exibidas na grade de produtos e filtradas de acordo com o munic&#237;pio do endere&#231;o selecionado. Esta op&#231;&#227;o determina que esta Transportadora tem permiss&#227;o para ser selecionada na grade de produtos em &lt;b>Pedidos de Venda&lt;/b>." ORDER="12" FIELDLABEL="Calcula o Prazo de Entrega em dias &#218;teis" GROUPNAME="Frete e Seguro" CTAB="0"/>
+        <PARAM NAME="GERADOR_ORIGEM" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Gerador Origem" CTAB="0"/>
+        <PARAM NAME="GERADORES" FORMAT="R" FLAGS="1" VISIBILITYRULE="(GERADOR_ORIGEM='')" PROJECTION="0" ORDER="16" FIELDLABEL="Utiliza endere&#231;o complementar(registro 321)" NESTEDNAME="millenium.GERADORES.GERADORES" GROUPNAME="EDI" CTAB="0"/>
+        <PARAM NAME="TIPO_FRETE" FORMAT="R" FLAGS="17" PROJECTION="0" ORDER="1" FIELDLABEL="Tipo Frete" NESTEDNAME="millenium.TIPOS_FRETE.TIPOS_FRETE" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="transportadora" FORMAT="N" SIZE="8" FLAGS="1" SOURCEEXPRESSION=" " PROJECTION="0" ORDER="20" FIELDLABEL="Transportadora" CTAB="0"/>
+        <FIELD NAME="gerador" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="18" FIELDLABEL="Cod Transportadora" CTAB="0"/>
+        <FIELD NAME="trans_id" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="19" FIELDLABEL="Trans Id" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT> //Chamando um servico de inclusao do Millennium
+#PRIVATE()
+#call:TRANS millenium.transportadoras.inclui(
+                COD_TRANSPORTADORA    = :COD_TRANSPORTADORA,
+                REGIAO_ATUA           = :REGIAO_ATUA,
+                RNTC                  = :RNTC,
+                SEGURO                = :SEGURO,
+                PLACA                 = :PLACA,
+                PLACA_UF              = :PLACA_UF,
+                TIPO_VEICULO          = :TIPO_VEICULO,
+                GATEWAY_FRETE         = :GATEWAY_FRETE,
+                TRANSP_GATEWAY_FRETE  = :TRANSP_GATEWAY_FRETE,
+                EXIBE_NA_GRADE_PEDIDO = :EXIBE_NA_GRADE_PEDIDO,
+                GERADOR_ORIGEM        = :GERADOR_ORIGEM,
+                GERADORES             = :GERADORES );
+#RETURN ( TRANSPORTADORA);
+
+
+// Definido para garantir  a escolha do frete no OMNI
+#PRIVATE()
+#CALL millenium.TIPOS_FRETE.incluir(
+DESCRICAO                   = :TIPO_FRETE.DESCRICAO,
+TRANSPORTADORA              = :TRANS.TRANSPORTADORA,
+SERV_AR                     = :TIPO_FRETE.SERV_AR,
+SERV_MP                     = :TIPO_FRETE.SERV_MP,
+SERV_VD                     = :TIPO_FRETE.SERV_VD,
+SERV_DD                     = TRUE,
+COD_TIPO_FRETE              = :COD_TRANSPORTADORA,
+NAO_UTILIZA_TRACKING_OBJETO = :TIPO_FRETE.NAO_UTILIZA_TRACKING_OBJETO,
+LOGISTICA_REVERSA           = :TIPO_FRETE.LOGISTICA_REVERSA,
+ENTREGA_FILIAL              = :TIPO_FRETE.ENTREGA_FILIAL,
+ENTREGA_AGENDADA            = :TIPO_FRETE.ENTREGA_AGENDADA,
+);
+
+
+//Retornando campos chave do resultado do processo
+
+SELECT TRANSPORTADORA, GERADOR, TRANS_ID FROM TRANSPORTADORAS WHERE TRANSPORTADORA = :TRANS.TRANSPORTADORA;
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

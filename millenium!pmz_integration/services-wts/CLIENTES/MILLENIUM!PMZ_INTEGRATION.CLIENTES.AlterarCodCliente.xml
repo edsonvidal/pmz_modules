@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="CLIENTES">
+    <METHOD NAME="AlterarCodCliente" DESCRIPTION="Alterar o codigo do cliente de acordo com o da PMZ" VERSION="4" INTFTYPE="2" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="CLIENTE" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="1" FIELDLABEL="Cliente" CTAB="0"/>
+        <PARAM NAME="COD_CLIENTE" SIZE="12" FLAGS="1" PROJECTION="0" FIELDLABEL="Cod Cliente" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT>//Executando uma atualizacao na tabela do Millennium
+#PRIVATE()
+UPDATE ICLIENTES
+   SET COD_CLIENTE = :COD_CLIENTE
+ WHERE (CLIENTE=:CLIENTE);
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

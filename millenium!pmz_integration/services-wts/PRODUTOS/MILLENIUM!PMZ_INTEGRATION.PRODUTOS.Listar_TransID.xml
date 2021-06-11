@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="PRODUTOS">
+    <METHOD NAME="Listar_TransID" DESCRIPTION="Lista os registros de produtos atualizados" VERSION="8" INTFTYPE="5" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="TRANS_ID" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Trans Id" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="produto" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Produto" CTAB="0"/>
+        <FIELD NAME="trans_id" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Trans Id" CTAB="0"/>
+        <FIELD NAME="cod_produto" SIZE="60" FLAGS="1" PROJECTION="0" FIELDLABEL="Cod Produto" CTAB="0"/>
+        <FIELD NAME="cod_fornecedor" SIZE="10" FLAGS="1" PROJECTION="0" FIELDLABEL="Cod Fornecedor" CTAB="0"/>
+        <FIELD NAME="fornecedor_emp" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Fornecedor Emp" CTAB="0"/>
+        <FIELD NAME="fornecedor_cod" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Fornecedor Cod" CTAB="0"/>
+        <FIELD NAME="produto" SIZE="60" FLAGS="1" PROJECTION="0" FIELDLABEL="Produto" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>SELECT p.produto AS produto,
+       p.TRANS_ID AS TRANS_ID,
+       REVERSE(PARSENAME(REPLACE(REVERSE(p.COD_produto), '-', '.'), 1)) AS fornecedor_emp,
+       REVERSE(PARSENAME(REPLACE(REVERSE(p.COD_produto), '-', '.'), 2)) AS fornecedor_cod,
+       REVERSE(PARSENAME(REPLACE(REVERSE(p.COD_produto), '-', '.'), 3)) AS produto ,
+       p.COD_produto,
+       f.cod_fornecedor AS cod_fornecedor
+FROM produtos p
+inner join fornecedores f on f.FORNECEDOR = p.fornecedor
+WHERE p.TRANS_ID >  :TRANS_ID
+ORDER BY p.TRANS_ID;
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

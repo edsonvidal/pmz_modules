@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="MOVIMENTACAO">
+    <METHOD NAME="Estoque_Atualizar_Saldo" DESCRIPTION="" VERSION="4" CATEGORY="inculada uma tabela B2B, ser&#225; retornado nos campos PRECO3 e PRECO4 os pre&#231;os &#34;POR&#34; e &#34;DE&#34; para B2B associados &#224; vitrine. Este m&#233;todo pode ser usado para atualizar os pre&#231;os regularmente j&#225; que retorna apenas as mudan&#231;as desde a &#250;ltima chamada." THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="PRODUTOS" FORMAT="R" FLAGS="1" PROJECTION="0" HINT="Registro de skus com seus respectivos itens" FIELDLABEL="Produtos" NESTEDNAME="MILLENIUM!PMZ_INTEGRATION.MOVIMENTACAO.ITEM" CTAB="0"/>
+        <PARAM NAME="COD_FILIAL" SIZE="10" FLAGS="1" PROJECTION="0" HINT="C&#243;digo da filial" FIELDLABEL="Cod Filial" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT>//M&#233;todo respons&#225;vel pela inclus&#227;o inicial das lojas para o ERP Millennium(Edson Vidal/Magdiel Araujo 09-06-2021)
+#PRIVATE() SELECT:TODAY #DATE() AS D FROM DUAL;
+#PRIVATE() #CALL:DOCUMENTO MILLENIUM.UTILS.DEFAULT(NOME="ROMANEIO", TAMANHO=6);
+
+#PRIVATE()
+  SELECT:EV
+    EVENTO
+  FROM EVENTOS
+    WHERE CODIGO ='9999';
+  #SELECT(EV._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Evento n&#227;o encontrado!")},ELSE:{});
+
+#PRIVATE()
+  SELECT:FL
+    FL.FILIAL AS FILIAL
+   ,FL.CONTA  AS CONTA
+  FROM FILIAIS FL
+    WHERE FL.COD_FILIAL = :COD_FILIAL;
+  #SELECT(FL._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Filial n&#227;o encontrada!")},ELSE:{});
+
+#SET(TBITEM, ${#CREATETABLE( ID                 VARCHAR(50)
+                            ,LOCAL_ESTOQUE      VARCHAR(50)
+                            ,QUANTIDADE         DOUBLE PRECISION
+                            ,PRECO              DOUBLE PRECISION
+                            )
+});
+
+#SET(TBPROD, ${#CREATETABLE( PRODUTO            INTEGER
+                            ,COR                INTEGER
+                            ,ESTAMPA            INTEGER
+                            ,TAMANHO            VARCHAR(5)
+                            ,QUANTIDADE         DOUBLE PRECISION
+                            ,IDLOCAL            INTEGER
+                            ,PRECO              DOUBLE PRECISION
+                            ,TIPO               VARCHAR(2)
+                            )
+});
+
+#PRIVATE()
+#EACH() PRODUTOS AS RS
+    INSERT INTO #REPLACE(TBITEM) (
+       ID
+      ,LOCAL_ESTOQUE
+      ,QUANTIDADE
+      ,PRECO
+    )
+    VALUES (
+       :RS.ID
+      ,:RS.LOCAL_ESTOQUE
+      ,:RS.QUANTIDADE
+      ,:RS.PRECO
+    );
+
+#PRIVATE()
+#EACH()
+SELECT:P
+   E.ID              AS ID
+  ,E.LOCAL_ESTOQUE   AS LOCAL_ESTOQUE
+  ,E.PRECO           AS PRECO
+  ,SUM(E.QUANTIDADE) AS QUANTIDADE
+FROM #REPLACE(TBITEM) E
+GROUP BY
+  E.ID
+ ,E.PRECO
+ ,E.LOCAL_ESTOQUE
+ 
+  #BEGIN
+    #CALL:LC MILLENIUM.LOCAIS_ESTOQUE.LISTA(FILIAL=:FL.FILIAL,LOCAL=:P.LOCAL_ESTOQUE);
+      #SELECT(LC._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Local n&#227;o econtrado !!!")},ELSE:{});
+
+    #CALL:I MILLENIUM.CODIGO_BARRAS.DECODIFICA_BARRA(BARRA=:P.ID);
+      #SELECT(I._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Produto n&#227;o econtrado !")},ELSE:{});
+
+    INSERT INTO #REPLACE(TBPROD) (
+          PRODUTO
+         ,COR
+         ,ESTAMPA
+         ,TAMANHO
+         ,IDLOCAL
+         ,QUANTIDADE
+         ,PRECO
+         ,TIPO
+         )
+        VALUES (
+         :I.PRODUTO
+        ,:I.COR
+        ,:I.ESTAMPA
+        ,:I.TAMANHO
+        ,:LC.IDLOCAL
+        ,:P.QUANTIDADE
+        ,:P.PRECO
+        ,:I.TIPO
+        );
+  #END;
+
+#PRIVATE()
+SELECT:PRODUTOS_EXEC
+   E.PRODUTO                     AS PRODUTO
+  ,E.COR                         AS COR
+  ,E.ESTAMPA                     AS ESTAMPA
+  ,E.TAMANHO                     AS TAMANHO
+  ,E.IDLOCAL                     AS IDLOCAL
+  ,E.PRECO                       AS PRECO
+  ,E.TIPO                        AS TIPO
+  ,SUM(QUANTIDADE)               AS QUANTIDADE
+FROM #REPLACE(TBPROD) E
+GROUP BY
+   E.PRODUTO
+  ,E.COR
+  ,E.ESTAMPA
+  ,E.TAMANHO
+  ,E.IDLOCAL
+  ,E.PRECO
+  ,E.TIPO
+ORDER BY E.PRODUTO;
+
+#PRIVATE()
+SELECT:PRD SUM(QUANTIDADE) AS QTDE
+FROM #REPLACE(TBPROD) P
+;
+
+  #CALL:MOV MILLENIUM.MOVIMENTACAO.EXECUTA(
+
+  
+#CALL: MILLENIUM_ECO.PRODUTOS.ATUALIZASALDODEESTOQUE()
+
+
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="CLIENTES">
+    <METHOD NAME="BuscarGerador" DESCRIPTION="Buscar o codigo do gerador para altera&#231;&#227;o do cliente" VERSION="15" INTFTYPE="5" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="CPF_CNPJ" SIZE="20" FLAGS="1" PROJECTION="0" FIELDLABEL="Cpf Cnpj" CTAB="0"/>
+        <PARAM NAME="RG" SIZE="20" FLAGS="1" PROJECTION="0" FIELDLABEL="Rg" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="GERADOR" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Gerador" CTAB="0"/>
+        <FIELD NAME="GERADOR_ORIGEM" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Gerador Origem" CTAB="0"/>
+        <FIELD NAME="CLIENTE" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Cliente" CTAB="0"/>
+        <FIELD NAME="EXISTE_RG" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Existe Rg" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>  select:GER sum(cl.GERADOR)        as GERADOR,
+             sum(cl.GERADOR_ORIGEM) as GERADOR_ORIGEM ,
+             sum(cl.cliente)        as CLIENTE,
+             sum(cl.EXISTE_RG)      as EXISTE_RG
+    from (
+           SELECT gr.GERADOR, gr.GERADOR as GERADOR_ORIGEM, COALESCE(  cl.CLIENTE,0) cliente , 0  as EXISTE_RG
+             FROM geradores gr
+        left join clientes cl on cl.GERADOR = gr.gerador
+            WHERE ( ( gr.PF_PJ = 'PF' and gr.CPF = :CPF_CNPJ ) or
+                    ( gr.PF_PJ = 'PJ' and gr.CNPJ = :CPF_CNPJ) or
+                    ( gr.PF_PJ = 'PJ' and gr.CGC = :CPF_CNPJ ) )
+        union all
+           SELECT 0 as GERADOR,0 as GERADOR_ORIGEM, 0 as cliente, count(*) EXISTE_RG
+             from geradores
+            where PF_PJ = 'PF'
+              and rg    = :RG) cl
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

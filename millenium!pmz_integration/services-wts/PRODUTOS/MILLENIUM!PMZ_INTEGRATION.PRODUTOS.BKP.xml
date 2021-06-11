@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="PRODUTOS">
+    <METHOD NAME="BKP" DESCRIPTION="" VERSION="1" THREADSAFE="1">
+      <PARAMS/>
+      <FIELDS/>
+      <ACTIONSCRIPT>#CHECK("SELECT COUNT(COD_PRODUTO)           AS N FROM PRODUTOS                WHERE COD_PRODUTO    = :COD_PRODUTO"         ,N > 0, "Valida&#231;&#227;o PMZ: COD_PRODUTO Ja existe");
+#CHECK("SELECT COUNT(FORNECEDOR)            AS N FROM FORNECEDORES            WHERE COD_FORNECEDOR = :COD_FORNECEDOR"      ,N=0, "Valida&#231;&#227;o PMZ: COD_FORNECEDOR nao encontrado");
+#CHECK("SELECT COUNT(CLASSIFICACAO_FIS)     AS N FROM CLASSIFICACAO_FIS       WHERE DESCRICAO      = :CLASSIFICACAO_FISCAL",N=0, "Valida&#231;&#227;o PMZ: Classifica&#231;&#227;o Fiscal n&#227;o Existe");
+#CHECK("SELECT COUNT(CEST)                  AS N FROM CEST                    WHERE DESCRICAO      = :CEST"                ,N=0, "Valida&#231;&#227;o PMZ: CEST n&#227;o Existe");
+#CHECK("SELECT COUNT(CLASSIFICACAO_PRODUTO) AS N FROM CLASSIFICACOES_PRODUTOS WHERE CLASS_PROD     = :CLASS_PROD"          ,N=0, "Valida&#231;&#227;o PMZ: Classificacao do Produto n&#227;o encontrado");
+
+#PRIVATE()
+SELECT:CFIS CLASSIFICACAO_FIS FROM CLASSIFICACAO_FIS WHERE DESCRICAO = :CLASSIFICACAO_FISCAL;
+
+#CHECK("SELECT COUNT(PERFIL_IMPOSTO) AS N FROM pmz_perfil_imposto_ncm WHERE CLASSIFICACAO_FIS=:CFIS.CLASSIFICACAO_FIS",N = 0, "Valida&#231;&#227;o PMZ: NCM nao possui Perfil de imposto");
+
+#PRIVATE()
+SELECT:PFI PERFIL_IMPOSTO  FROM pmz_perfil_imposto_ncm   WHERE CLASSIFICACAO_FIS =  :CFIS.CLASSIFICACAO_FIS;
+
+#CHECK("SELECT COUNT(DESCRICAO) AS N FROM PERFIL_IMPOSTOS WHERE PERFIL_IMPOSTO=:PFI.PERFIL_IMPOSTO", N=0, "Valida&#231;&#227;o PMZ: Perfil de imposto n&#227;o encontrado");
+
+#PRIVATE()
+SELECT:FR FORNECEDOR FROM FORNECEDORES WHERE COD_FORNECEDOR = :COD_FORNECEDOR;
+
+#PRIVATE()
+SELECT:CT CEST FROM CEST WHERE DESCRICAO = :CEST;
+
+#PRIVATE()
+SELECT:CPD CLASSIFICACAO_PRODUTO FROM CLASSIFICACOES_PRODUTOS WHERE CLASS_PROD = :CLASS_PROD;
+
+#PRIVATE()
+INSERT :PROD INTO PRODUTOS( COD_PRODUTO,
+                    FORNECEDOR,
+                    CLASSIFICACAO_FIS,
+                    COD_NCM,
+                    CEST,
+                    PERFIL_IMPOSTO,
+                    ID_CLASS_PROD,
+                    CLASS_PROD,
+                    PRODUTO_CLASS_SEFAZ,
+                    DESCRICAO_NFE,
+                    DESCRICAO1,
+                    DESCRICAO_LITERAL,
+                    DESCRICAO_ETIQ,
+                    DESCRICAO_ORIGINAL,
+                    DESCRICAO_TRADUZIDA,
+                    OBS,
+                    DATA_CADASTRO,
+                    DATA_ATUALIZACAO,
+                    COD_PRODUTO_FORNEC,
+                    REFERENCIA,
+                    CLASS_PROD_SPED,
+                    COD_BENEF_FISCAL,
+                    ORIGEM_PROD,
+                    PESO,
+                    PESO_BRUTO_MEDIO,
+                    PESO_REAL,
+                    TIPO_PROD,
+                    QUANTIDADE_CAIXA,
+                    QUANTIDADES_MULTIPLAS,
+                    UNIDADE_USO,
+                    UNIDADE_ARMAZEN,
+                    UNIDADE_COMPRA,
+                    UNIDADE_TRIB,
+                    FATOR_TRIB,
+                    INTEIRO,
+                    WEB,
+                    STATUS,
+                    WMS,
+                    BLOQUEIA_VENDA,
+                    BLOQUEIA_PV,
+                    BLOQUEIA_PED_COMPRA,
+                    NAO_CONTROLA_ESTOQUE,
+                    BLOQUEIA_COMPRA,
+                    KIT,
+                    PERMITE_PEDIDO_SEM_ESTOQUE)
+VALUES ( :COD_PRODUTO,
+         :FR.FORNECEDOR,
+         :CFIS.CLASSIFICACAO_FIS,
+         :CLASSIFICACAO_FISCAL,
+         :CT.CEST,
+         :PFI.PERFIL_IMPOSTO,
+         :CPD.CLASSIFICACAO_PRODUTO ,
+         :CLASS_PROD,
+         :PRODUTO_CLASS_SEFAZ,
+         :DESCRICAO_NFE,
+         :DESCRICAO_COMPLETA,
+         :DESCRICAO_COMPLETA,
+         :DESCRICAO_COMPLETA,
+         :DESCRICAO_COMPLETA,
+         :DESCRICAO_COMPLETA,
+         :OBS,
+         :DATA_CADASTRO,
+         :DATA_ATUALIZACAO,
+         :COD_PRODUTO_FORNEC,
+         :REFERENCIA,
+         :CLASS_PROD_SPED,
+         :COD_BENEF_FISCAL,
+         :ORIGEM_PROD,
+         :PESO,
+         :PESO_BRUTO_MEDIO,
+         :PESO_REAL,
+         :TIPO_PROD,
+         :QUANTIDADE_CAIXA,
+         :QUANTIDADES_MULTIPLAS,
+         :UNIDADE_USO,
+         :UNIDADE_ARMAZEN,
+         :UNIDADE_COMPRA,
+         :UNIDADE_TRIB,
+         :FATOR_TRIB,
+         :INTEIRO,
+         :WEB,
+         :STATUS,
+         :WMS,
+         :BLOQUEIA_VENDA,
+         :BLOQUEIA_PV,
+         :BLOQUEIA_PED_COMPRA,
+         :NAO_CONTROLA_ESTOQUE,
+         :BLOQUEIA_COMPRA,
+         :KIT,
+         :PERMITE_PEDIDO_SEM_ESTOQUE)
+#RETURN ( PRODUTO);
+
+ //Retornando campos chave do resultado do processo
+SELECT PRODUTO, COD_PRODUTO, TRANS_ID FROM PRODUTOS WHERE PRODUTO = :PROD.PRODUTO;
+
+// Incluir Codigo de Barra
+#PRIVATE()
+SELECT:TB TIPO_BARRA FROM TIPOS_BARRA WHERE DESCRICAO = :TIPO_BARRA;
+
+#PRIVATE()
+INSERT INTO CODIGO_BARRAS( PRODUTO, BARRA, TIPO_BARRA  ) VALUES ( :PROD.PRODUTO,  :CODIGO_BARRAS, :TB.TIPO_BARRA) #RETURN ( CODIGO_BARRA );
+
+
+
+
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

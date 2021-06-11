@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="FORNECEDORES">
+    <METHOD NAME="Incluir" DESCRIPTION="Incluir Fornecedor" VERSION="408" INTFTYPE="1" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+          <GROUP NAME="Dados do Fornecedor" STYLE="1"/>
+          <GROUP NAME="Classifica&#231;&#227;o"/>
+          <GROUP NAME="Acesso a Oficinas"/>
+          <GROUP NAME="Integra&#231;&#227;o"/>
+          <GROUP NAME="Avalia&#231;&#227;o"/>
+          <GROUP NAME="Acerto de Fornecedor"/>
+          <GROUP NAME="Contabiliza&#231;&#227;o" STYLE="1"/>
+          <GROUP NAME="Cota&#231;&#227;o / Envio para o Fornecedor"/>
+        </GROUPS>
+        <PARAM NAME="COD_FORNECEDOR" SIZE="10" FLAGS="17" DEFAULT="millenium.utils.default(['COD_FORNECEDOR',5],'Result',True)" SOURCEEXPRESSION="fornecedor.gerador.COD_FORNECEDOR" PROJECTION="0" ORDER="3" FIELDLABEL="C&#243;digo" CTAB="0"/>
+        <PARAM NAME="PRODUTOS_FORNEC" SIZE="50" FLAGS="1" SOURCEEXPRESSION="fornecedor.gerador.PRODUTOS_FORNEC" PROJECTION="0" ORDER="9" FIELDLABEL="Fornece" GROUPNAME="Classifica&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="ULT_COMPRA" FORMAT="D" SIZE="10" FLAGS="1" PROJECTION="0" ORDER="20" FIELDLABEL="&#218;ltima Compra" GROUPNAME="Avalia&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="LICENCIADO" FORMAT="B" SIZE="1" FLAGS="16" DEFAULT="F" PROJECTION="0" ORDER="24" FIELDLABEL="Pasta de retorno de Cota&#231;&#227;o e envio de Pedidos" GROUPNAME="Cota&#231;&#227;o / Envio para o Fornecedor" CTAB="0"/>
+        <PARAM NAME="E_MAIL_NFE" SIZE="100" FLAGS="1" PROJECTION="0" ORDER="6" FIELDLABEL="E-mail NFe" GROUPNAME="Dados do Fornecedor" CTAB="0"/>
+        <PARAM NAME="DISPONIVEL_WEB" FORMAT="B" SIZE="1" FLAGS="1" DEFAULT="F" PROJECTION="0" ORDER="8" FIELDLABEL="Dispon&#237;vel na Web" GROUPNAME="Classifica&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="TIPO_PEDIDO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="17" LOOKUP="TIPOS_PEDIDO.Lista_Compras" LOOKUPKEY="TIPO_PEDIDO" LOOKUPDISPLAY="DESCRICAO" FIELDLABEL="Tipo de Pedido" GROUPNAME="Integra&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="DIA_BASE_ACERTO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" HINT="Dia base para formar a data base para calcular vencimento dos t&#237;tulos no acerto de fornecedor." ORDER="22" FIELDLABEL="Dia Base para Acerto" GROUPNAME="Acerto de Fornecedor" CTAB="0"/>
+        <PARAM NAME="OFICINA" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="FALSE" PROJECTION="0" ORDER="11" FIELDLABEL="Oficina" GROUPNAME="Acesso a Oficinas" CTAB="0"/>
+        <PARAM NAME="ENVIO_TITULO" FORMAT="B" SIZE="1" FLAGS="17" VISIBILITYRULE="(OFICINA=TRUE)" DEFAULT="F" PROJECTION="0" ORDER="12" FIELDLABEL="Gerar T&#237;tulos no Envio para Oficina" GROUPNAME="Acesso a Oficinas" CTAB="0"/>
+        <PARAM NAME="GERA_TITULO_PREVISAO" FORMAT="B" SIZE="1" FLAGS="17" VISIBILITYRULE="(OFICINA=TRUE) AND (ENVIO_TITULO=TRUE)" DEFAULT="F" PROJECTION="0" ORDER="13" FIELDLABEL="Gerar T&#237;tulo de Envio como Previs&#227;o" GROUPNAME="Acesso a Oficinas" CTAB="0"/>
+        <PARAM NAME="INTEGRACAO_JUST_IN_TIME" SIZE="1" FLAGS="17" DEFAULT="F" PROJECTION="0" HINT="&lt;b>Completa:&lt;/b>Requisi&#231;&#227;o de compra gera o pedido de compra na filial/loja e o pedido de compra gera o pedido de venda na matriz&lt;br>&lt;b>Parcial:&lt;/b>Requisi&#231;&#227;o de compra gera o pedido de compra na filial/loja." ORDER="15" LOOKUP="list:'F','N&#227;o Utiliza';'T','Completa';'P','Parcial';" FIELDLABEL="Integra&#231;&#227;o JUST-IN-TIME de pedidos" GROUPNAME="Integra&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="CONTROLA_LICENCIADOS" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="F" PROJECTION="0" HINT="Ao ligar esse par&#226;metro o sistema passa a fazer o processo de controle de produtos licenciados" ORDER="2" FIELDLABEL="Controla Licenciados" CTAB="0"/>
+        <PARAM NAME="ENVIA_CLIENTE" FORMAT="B" SIZE="1" FLAGS="17" VISIBILITYRULE="(INTEGRACAO_JUST_IN_TIME='T')" DEFAULT="F" PROJECTION="0" HINT="Envia o cadastro do cliente na integra&#231;&#227;o Just-in-time quando o pedido de compra na loja (filial) envia os dados para a matriz criar o pedido de venda" ORDER="18" FIELDLABEL="Envia Cliente" GROUPNAME="Integra&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="INTEGRACAO_JUST_IN_TIME_ESTOQUE" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="F" PROJECTION="0" HINT="Define que esse fornecedor ser&#225; usado para atualizar o estoque na integra&#231;&#227;o e-commerce Vtex" ORDER="16" FIELDLABEL="Integra&#231;&#227;o JUST-IN-TIME de estoque" GROUPNAME="Integra&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="CC_CREDITO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="25" LOOKUP="CONTA_CONTABIL.ListaParaLancamento" LOOKUPKEY="CONTA_CONTABIL" LOOKUPDISPLAY="DESCRICAO" LOOKUPCODE="CODIGO" FIELDLABEL="Conta Cont&#225;bil Cr&#233;dito" GROUPNAME="Contabiliza&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="CC_DEBITO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="26" LOOKUP="CONTA_CONTABIL.ListaParaLancamento" LOOKUPKEY="CONTA_CONTABIL" LOOKUPDISPLAY="DESCRICAO" LOOKUPCODE="CODIGO" FIELDLABEL="Conta Cont&#225;bil T&#237;tulo" GROUPNAME="Contabiliza&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="CC_ADIANTAMENTO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="24" LOOKUP="CONTA_CONTABIL.ListaParaLancamento" LOOKUPKEY="CONTA_CONTABIL" LOOKUPDISPLAY="DESCRICAO" LOOKUPCODE="CODIGO" FIELDLABEL="Conta Cont&#225;bil Adiantamento" GROUPNAME="Contabiliza&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="GERADOR_ORIGEM" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="1" FIELDLABEL="Gerador Origem" CTAB="0"/>
+        <PARAM NAME="GERADORES" FORMAT="R" FLAGS="1" VISIBILITYRULE="(GERADOR_ORIGEM='')" STYLE="8" PROJECTION="0" ORDER="4" FIELDLABEL="Geradores" NESTEDNAME="MILLENIUM.GERADORES.GERADORES" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="FORNECEDOR" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="28" FIELDLABEL="Fornecedor" CTAB="0"/>
+        <FIELD NAME="GERADOR" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="29" FIELDLABEL="Gerador" CTAB="0"/>
+        <FIELD NAME="TRANS_ID" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="30" FIELDLABEL="Trans Id" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>//Busca ID das contas contabeis
+
+SELECT:CTB ( SELECT  PCONTA  FROM PLANO_CONTAS WHERE CODIGO =:CC_DEBITO)       AS CC_DEBITO,
+           ( SELECT  PCONTA  FROM PLANO_CONTAS WHERE CODIGO =:CC_CREDITO)      AS CC_CREDITO,
+           ( SELECT  PCONTA  FROM PLANO_CONTAS WHERE CODIGO =:CC_ADIANTAMENTO) AS CC_ADIANTAMENTO
+  FROM dual;
+
+#CALL:FORN millenium.fornecedores.inclui(
+COD_FORNECEDOR                  = :COD_FORNECEDOR,
+PRODUTOS_FORNEC                 = :PRODUTOS_FORNEC,
+ULT_COMPRA                      = :ULT_COMPRA,
+LICENCIADO                      = :LICENCIADO,
+E_MAIL_NFE                      = :E_MAIL_NFE,
+DISPONIVEL_WEB                  = :DISPONIVEL_WEB,
+TIPO_PEDIDO                     = :TIPO_PEDIDO,
+DIA_BASE_ACERTO                 = :DIA_BASE_ACERTO ,
+OFICINA                         = :OFICINA ,
+ENVIO_TITULO                    = :ENVIO_TITULO,
+GERA_TITULO_PREVISAO            = :GERA_TITULO_PREVISAO,
+INTEGRACAO_JUST_IN_TIME         = :INTEGRACAO_JUST_IN_TIME,
+CONTROLA_LICENCIADOS            = :CONTROLA_LICENCIADOS,
+ENVIA_CLIENTE                   = :ENVIA_CLIENTE ,
+INTEGRACAO_JUST_IN_TIME_ESTOQUE = :INTEGRACAO_JUST_IN_TIME_ESTOQUE,
+CC_CREDITO                      = :CTB.CC_ADIANTAMENTO,
+CC_DEBITO                       = :CTB.CC_CREDITO,
+CC_ADIANTAMENTO                 = :CTB.CC_DEBITO,
+GERADOR_ORIGEM                  = :GERADOR_ORIGEM,
+GERADORES                       = :GERADORES ) ;
+#RETURN(FORNECEDOR);
+
+//Retornando campos chave do resultado do processo
+SELECT FORNECEDOR, GERADOR, TRANS_ID FROM FORNECEDORES WHERE FORNECEDOR = :FORN.FORNECEDOR;
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

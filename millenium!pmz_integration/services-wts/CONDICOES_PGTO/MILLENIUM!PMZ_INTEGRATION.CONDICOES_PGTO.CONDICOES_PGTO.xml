@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="CONDICOES_PGTO">
+    <METHOD NAME="CONDICOES_PGTO" DESCRIPTION="Condi&#231;&#245;es de Pagamento" VERSION="121" INTFTYPE="10" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+          <GROUP NAME="Descri&#231;&#227;o da(s) Parcela(s)"/>
+          <GROUP NAME="Par&#226;metros "/>
+          <GROUP NAME="Configura&#231;&#245;es do Carn&#234;"/>
+          <GROUP NAME="Tipos de Pagamentos poss&#237;veis"/>
+        </GROUPS>
+        <PARAM NAME="CONDICOES_PGTO" FORMAT="+" SIZE="8" FLAGS="1032" PROJECTION="0" ORDER="2" FIELDLABEL="Condicoes Pgto" CTAB="0"/>
+        <PARAM NAME="CODIGO" SIZE="3" FLAGS="17" DEFAULT="millenium.utils.default(['CODIGO_COND_PAGTO',3],'Result',True)" PROJECTION="0" ORDER="1" FIELDLABEL="C&#243;digo" CTAB="0"/>
+        <PARAM NAME="DESCRICAO" SIZE="25" FLAGS="17" PROJECTION="0" ORDER="2" FIELDLABEL="Descri&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="PRAZO" FORMAT="N" SIZE="8" FLAGS="17" PROJECTION="0" ORDER="8" FIELDLABEL="Prazo 1&#186; Parcela" GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+        <PARAM NAME="TIPO_PGTO" FORMAT="N" SIZE="8" FLAGS="25" PROJECTION="0" ORDER="7" LOOKUP="TIPOS_PGTOS.ListaTodosTiposPgtos" LOOKUPKEY="TIPO_PGTO" LOOKUPDISPLAY="DESCRICAO" FIELDLABEL="Tipo de Pagamento" GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+        <PARAM NAME="FIXA_MES30" FORMAT="B" SIZE="1" FLAGS="17" VISIBILITYRULE="(FIXA_DIA_CALCULO=0)" DEFAULT="0" PROJECTION="0" ORDER="14" FIELDLABEL="Fixa M&#234;s em 30 dias" GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+        <PARAM NAME="MUDA_DATASEG" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="0" PROJECTION="0" ORDER="12" FIELDLABEL="Muda Data de Vencimento de S&#225;b. ou Dom. p/ Seg." GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+        <PARAM NAME="VALOR_MINIMO" FORMAT="M" SIZE="17" FLAGS="17" DECIMALS="4" DEFAULT="0" PROJECTION="0" ORDER="20" FIELDLABEL="Valor M&#237;nimo" GROUPNAME="Par&#226;metros " CTAB="0"/>
+        <PARAM NAME="IMPRIME_CARNE" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="F" PROJECTION="0" ORDER="26" FIELDLABEL="Imprime Carn&#234;" GROUPNAME="Configura&#231;&#245;es do Carn&#234;" CTAB="0"/>
+        <PARAM NAME="ENVIA_PDA" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="0" PROJECTION="0" ORDER="5" FIELDLABEL="Envia Pda" CTAB="0"/>
+        <PARAM NAME="TIPO" SIZE="1" FLAGS="17" DEFAULT="T" PROJECTION="0" ORDER="3" LOOKUP="list:'T','Todos';'C','Compra';'V','Venda';" FIELDLABEL="Tipo" CTAB="0"/>
+        <PARAM NAME="FIXA_DIA_CALCULO" FORMAT="B" SIZE="1" FLAGS="17" VISIBILITYRULE="(FIXA_MES30=0)" DEFAULT="F" PROJECTION="0" ORDER="15" FIELDLABEL="Fixa Dia para C&#225;lculo" GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+        <PARAM NAME="CREDITO_OBRIGATORIO" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="F" PROJECTION="0" ORDER="22" FIELDLABEL="Obriga Aproveitamento de Cr&#233;dito" GROUPNAME="Par&#226;metros " CTAB="0"/>
+        <PARAM NAME="PAGAMENTO_FUTURO" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="F" PROJECTION="0" HINT="Condi&#231;&#227;o de pagamento deve ser utilizada no faturamento de compra. O t&#237;tulo ser&#225; gerado como previs&#227;o e o pagamento ser&#225; liberado pelo processo de Acerto de fornecedor.&lt;p>O Acerto de fornecedor libera o pagamento conforme ocorre a venda dos produtos." ORDER="23" FIELDLABEL="Pagamento Futuro" GROUPNAME="Par&#226;metros " CTAB="0"/>
+        <PARAM NAME="NAO_IGUALAR_PARCELAS" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="F" PROJECTION="0" ORDER="11" FIELDLABEL="N&#227;o Igualar Parcelas" GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+        <PARAM NAME="MUDA_DATAFERIADO" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="F" PROJECTION="0" HINT="Obrigat&#243;rio preenchimento de um calend&#225;rio padr&#227;o e seus dias &#250;teis" ORDER="13" FIELDLABEL="Muda Data de Vencimento de Feriado p/ Pr&#243;ximo Dia &#218;til" GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+        <PARAM NAME="TRUNCAR_PARCELAS" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="F" PROJECTION="0" HINT="Trunca parcelas para duas casas decimais e a diferen&#231;a insere na primeira parcela" ORDER="18" FIELDLABEL="Truncar Parcelas" GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+        <PARAM NAME="DESCONTO" FORMAT="N" SIZE="15" FLAGS="1" DECIMALS="7" DEFAULT="0" PROJECTION="0" ORDER="21" FIELDLABEL="Desconto Pr&#233;-Estipulado (%)" GROUPNAME="Par&#226;metros " CTAB="0"/>
+        <PARAM NAME="TIPO_OPERACAO" SIZE="1" FLAGS="1" PROJECTION="0" ORDER="4" LOOKUP="list:'T','Todos';'V','Varejo';'A','Atacado';'C','Cat&#225;logo';" FIELDLABEL="Tipo de Opera&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="PERCENTUAL" FORMAT="N" SIZE="15" FLAGS="1" DECIMALS="7" PROJECTION="0" ORDER="9" FIELDLABEL="Percentual 1&#186; Parcela" GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+        <PARAM NAME="LIMITE_MAX_DESC" FORMAT="N" SIZE="15" FLAGS="1" DECIMALS="4" PROJECTION="0" ORDER="24" FIELDLABEL="Limite M&#225;ximo de Desconto por Produto (%)" GROUPNAME="Par&#226;metros " CTAB="0"/>
+        <PARAM NAME="DESCRICAO_PARC" FORMAT="R" FLAGS="1" PROJECTION="0" ORDER="10" FIELDLABEL="Descri&#231;&#227;o das Parcelas" NESTEDNAME="millenium.CONDICOES_PGTO.Descricao_Parc" GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+        <PARAM NAME="TIPOS_PGTOS" FORMAT="R" FLAGS="1" STYLE="3" PROJECTION="0" ORDER="28" FIELDLABEL="Tipos Pagamentos" NESTEDNAME="millenium.CONDICOES_PGTO.TIPOS_PGTOS" GROUPNAME="Tipos de Pagamentos poss&#237;veis" CTAB="0"/>
+        <PARAM NAME="DIA_BASE" FORMAT="R" FLAGS="1" PROJECTION="0" ORDER="16" FIELDLABEL="Dia Base" NESTEDNAME="millenium.CONDICOES_PGTO.DIA_BASE" GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+        <PARAM NAME="PRAZOS_ANTECIPACAO_PV" FORMAT="R" FLAGS="1" PROJECTION="0" ORDER="17" FIELDLABEL="Parcelas Antecipa&#231;&#227;o Pedido Venda" NESTEDNAME="MILLENIUM.CONDICOES_PGTO.DESCRICAO_PARC" GROUPNAME="Descri&#231;&#227;o da(s) Parcela(s)" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT></ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

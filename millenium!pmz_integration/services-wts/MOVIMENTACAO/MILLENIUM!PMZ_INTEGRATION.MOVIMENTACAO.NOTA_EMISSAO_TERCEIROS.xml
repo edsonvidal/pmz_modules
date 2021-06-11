@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="MOVIMENTACAO">
+    <METHOD NAME="NOTA_EMISSAO_TERCEIROS" DESCRIPTION="" VERSION="2" THREADSAFE="1">
+      <PARAMS/>
+      <FIELDS/>
+      <ACTIONSCRIPT>
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>
