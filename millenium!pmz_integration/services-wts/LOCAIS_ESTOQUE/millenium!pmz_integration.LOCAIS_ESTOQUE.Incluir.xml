@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="LOCAIS_ESTOQUE">
-    <METHOD NAME="Incluir" DESCRIPTION="Incluir Local de Estoque" VERSION="14" INTFTYPE="1" THREADSAFE="0">
+    <METHOD NAME="Incluir" DESCRIPTION="Incluir Local de Estoque" VERSION="15" INTFTYPE="1" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP/>
@@ -11,7 +11,8 @@
         <PARAM NAME="EHPAI" FORMAT="B" SIZE="1" PROJECTION="0" FIELDLABEL="Ehpai" CTAB="0"/>
       </PARAMS>
       <FIELDS/>
-      <ACTIONSCRIPT>// Busca Codigo da Filial
+      <ACTIONSCRIPT>//Busca Codigo da Filial(Magdiel Araujo 11/06/2021)
+
 SELECT:FL FILIAL FROM FILIAIS WHERE COD_FILIAL=:COD_FILIAL;
 
 #CALL MILLENIUM.LOCAIS_ESTOQUE.INCLUI(
