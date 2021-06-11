@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="FUNCIONARIOSFILIAL">
+    <METHOD NAME="ConsultaPMZ" DESCRIPTION="Consultar Funcionarios" VERSION="7" INTFTYPE="6" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="COD_FUNCIONARIO" SIZE="7" FLAGS="1" PROJECTION="0" FIELDLABEL="Cod Funcionario" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="FUNCIONARIO" FORMAT="&#0;" PROJECTION="0" FIELDLABEL="Funcionario" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>SELECT:FUN FUNCIONARIO,
+        GERADOR,
+        COD_FUNCIONARIO,
+        NAO_MOSTRAR_NO_EVENTO AS DESATIVADO
+#ROWSET({#CALL:geradores millenium.geradores.consultar(:FUN.GERADOR)})
+#ROWSET({#CALL:cargos    millenium.cargos.consultar(:FUN.cargo)})
+FROM FUNCIONARIOS
+WHERE ( COD_FUNCIONARIO=:COD_FUNCIONARIO);
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

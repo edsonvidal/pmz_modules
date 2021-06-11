@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="CLIENTES_RG">
+    <METHOD NAME="Excluir" DESCRIPTION="" VERSION="12" INTFTYPE="3" THREADSAFE="0">
+      <PARAMS/>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+      </FIELDS>
+      <ACTIONSCRIPT>DELETE FROM PMZ_GERADORES WHERE GERADOR=:WTSSYS_OBJECT;
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

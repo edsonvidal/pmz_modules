@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="SAIDAS">
+    <METHOD NAME="Venda_Incluir" DESCRIPTION="" VERSION="3" THREADSAFE="0">
+      <PARAMS/>
+      <FIELDS/>
+      <ACTIONSCRIPT>select * from dual;
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

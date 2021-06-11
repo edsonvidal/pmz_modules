@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="FORNECEDORES">
+    <METHOD NAME="Excluir" DESCRIPTION="Excluir Fornecedor" VERSION="109" INTFTYPE="3" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="COD_FORNECEDOR" SIZE="12" FLAGS="17" PROJECTION="0" ORDER="1" FIELDLABEL="Fornecedor" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT>//Executando uma query para retornar o id do cliente para passar ao metodo de exclusao
+SELECT:FORN FORNECEDOR FROM FORNECEDORES WHERE COD_FORNECEDOR = :COD_FORNECEDOR;
+#CALL MILLENIUM.FORNECEDORES.EXCLUI(FORNECEDOR=:FORN.FORNECEDOR);
+
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

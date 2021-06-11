@@ -1,0 +1,622 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="MOVIMENTACAO">
+    <METHOD NAME="NOTA_EMISSAO_PROPRIA" DESCRIPTION="Emiss&#227;o de Nota Pr&#243;pria" VERSION="183" INTFTYPE="1" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="COD_FILIAL" SIZE="10" FLAGS="17" PROJECTION="0" ORDER="8" FIELDLABEL="C&#243;digo da Filial" CTAB="0"/>
+        <PARAM NAME="CNPJ_CPF_DESTINATARIO" SIZE="18" FLAGS="17" PROJECTION="0" ORDER="4" FIELDLABEL="Cnpj Fornecedor" CTAB="0"/>
+        <PARAM NAME="COD_EVENTO" SIZE="5" FLAGS="17" PROJECTION="0" HINT="C&#243;digo do Evento No Millennium" ORDER="7" FIELDLABEL="C&#243;digo do Evento" CTAB="0"/>
+        <PARAM NAME="DATA" FORMAT="D" SIZE="10" FLAGS="17" PROJECTION="0" ORDER="11" FIELDLABEL="Data" CTAB="0"/>
+        <PARAM NAME="COD_CONDICAO_PGTO" SIZE="3" FLAGS="17" PROJECTION="0" ORDER="6" FIELDLABEL="C&#243;digo da Condi&#231;&#227;o Pgto" CTAB="0"/>
+        <PARAM NAME="COD_TABELA_PRECO" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="9" FIELDLABEL="C&#243;digo da Tabela Pre&#231;o" CTAB="0"/>
+        <PARAM NAME="OBS" SIZE="200" FLAGS="1" PROJECTION="0" ORDER="17" FIELDLABEL="Obs" CTAB="0"/>
+        <PARAM NAME="CNPJ_TRANSPORTADORA" SIZE="18" FLAGS="1" PROJECTION="0" ORDER="5" FIELDLABEL="Cnpj Transportadora" CTAB="0"/>
+        <PARAM NAME="PRODUTOS" FORMAT="R" FLAGS="1" STYLE="3" PROJECTION="0" ORDER="13" FIELDLABEL="Produtos" NESTEDNAME="millenium!pmz.MOVIMENTACAO.PRODUTOS" CTAB="0"/>
+        <PARAM NAME="LANCAMENTOS" FORMAT="R" FLAGS="1" STYLE="3" PROJECTION="0" ORDER="15" FIELDLABEL="Lan&#231;amentos" NESTEDNAME="MILLENIUM!PMZ.MOVIMENTACAO.LANCAMENTOS" CTAB="0"/>
+        <PARAM NAME="NOTAS" FORMAT="R" FLAGS="1" STYLE="3" PROJECTION="0" ORDER="14" FIELDLABEL="Notas" NESTEDNAME="millenium!pmz.MOVIMENTACAO.NOTAS" CTAB="0"/>
+        <PARAM NAME="PESO_LIQUIDO" FORMAT="N" SIZE="17" FLAGS="1" DECIMALS="4" PROJECTION="0" ORDER="19" FIELDLABEL="Peso Liquido" CTAB="0"/>
+        <PARAM NAME="PESO_BRUTO" FORMAT="N" SIZE="17" FLAGS="1" DECIMALS="4" PROJECTION="0" ORDER="18" FIELDLABEL="Peso Bruto" CTAB="0"/>
+        <PARAM NAME="QUANTIDADE_VOLUME" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="21" FIELDLABEL="Quantidade Volume" CTAB="0"/>
+        <PARAM NAME="QUANTIDADE_TOTAL" FORMAT="N" SIZE="17" FLAGS="1" DECIMALS="4" PROJECTION="0" ORDER="20" FIELDLABEL="Quantidade Total" CTAB="0"/>
+        <PARAM NAME="VALOR_FINAL" FORMAT="M" SIZE="17" FLAGS="1" DECIMALS="4" PROJECTION="0" ORDER="23" FIELDLABEL="Valor Final" CTAB="0"/>
+        <PARAM NAME="VALOR_FRETE" FORMAT="M" SIZE="17" FLAGS="1" DECIMALS="4" PROJECTION="0" ORDER="24" FIELDLABEL="Valor Frete" CTAB="0"/>
+        <PARAM NAME="VALOR_CORTESIA" FORMAT="M" SIZE="17" FLAGS="1" DECIMALS="4" PROJECTION="0" ORDER="22" FIELDLABEL="Valor Cortesia" CTAB="0"/>
+        <PARAM NAME="VALOR_TOTAL_PRODUTOS" FORMAT="M" SIZE="17" FLAGS="1" DECIMALS="4" PROJECTION="0" ORDER="25" FIELDLABEL="Valor Total Produtos" CTAB="0"/>
+        <PARAM NAME="FRETE_INFORMADO" FORMAT="B" SIZE="1" FLAGS="1" DEFAULT="FALSE" PROJECTION="0" HINT="Indica se o valor do frete foi infomado" ORDER="12" FIELDLABEL="Frete Informado" CTAB="0"/>
+        <PARAM NAME="CONSIDERAR_FRETE_IMPOSTOS" FORMAT="B" SIZE="1" FLAGS="1" DEFAULT="FALSE" PROJECTION="0" HINT="Indica se &#233; para considerar valor do frete no impostos" ORDER="10" FIELDLABEL="Considerar Frete Impostos" CTAB="0"/>
+        <PARAM NAME="MODALIDADE_FRETE" SIZE="1" FLAGS="1" PROJECTION="0" ORDER="16" FIELDLABEL="Modalidade Frete" CTAB="0"/>
+        <PARAM NAME="TIPO_GERADOR" SIZE="1" FLAGS="1" PROJECTION="0" HINT="Tipo de gerador (C=Cliente, F=Fornecedor)" ORDER="3" LOOKUP="list:'C','Cliente';'F','Fornecedor';" FIELDLABEL="Tipo Gerador" CTAB="0"/>
+        <PARAM NAME="ACERTO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" HINT="Porcentagem de Desconto" ORDER="1" FIELDLABEL="Acerto" CTAB="0"/>
+        <PARAM NAME="V_ACERTO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" HINT="Valor do Desconto" ORDER="2" FIELDLABEL="V Acerto" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="COD_OPERACAO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="27" FIELDLABEL="Cod Operacao" CTAB="0"/>
+        <FIELD NAME="TIPO_OPERACAO" SIZE="1" FLAGS="1" PROJECTION="0" ORDER="29" FIELDLABEL="Tipo Operacao" CTAB="0"/>
+        <FIELD NAME="TRANS_ID" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="30" FIELDLABEL="Trans Id" CTAB="0"/>
+        <FIELD NAME="ROMANEIO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="28" FIELDLABEL="Documento" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>/* Gerar movimenta&#231;&#227;o por chamada via API */
+
+//Consulta e valida o evento para movimento
+#PRIVATE()
+SELECT:EV EVENTO, TIPO_EVENTO FROM EVENTOS WHERE CODIGO=:COD_EVENTO;
+  #SELECT(EV._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Evento n&#227;o encontrado !")},ELSE:{});
+
+//Consulta e valida a filial para movimento
+#PRIVATE()
+SELECT:FL FILIAL, CONTA FROM FILIAIS WHERE COD_FILIAL=:COD_FILIAL;
+  #SELECT(FL._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Filial n&#227;o encontrada !")},ELSE:{});
+
+//Consulta e valida a conta para movimento
+//#PRIVATE()
+//SELECT:CT CONTA FROM CONTAS WHERE NUMERO=:COD_CONTA ;
+//  #SELECT(CT._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Conta n&#227;o encontrada !")},ELSE:{});
+
+//Consulta e valida o cliente/fornecedor para o movimento
+#SELECT(TIPO_GERADOR
+   ,'C':{
+     #PRIVATE()
+     SELECT:DEST_C CLIENTE, IE, NAOCONTRIBUINTE_ICMS, IPI_NAOINCIDE_ICMS FROM CLIENTES WHERE (CGC=:CNPJ_CPF_DESTINATARIO OR (CPF=:CNPJ_CPF_DESTINATARIO));
+     #SELECT(DEST_C._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Cliente n&#227;o encontrado !")},ELSE:{});
+     
+     #PRIVATE()
+     SELECT:TPGC CLIENTE, TIPO_EVENTO FROM EVENTOS WHERE CODIGO = :COD_EVENTO AND CLIENTE = 'T';
+     #SELECT(TPGC._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"O evento informado n&#227;o acessa cliente !")},ELSE:{});
+   }
+   ,'F':{
+     #PRIVATE()
+     SELECT:DEST_F FORNECEDOR, IE, NAOCONTRIBUINTE_ICMS, IPI_NAOINCIDE_ICMS FROM FORNECEDORES WHERE (CGC=:CNPJ_CPF_DESTINATARIO OR (CPF=:CNPJ_CPF_DESTINATARIO));
+     #SELECT(DEST_F._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Fornecedor n&#227;o encontrado !")},ELSE:{});
+
+     #PRIVATE()
+     SELECT:TPGF FORNECEDOR, TIPO_EVENTO FROM EVENTOS WHERE CODIGO = :COD_EVENTO AND FORNECEDOR = 'T';
+     #SELECT(TPGF._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"O evento informado n&#227;o acessa fornecedor !")},ELSE:{});
+   }
+   
+   ,ELSE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Informe um tipo de gerador para cliente ou fornecedor !")}
+);
+
+//Consulta e valida a condi&#231;&#227;o de pagamento para o movimento
+#PRIVATE()
+SELECT:CP CONDICOES_PGTO, TIPO_PGTO FROM CONDICOES_PGTO WHERE CODIGO=:COD_CONDICAO_PGTO;
+  #SELECT(CP._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Condi&#231;&#227;o de pagamento n&#227;o encontrada !")},ELSE:{});
+
+//Consulta e valida a Tabela de pre&#231;o para o movimento
+#PRIVATE()
+SELECT:TP TABELA FROM TABELAS_PRECO WHERE COD_TPRECO=:COD_TABELA_PRECO;
+  #SELECT(TP._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Tabela de pre&#231;o n&#227;o encontrada !")},ELSE:{});
+
+//Consulta e valida a transportadora para o movimento
+#PRIVATE()
+SELECT:TR TRANSPORTADORA FROM TRANSPORTADORAS WHERE CGC=:CNPJ_TRANSPORTADORA;
+  #SELECT(TR._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Transportadora n&#227;o encontrada !")},ELSE:{});
+
+//Cria tabela temporaria para armazenamento e tratamento dos dados de produtos
+#SET(TBPROD, ${#CREATETABLE( PRODUTO            INTEGER
+                            ,COR                INTEGER
+                            ,ESTAMPA            INTEGER
+                            ,TAMANHO            VARCHAR(5)
+                            ,ITEM               VARCHAR(20)
+                            ,QUANTIDADE         INTEGER
+                            ,PRECO              DOUBLE PRECISION
+                            ,COD_PRODUTO        VARCHAR(60)
+                            ,TIPO_PROD          VARCHAR(2)
+                            ,ID                 VARCHAR(60)
+                            ,SIT_TRIB           VARCHAR(3)
+	                        ,BICM               DOUBLE PRECISION
+	                        ,ICM                DOUBLE PRECISION
+	                        ,V_ICMS             DOUBLE PRECISION
+	                        ,BIPI               DOUBLE PRECISION
+	                        ,IPI                DOUBLE PRECISION
+	                        ,V_IPI              DOUBLE PRECISION
+                            ,BICMSUB            DOUBLE PRECISION
+	                        ,TAXA_ICMSS         DOUBLE PRECISION
+	                        ,ICMSS              DOUBLE PRECISION
+	                        ,V_ICMSS            DOUBLE PRECISION
+	                        ,B_PIS              DOUBLE PRECISION
+	                        ,PIS                DOUBLE PRECISION
+	                        ,V_PIS              DOUBLE PRECISION
+                            ,B_COFINS           DOUBLE PRECISION
+	                        ,COFINS             DOUBLE PRECISION
+	                        ,V_COFINS           DOUBLE PRECISION
+	                        ,B_FCP              DOUBLE PRECISION
+	                        ,FCP                DOUBLE PRECISION
+	                        ,V_FCP              DOUBLE PRECISION
+	                        ,B_ISS              DOUBLE PRECISION
+	                        ,V_ISS              DOUBLE PRECISION
+	                        ,DESC_SUFRAMA       DOUBLE PRECISION
+	                        ,TOTAL_BRUTO        DOUBLE PRECISION
+                            ,TOTAL_LIQUIDO      DOUBLE PRECISION
+	                        ,NOTA               INTEGER
+	                        ,CF_ICMS            VARCHAR(1)
+                            ,CF_IPI             VARCHAR(1)
+                            ,CF_CST_IPI         VARCHAR(2)
+                            ,CF_CST_PIS         VARCHAR(2)
+                            ,CF_CST_COFINS      VARCHAR(2)
+                            ,COD_NOTA           VARCHAR(20)
+                            ,DSC_NOTA_ORIG      VARCHAR(100)
+                            ,V_ICMS_UF_DEST     DOUBLE PRECISION
+                            ,V_ICMS_UF_REMET    DOUBLE PRECISION
+                            ,DESC_CFOP          VARCHAR (20)
+                            ,DESCONTO           INTEGER
+                            ,NOTA_REF           INTEGER
+                            ,BCUF_DEST          DOUBLE PRECISION
+                            ,FCP_UF_DEST        DOUBLE PRECISION
+                            ,ICMS_UF_DEST       DOUBLE PRECISION
+                            ,ICMS_INT           DOUBLE PRECISION
+                            ,ICMS_INTER_PART    DOUBLE PRECISION
+                            ,V_FCP_UF_DEST      DOUBLE PRECISION
+                            )
+              }
+);
+
+//Percorre o registro de produtos e colocar os dados em tabela temporaria
+#PRIVATE()
+#EACH() PRODUTOS AS RS
+    INSERT INTO #REPLACE(TBPROD) (
+       PRODUTO
+      ,COR
+      ,ESTAMPA
+      ,TAMANHO
+      ,ITEM
+      ,QUANTIDADE
+      ,PRECO
+      ,COD_PRODUTO
+      ,TIPO_PROD
+      ,ID
+      ,SIT_TRIB
+	  ,BICM
+	  ,ICM
+ 	  ,V_ICMS
+	  ,BIPI             	
+	  ,IPI
+	  ,V_IPI
+	  ,BICMSUB
+	  ,TAXA_ICMSS
+	  ,ICMSS
+	  ,V_ICMSS
+	  ,B_PIS             	
+	  ,PIS
+	  ,V_PIS
+   	  ,B_COFINS
+	  ,COFINS
+	  ,V_COFINS
+	  ,B_FCP
+	  ,FCP
+	  ,V_FCP
+	  ,B_ISS
+      ,V_ISS
+      ,DESC_SUFRAMA
+      ,TOTAL_BRUTO
+      ,TOTAL_LIQUIDO
+	  ,NOTA
+	  ,CF_ICMS
+      ,CF_IPI
+      ,CF_CST_IPI
+      ,CF_CST_PIS
+      ,CF_CST_COFINS
+      ,COD_NOTA
+      ,DSC_NOTA_ORIG
+      ,V_ICMS_UF_DEST
+      ,V_ICMS_UF_REMET
+      ,DESC_CFOP
+      ,DESCONTO
+      ,NOTA_REF
+      ,BCUF_DEST
+      ,FCP_UF_DEST
+      ,ICMS_UF_DEST
+      ,ICMS_INT
+      ,ICMS_INTER_PART
+      ,V_FCP_UF_DEST
+      )
+    VALUES (
+       :RS.PRODUTO
+      ,:RS.COR
+      ,:RS.ESTAMPA
+      ,:RS.TAMANHO
+      ,:RS.ITEM
+      ,:RS.QUANTIDADE
+      ,:RS.PRECO
+      ,:RS.COD_PRODUTO
+      ,:RS.TIPO_PROD
+      ,:RS.ID
+      ,:RS.SIT_TRIB
+	  ,:RS.BICM
+ 	  ,:RS.ICM
+	  ,:RS.V_ICMS
+	  ,:RS.BIPI             	
+	  ,:RS.IPI
+	  ,:RS.V_IPI
+	  ,:RS.BICMSUB
+	  ,:RS.TAXA_ICMSS
+	  ,:RS.ICMSS
+	  ,:RS.V_ICMSS
+      ,:RS.B_PIS
+	  ,:RS.PIS
+	  ,:RS.V_PIS
+      ,:RS.B_COFINS
+	  ,:RS.COFINS
+	  ,:RS.V_COFINS
+	  ,:RS.B_FCP
+	  ,:RS.FCP
+	  ,:RS.V_FCP
+	  ,:RS.B_ISS
+      ,:RS.V_ISS
+      ,:RS.DESC_SUFRAMA
+      ,:RS.TOTAL_BRUTO
+      ,:RS.TOTAL_LIQUIDO
+	  ,:RS.NOTA
+	  ,:RS.CF_ICMS
+      ,:RS.CF_IPI
+      ,:RS.CF_CST_IPI
+      ,:RS.CF_CST_PIS
+      ,:RS.CF_CST_COFINS
+      ,:RS.COD_NOTA
+      ,:RS.DSC_NOTA_ORIG
+      ,:RS.V_ICMS_UF_DEST
+      ,:RS.V_ICMS_UF_REMET
+      ,:RS.DESC_CFOP
+      ,:RS.DESCONTO
+      ,:RS.NOTA_REF
+      ,:RS.BCUF_DEST
+      ,:RS.FCP_UF_DEST
+      ,:RS.ICMS_UF_DEST
+      ,:RS.ICMS_INT
+      ,:RS.ICMS_INTER_PART
+      ,:RS.V_FCP_UF_DEST
+    );
+
+//Prepara os registros da tabela temporaria, para envio do produtos ao movimento
+#PRIVATE()
+#EACH()
+SELECT:SKU E.ID FROM #REPLACE(TBPROD) E
+
+#BEGIN
+  #CALL:BARRA MILLENIUM.CODIGO_BARRAS.DECODIFICA_BARRA(BARRA=:SKU.ID);
+  #SELECT(SKU._EOF
+    ,TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Produto n&#227;o encontrado !")}
+    ,ELSE:{
+        UPDATE #REPLACE(TBPROD)
+          SET
+            PRODUTO = :BARRA.PRODUTO
+           ,COR     = :BARRA.COR
+           ,ESTAMPA = :BARRA.ESTAMPA
+           ,TAMANHO = :BARRA.TAMANHO
+        WHERE ID = :SKU.ID;
+    });
+
+#END;
+
+//Prepara os registros de produtos
+#PRIVATE()
+SELECT:PRODUTOS_MOVIMENTO
+  PE.PRODUTO
+ ,PE.COR
+ ,PE.ESTAMPA
+ ,PE.TAMANHO
+ ,PE.ITEM
+ ,PE.QUANTIDADE
+ ,P.UNIDADE_USO        AS UNIDADE
+ ,PE.TIPO_PROD         AS TIPO
+ ,PE.PRECO             AS PRECO
+ ,PE.PRECO             AS PRECO_APLICADO
+ ,PE.PRECO             AS PRECO_BRUTO
+ ,PE.PRECO             AS PRECO_TOTAL
+ ,PE.SIT_TRIB          AS SIT_TRIB
+ ,PE.BICM              AS BICM
+ ,PE.ICM               AS ICM
+ ,PE.V_ICMS            AS VICMS
+ ,PE.BIPI              AS BIPI
+ ,PE.IPI               AS IPI
+ ,PE.V_IPI             AS VIPI
+ ,PE.BICMSUB           AS BICMSUB
+ ,PE.ICMSS             AS ICMSS
+ ,PE.TAXA_ICMSS        AS TAXA_ICMSS
+ ,PE.V_ICMSS           AS VICMSSUB
+ ,PE.B_COFINS          AS B_COFINS
+ ,PE.COFINS            AS COFINS
+ ,PE.V_COFINS          AS V_COFINS
+ ,PE.B_PIS             AS B_PIS
+ ,PE.PIS               AS PIS
+ ,PE.V_PIS             AS V_PIS
+ ,PE.B_FCP             AS B_FCP
+ ,PE.FCP               AS FCP
+ ,PE.V_FCP             AS V_FCP
+ ,PE.B_ISS             AS B_ISS
+ ,PE.V_ISS             AS V_ISS
+ ,PE.DESC_SUFRAMA      AS DESC_SUFRAMA
+ ,PE.TOTAL_BRUTO       AS IT_VALOR_BRUTO
+ ,PE.TOTAL_LIQUIDO     AS TOTAL_LIQUIDO
+ ,PE.TOTAL_LIQUIDO     AS IT_VALOR_LIQUIDO
+ ,PE.NOTA              AS NOTA
+ ,PE.CF_ICMS           AS CF_ICMS
+ ,PE.CF_IPI            AS CF_IPI
+ ,PE.CF_CST_IPI        AS CF_CST_IPI
+ ,PE.CF_CST_PIS        AS CF_CST_PIS
+ ,PE.CF_CST_COFINS     AS CF_CST_COFINS
+ ,PE.COD_NOTA          AS CODIGONOTA
+ ,PE.DSC_NOTA_ORIG     AS DESCRICAONOTA
+ ,0                    AS BICMSUBE
+ ,0                    AS ICMSSE
+ ,0                    AS VICMSSUBE
+ ,'F'                  AS ICMSSE_INFLUI_FIN
+ ,'F'                  AS CF_UTILIZA_IVA_AJUSTADO
+ ,'F'                  AS CF_RECOLHE_ICMSST_ANT
+ ,0                    AS V_ICMSS_ANT
+ ,0                    AS BICMSUB_ANT
+ ,0                    AS ICMSS_ANT
+ ,0                    AS TAXA_ICMSS_ANT
+ ,1                    AS ITEM_CUPOM
+ ,1                    AS FATOR_CONVERSAO
+ ,0                    AS B_ISS
+ ,0                    AS V_ISS
+ ,(SELECT MAX (CFOP) FROM CFOP WHERE NAT_OPERACAO=PE.DESC_CFOP) AS CFOP
+ ,(SELECT  MAX (NCREDITA_ICMS)      FROM CFOP WHERE NAT_OPERACAO=PE.DESC_CFOP) AS CF_NCREDITA_ICMS
+ ,(SELECT  MAX (NCREDITA_IPI)       FROM CFOP WHERE NAT_OPERACAO=PE.DESC_CFOP) AS CF_NCREDITA_IPI
+ ,(SELECT  MAX (CREDITO_CIAP)       FROM CFOP WHERE NAT_OPERACAO=PE.DESC_CFOP) AS CF_CREDITO_CIAP
+ ,(SELECT  MAX (TRANS_SALDO_CREDOR) FROM CFOP WHERE NAT_OPERACAO=PE.DESC_CFOP) AS CF_TRANS_SALDO_CREDOR
+ ,PE.V_ICMS_UF_DEST   AS V_ICMS_UF_DEST
+ ,PE.V_ICMS_UF_REMET  AS V_ICMS_UF_DEST
+ ,PE.DESCONTO         AS DESCONTO
+ ,PE.NOTA_REF         AS NOTA_REF
+ ,PE.BCUF_DEST        AS BCUF_DEST
+ ,PE.FCP_UF_DEST      AS FCP_UF_DEST
+ ,PE.ICMS_UF_DEST     AS ICMS_UF_DEST
+ ,PE.ICMS_INT         AS ICMS_INT
+ ,PE.ICMS_INTER_PART  AS ICMS_INTER_PART
+ ,PE.V_FCP_UF_DEST    AS V_FCP_UF_DEST
+FROM #REPLACE(TBPROD) PE
+  INNER JOIN PRODUTOS P ON P.PRODUTO = PE.PRODUTO
+  LEFT JOIN CFOP CF ON CF.NAT_OPERACAO=PE.DESC_CFOP
+WHERE PE.PRODUTO IS NOT NULL;
+
+//Cria tabela temporaria para armazenamento e tratamento dos dados do financeiro
+#SET(TBLANC, ${#CREATETABLE( N_DOCUMENTO        VARCHAR(20)
+                            ,DATA_EMISSAO       DATE
+                            ,DATA_VENCIMENTO    DATE
+                            ,VALOR_INICIAL      DOUBLE PRECISION
+                            ,NUMPARC            INTEGER
+                            ,PARCELA            INTEGER
+                            ,DUPLICATA          VARCHAR(50)
+                            ,TIPO_PGTO          INTEGER
+                            )
+              }
+);
+
+#EACH() LANCAMENTOS AS LS
+    INSERT INTO #REPLACE(TBLANC) (
+       N_DOCUMENTO
+      ,DATA_EMISSAO
+      ,DATA_VENCIMENTO
+      ,VALOR_INICIAL
+      ,NUMPARC
+      ,PARCELA
+      ,DUPLICATA
+      ,TIPO_PGTO
+    )
+    VALUES (
+       :LS.N_DOCUMENTO
+      ,:LS.DATA_EMISSAO
+      ,:LS.DATA_VENCIMENTO
+      ,:LS.VALOR_INICIAL
+      ,:LS.NUMPARC
+      ,:LS.PARCELA
+      ,:LS.DUPLICATA
+      ,:LS.TIPO_PGTO
+    );
+
+//Prepara os registros do financeiro
+SELECT:LANCAMENTOS_MOVIMENTO
+  L.N_DOCUMENTO                                 AS DOCUMENTO
+ ,L.DATA_EMISSAO                                AS DATA_EMISSAO
+ ,L.DATA_VENCIMENTO                             AS DATA_VENCIMENTO
+ ,L.VALOR_INICIAL                               AS VALOR_INICIAL
+ ,COALESCE(TPP.TIPO_PGTO,-2000000000)           AS TIPO_PGTO
+ ,'T'                                           AS TITULO
+ ,#REPLACE(FL.FILIAL)                           AS FILIAL
+ ,#REPLACE(FL.CONTA)                            AS CONTA
+ ,100                                           AS PERCENTUAL_JUROS
+ ,L.VALOR_INICIAL                               AS VALOR_JUROS
+ ,L.VALOR_INICIAL                               AS VALOR_CALCULADO
+ ,L.NUMPARC                                     AS NUMPARC
+ ,L.PARCELA                                     AS PARCELA
+ ,L.DUPLICATA                                   AS DUPLICATA
+ ,2                                             AS CARTEIRA
+ ,L.DUPLICATA                                   AS DUPL_COMPLETA_COBREBEM_S_DIGITO
+ ,L.DUPLICATA                                   AS DUPLICATA_COMPLETA_COBREBEM
+ ,L.DUPLICATA                                   AS DUPLICATA_SEM_DIGITO
+FROM #REPLACE(TBLANC) L
+LEFT JOIN TIPOS_PGTOS TPP ON TPP.TIPO_PGTO=L.TIPO_PGTO;
+
+//Cria tabela temporaria para armazenamento e tratamento dos dados da Nota
+#SET(TBNF, ${#CREATETABLE(   NUMERO_NOTA        VARCHAR(15)
+                            ,VALOR              DOUBLE PRECISION
+                            ,ICMS               DOUBLE PRECISION
+                            ,V_ICMS             DOUBLE PRECISION
+                            ,IPI                DOUBLE PRECISION
+                            ,V_IPI              DOUBLE PRECISION
+                            ,ICMSS              DOUBLE PRECISION
+                            ,SERIE              VARCHAR(5)
+                            ,DATA               DATE
+                            ,V_PIS              DOUBLE PRECISION
+                            ,B_PIS              DOUBLE PRECISION
+                            ,V_COFINS           DOUBLE PRECISION
+                            ,B_COFINS           DOUBLE PRECISION
+                            ,V_ICMSS            DOUBLE PRECISION
+                            ,DESC_SUFRAMA       DOUBLE PRECISION
+                            ,IDNFE              VARCHAR(48)
+                            ,DIGITADA           VARCHAR(1)
+                            ,IDRECIBO           VARCHAR(50)
+                            ,IDPROTOCOLO        VARCHAR(50)
+                            ,COD_MODELO         VARCHAR(2)
+                            ,IDNFE_REF          VARCHAR(50)
+                            ,REF_SERIE          VARCHAR(3)
+                            ,REF_CNPJ           VARCHAR(19)
+                            ,REF_NNF            VARCHAR(9) )
+              }
+);
+
+#EACH() NOTAS AS NF
+    INSERT INTO #REPLACE(TBNF) (
+       NUMERO_NOTA
+      ,VALOR
+      ,ICMS
+      ,V_ICMS
+      ,IPI
+      ,V_IPI
+      ,ICMSS
+      ,SERIE
+      ,DATA
+      ,V_PIS
+      ,B_PIS
+      ,V_COFINS
+      ,B_COFINS
+      ,V_ICMSS
+      ,DESC_SUFRAMA
+      ,IDNFE
+      ,DIGITADA
+      ,IDRECIBO
+      ,IDPROTOCOLO
+      ,COD_MODELO
+      ,IDNFE_REF
+      ,REF_SERIE
+      ,REF_CNPJ
+      ,REF_NNF
+    )
+    VALUES (
+       :NF.NUMERO_NOTA
+      ,:NF.VALOR
+      ,:NF.ICMS
+      ,:NF.V_ICMS
+      ,:NF.IPI
+      ,:NF.V_IPI
+      ,:NF.ICMSS
+      ,:NF.SERIE
+      ,:NF.DATA
+      ,:NF.V_PIS
+      ,:NF.B_PIS
+      ,:NF.V_COFINS
+      ,:NF.B_COFINS
+      ,:NF.V_ICMSS
+      ,:NF.DESC_SUFRAMA
+      ,:NF.IDNFE
+      ,:NF.DIGITADA
+      ,:NF.IDRECIBO
+      ,:NF.IDPROTOCOLO
+      ,:NF.COD_MODELO
+      ,:NF.IDNFE_REF
+      ,:NF.REF_SERIE
+      ,:NF.REF_CNPJ
+      ,:NF.REF_NNF
+    );
+
+//Prepara os registros da Nota
+SELECT:NOTA_FISCAL
+  N.NUMERO_NOTA                                AS NOTA
+ ,N.VALOR                                      AS VALOR
+ ,N.ICMS                                       AS ICMS
+ ,N.V_ICMS                                     AS V_ICMS
+ ,N.IPI                                          AS IPI
+ ,N.V_IPI                                        AS V_IPI
+ ,N.ICMSS                                        AS ICMSS
+ ,N.SERIE                                        AS SERIE
+ ,N.DATA                                         AS DATA
+ ,N.V_PIS                                        AS V_PIS
+ ,N.B_PIS                                        AS B_PIS
+ ,N.V_COFINS                                     AS V_COFINS
+ ,N.B_COFINS                                     AS B_COFINS
+ ,N.V_ICMSS                                      AS V_ICMSS
+ ,N.DESC_SUFRAMA                                 AS DESC_SUFRAMA
+ ,#REPLACET(EV.TIPO_EVENTO)                    AS TIPO_NOTA
+ ,N.NUMERO_NOTA                                  AS NUMERO_NOTA
+ ,0                                            AS SEQUENCIA
+ ,'R'                                          AS REGIME_UTILIZADO
+ ,'F'                                          AS USA_IVA_COLB
+ ,#REPLACET(TIPO_GERADOR)                      AS TIPO_GERADOR_IG
+ #SELECT(TIPO_GERADOR
+   ,'C':{,#REPLACET(DEST_C.NAOCONTRIBUINTE_ICMS) AS NAOCONTRIBUINTE_ICMS_IG}
+   ,'F':{,#REPLACET(DEST_F.NAOCONTRIBUINTE_ICMS) AS NAOCONTRIBUINTE_ICMS_IG}
+   ,ELSE:{}
+ )
+ #SELECT(TIPO_GERADOR
+   ,'C':{,#REPLACET(DEST_C.IE)                   AS IE_IG}
+   ,'F':{,#REPLACET(DEST_F.IE)                   AS IE_IG}
+   ,ELSE:{}
+  )
+ #SELECT(TIPO_GERADOR
+   ,'C':{,#REPLACET(DEST_C.IPI_NAOINCIDE_ICMS)   AS IPI_NAOINCIDE_ICMS_IG}
+   ,'F':{,#REPLACET(DEST_F.IPI_NAOINCIDE_ICMS)   AS IPI_NAOINCIDE_ICMS_IG}
+   ,ELSE:{}
+  )
+ ,N.IDNFE                                          AS IDNFE
+ ,N.DIGITADA                                       AS USUARIO
+ ,N.IDRECIBO                                       AS IDRECIBO
+ ,N.IDPROTOCOLO                                    AS IDPROTOCOLO
+ ,NM.NF_MODELO                                     AS MODELO
+ ,N.IDNFE_REF                                     AS IDNFE_REF
+ ,N.REF_SERIE                                     AS REF_SERIE
+ ,N.REF_CNPJ                                      AS REF_CNPJ
+ ,N.REF_NNF                                       AS REF_NNF
+FROM #REPLACE(TBNF) N
+LEFT JOIN NF_MODELOS NM ON NM.CODIGO=N.COD_MODELO;
+
+#CALL:DOC MILLENIUM.UTILS.DEFAULT( NOME="ROMANEIO", TAMANHO=6);
+
+#CALL:MOV MILLENIUM.MOVIMENTACAO.EXECUTA(
+   EVENTO                    = :EV.EVENTO
+  ,ROMANEIO                  = :DOC.RESULT
+  ,FILIAL                    = :FL.FILIAL
+  ,CONTA                     = :FL.CONTA
+  ,DATA                      = :DATA
+  ,DATA_BASE                 = :DATA
+  ,DATA_ATUALIZACAO          = #NOW()
+  #SELECT(TIPO_GERADOR
+   ,'C':{,CLIENTE            = :DEST_C.CLIENTE}
+   ,'F':{,FORNECEDOR         = :DEST_F.FORNECEDOR}
+   ,ELSE:{}
+  )
+  ,PRODUTOS                  = :PRODUTOS_MOVIMENTO
+  ,CONDICOES_PGTO            = :CP.CONDICOES_PGTO
+  ,OBS                       = :OBS
+  ,TRANSPORTADORA            = :TR.TRANSPORTADORA
+  ,USUARIO                   = #USER()
+  ,CONSIDERAR_FRETE_IMPOSTOS = :CONSIDERAR_FRETE_IMPOSTOS
+  ,FRETE_INFORMADO           = :FRETE_INFORMADO
+  ,MODALIDADE_FRETE          = :MODALIDADE_FRETE
+  ,NUMERACAO_NOTA_AUTO       =  FALSE
+  ,PESO_L                    = :PESO_LIQUIDO
+  ,PESO_B                    = :PESO_BRUTO
+  ,VOLUME                    = :QUANTIDADE_VOLUME
+  ,QTDE                      = :QUANTIDADE_TOTAL
+  ,V_FRETE                   = :VALOR_FRETE
+  ,CORTESIA                  = :VALOR_CORTESIA
+  ,TOTAL                     = :VALOR_TOTAL_PRODUTOS
+  ,VALOR_FINAL               = :VALOR_FINAL
+  ,LANCAMENTOS               = :LANCAMENTOS_MOVIMENTO
+  ,NOTAS                     = :NOTA_FISCAL
+  ,ACERTO                    = :ACERTO
+  ,V_ACERTO                  = :V_ACERTO
+);
+
+
+//Retornando campos chave do resultado do processo
+SELECT
+  M.COD_OPERACAO  AS COD_OPERACAO
+ ,M.TIPO_OPERACAO AS TIPO_OPERACAO
+ ,M.ROMANEIO      AS ROMANEIO
+ ,NF.TRANS_ID     AS TRANS_ID
+FROM MOVIMENTO M
+  LEFT JOIN NF ON NF.COD_OPERACAO = M.COD_OPERACAO AND NF.TIPO_OPERACAO = M.TIPO_OPERACAO
+WHERE M.COD_OPERACAO = :MOV.COD_OPERACAO
+  AND M.TIPO_OPERACAO = :MOV.TIPO_OPERACAO;
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

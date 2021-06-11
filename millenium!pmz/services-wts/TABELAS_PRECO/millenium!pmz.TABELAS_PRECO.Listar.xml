@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="TABELAS_PRECO">
+    <METHOD NAME="Listar" DESCRIPTION="Lista Tabela de Pre&#231;os" VERSION="85" INTFTYPE="5" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="COD_TPRECO" SIZE="5" PROJECTION="0" FIELDLABEL="Cod Tpreco" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="TABELA" FORMAT="N" SIZE="8" FLAGS="8" PROJECTION="0" HINT="ID da Tabela" FIELDLABEL="Tabela" CTAB="0"/>
+        <FIELD NAME="COD_TPRECO" SIZE="7" FLAGS="1" PROJECTION="0" HINT="C&#243;digo da tabela" ORDER="5" FIELDLABEL="C&#243;digo" CTAB="0"/>
+        <FIELD NAME="DESCRICAO" SIZE="40" FLAGS="1" PROJECTION="0" HINT="Descri&#231;&#227;o da Tabela" ORDER="6" FIELDLABEL="Descri&#231;&#227;o" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>SELECT
+  TABELA
+ ,COD_TPRECO AS COD_TPRECO
+ ,DESCRICAO
+FROM TABELAS_PRECO
+WHERE[COD_TPRECO=:COD_TPRECO]
+;
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="CLIENTES">
+    <METHOD NAME="Excluir" DESCRIPTION="Excluir um cliente" VERSION="41" INTFTYPE="3" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="COD_CLIENTE" SIZE="12" FLAGS="17" PROJECTION="0" FIELDLABEL="Cod Cliente" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="CLIENTE" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" FIELDLABEL="Cliente" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>//Executando uma query para retornar o id do cliente para passar ao metodo de exclusao
+SELECT:CL CLIENTE FROM CLIENTES WHERE COD_CLIENTE = :COD_CLIENTE;
+#CALL MILLENIUM.CLIENTES.EXCLUI(CLIENTE=:CL.CLIENTE);
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

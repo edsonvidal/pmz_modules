@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="ENTRADAS">
+    <METHOD NAME="NOTAS" DESCRIPTION="" VERSION="1" INTFTYPE="9" THREADSAFE="0">
+      <PARAMS/>
+      <FIELDS/>
+      <ACTIONSCRIPT></ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

@@ -1,0 +1,667 @@
+{
+	"info": {
+		"_postman_id": "b8a86608-8365-4763-b951-e9d8a975fbfc",
+		"name": "Millennium - PMZ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Classificação Fiscal(NCM)",
+			"item": [
+				{
+					"name": "Classificação Fiscal - Incluir",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "pmz-api",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3rGf3S7h",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"codigo\":\"EV01\",\r\n   \"descricao\":\"123456789\",\r\n   \"obs\":\"TESTE VIDAL OBS\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://179.124.195.158:6017/api/millenium/classificacao_fis/inclui",
+							"protocol": "http",
+							"host": [
+								"179",
+								"124",
+								"195",
+								"158"
+							],
+							"port": "6017",
+							"path": [
+								"api",
+								"millenium",
+								"classificacao_fis",
+								"inclui"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Classificação Fical - Listar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "pmz-api",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3rGf3S7h",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://179.124.195.158:6017/api/millenium!pmz/grupo_contabil/listar&$format=json",
+							"protocol": "http",
+							"host": [
+								"179",
+								"124",
+								"195",
+								"158"
+							],
+							"port": "6017",
+							"path": [
+								"api",
+								"millenium!pmz",
+								"grupo_contabil",
+								"listar&$format=json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Classificação Fical - Alterar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "pmz-api",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3rGf3S7h",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"classificacao_fis\": 20403,\r\n   \"codigo\":\"EV01\",\r\n   \"descricao\":\"22222222\",\r\n   \"obs\":\"TESTE VIDAL OBS\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://179.124.195.158:6017/api/millenium/classificacao_fis/altera",
+							"protocol": "http",
+							"host": [
+								"179",
+								"124",
+								"195",
+								"158"
+							],
+							"port": "6017",
+							"path": [
+								"api",
+								"millenium",
+								"classificacao_fis",
+								"altera"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Classificação Fical - Remover",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "pmz-api",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3rGf3S7h",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"classificacao_fis\": 20402 }"
+						},
+						"url": {
+							"raw": "http://179.124.195.158:6017/api/millenium/classificacao_fis/exclui",
+							"protocol": "http",
+							"host": [
+								"179",
+								"124",
+								"195",
+								"158"
+							],
+							"port": "6017",
+							"path": [
+								"api",
+								"millenium",
+								"classificacao_fis",
+								"exclui"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Grupo Contabil",
+			"item": [
+				{
+					"name": "Grupo Contabil - Incluir",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "pmz-api",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3rGf3S7h",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"codigo\":\"api01\",\r\n   \"descricao\":\"123456789\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://179.124.195.158:6017/api/millenium!pmz/grupo_contabil/incluir",
+							"protocol": "http",
+							"host": [
+								"179",
+								"124",
+								"195",
+								"158"
+							],
+							"port": "6017",
+							"path": [
+								"api",
+								"millenium!pmz",
+								"grupo_contabil",
+								"incluir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupo Contabil - Listar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "pmz-api",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3rGf3S7h",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://179.124.195.158:6017/api/millenium!pmz/grupo_contabil/listar?$format=json",
+							"protocol": "http",
+							"host": [
+								"179",
+								"124",
+								"195",
+								"158"
+							],
+							"port": "6017",
+							"path": [
+								"api",
+								"millenium!pmz",
+								"grupo_contabil",
+								"listar"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupo Contabil - Remover",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "pmz-api",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3rGf3S7h",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"grupo_contabil\": 204 }"
+						},
+						"url": {
+							"raw": "http://179.124.195.158:6017/api/millenium!pmz/grupo_contabil/excluir",
+							"protocol": "http",
+							"host": [
+								"179",
+								"124",
+								"195",
+								"158"
+							],
+							"port": "6017",
+							"path": [
+								"api",
+								"millenium!pmz",
+								"grupo_contabil",
+								"excluir"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Incluir",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "pmz-api",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3rGf3S7h",
+									"type": "string"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "pmz-api",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"cod_cliente\":\"PMZ001\",\n   \"geradores\":[\n      { \n         \"nome\":\"PMZ001-NOME incluido\",\n         \"fantasia\":\"PMZ001-FANTASIA\",\n         \"cnpj\":\"35.748.727/0001-36\",\n         \"cgc\":\"35.748.727/0001-36\",\n         \"cpf\":\"\",\n         \"rg\":\"\",\n         \"ie\":\"131.148.232.598\",\n         \"ufie\":\"SP\",\n         \"im\":\"\",\n         \"pf_pj\":\"PJ\",\n         \"tipo_empresa\":1,\n         \"e_mail\":\"teste@teste.com.br\",\n         \"obs\":\"obs text\",\n         \"aplicar_icms_st\":true,\n         \"maladireta\":false,\n         \"contato\":\"nome contato\",\n         \"ddd\":\"11\",\n         \"cel\":\"9999 9999\",\n         \"enderecos\":[\n            {\n               \"endereco\":0,\n               \"logradouro\":\"Rua Carneiro Leão\",\n               \"numero\":\"1\",\n               \"bairro\":\"Vila Scarpelli\",\n               \"cidade\":\"SANTO ANDRÉ\",\n               \"estado\":\"SP\",\n               \"cep\":\"09050-430\",\n               \"endereco_entrega\":true,\n               \"endereco_nota\":true,\n               \"endereco_cobranca\":true,\n               \"pais\":0\n            }\n         ],\n         \"desativado\":false,\n         \"tipo_sexo\":\"U\",\n         \"suframa\":\"\",\n         \"desc_icms\":false,\n         \"desc_cofins\":false,\n         \"desc_pis\":false,\n         \"naocontribuinte_icms\":false,\n         \"ipi_naoincide_icms\":false,\n         \"gera_dificms\":false,\n         \"concessao_dificms\":false,\n         \"substituto_tributario\":false,\n         \"tab_ie\":[\n            {\n               \"ie\":\"\",\n               \"ufie\":\"\",\n               \"pf_pj\":\"\",\n               \"pais\":0,\n               \"tipo\":\"\",\n               \"ie_semnum\":false\n            }\n         ],\n         \"produtor_rural\":false,\n         \"contribuinte_icms\":true,\n         \"calcula_ir\":false,\n         \"nao_excluir_enderecos\":false,\n         \"consentimento_lgpd\": \"1\"\n      }\n   ],\n   \"data_cadastro\":\"2021-03-29\",\n   \"data_atualizacao\":\"2021-03-29\",\n   \"limite_credito\":74.0000,\n   \"conceito\":1,\n   \"bloqueia_vendas\":false,\n   \"bloqueia_pedidos\":false,\n   \"historico_bloqueio\":\"text\",\n   \"cod_filial\":\"036\",\n   \"banco\":237,\n   \"grupo_loja\":1,\n   \"cadastro_credito\":\"2021-03-29\",\n   \"dados_adicionais\":\"text\",\n   \"naturalidade\":\"text\",\n   \"estado_civil\":\"text\",\n   \"filiacao\":\"text\",\n   \"data_bloqueio\":\"2021-03-29\",\n   \"obs_fat\":\"text\",\n   \"obs_cli_fat\":\"text\",\n   \"obs_cli_prefat\":\"text\",\n   \"obs_cli_pedido\":\"text\",\n   \"empresa\":\"text\",\n   \"e_mail_nfe\":\"text@teste.com.br\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:6017/api/millenium!pmz/clientes/incluir?$format=json",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "6017",
+							"path": [
+								"api",
+								"millenium!pmz",
+								"clientes",
+								"incluir"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "pmz-api",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3rGf3S7h",
+									"type": "string"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "pmz-api",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cod_cliente\": \"5063900\",\n\t\"geradores\": [\n\t\t{   \"gerador\": \"22957\",\n\t\t\t\"nome\": \"JOSE BONIFACIO PRACHEDES - alterado2\",\n\t\t\t\"fantasia\": \"JOSE BONIFACIO\",\n\t\t\t\"cnpj\": \" \",\n\t\t\t\"cpf\": \"241.034.971-49\",\n\t\t\t\"rg\": \"241.034.971-49\",\n\t        \"data_emissao_rg\": \"2015-08-05T04:00:00.000Z\",\n            \"orgao_emissor\": \"MT\",\n    \t\t\"ie\": \"ISENTO\",\n\t\t\t\"ufie\": \"MT\",\n\t\t\t\"im\": \" \",\n\t\t\t\"pf_pj\": \"PF\",\n\t\t\t\"e_mail\": null,\n\t\t\t\"contato\": \"JOSE\",\n\t\t\t\"contatos\": [],\n\t\t\t\"enderecos\": [\n\t\t\t\t{\n\t\t\t\t\t\"alterar\": true,\n\t\t\t\t\t\"atualiza_cep\": true,\n\t\t\t\t\t\"bairro\": \" \",\n\t\t\t\t\t\"cep\": \"78575000\",\n\t\t\t\t\t\"cidade\": \"JUARA\",\n\t\t\t\t\t\"cnpj\": \" \",\n\t\t\t\t\t\"contato\": \"JOSE\",\n\t\t\t\t\t\"ddd\": \"065\",\n\t\t\t\t\t\"endereco\": \"002\",\n\t\t\t\t\t\"endereco_cobranca\": \"true\",\n\t\t\t\t\t\"endereco_entrega\": \"false\",\n\t\t\t\t\t\"endereco_nota\": \"false\",\n\t\t\t\t\t\"estado\": \"MT\",\n\t\t\t\t\t\"fax\": \" \",\n\t\t\t\t\t\"fone\": \" \",\n\t\t\t\t\t\"logradouro\": \"RUA CUIABA,N.634 ESQUINA COM MARANHAO\",\n\t\t\t\t\t\"numero\": null,\n\t\t\t\t\t\"pais\": \"1058\",\n\t\t\t\t\t\"ramal\": \" \",\n\t\t\t\t\t\"consulta_web\": false\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"alterar\": true,\n\t\t\t\t\t\"atualiza_cep\": true,\n\t\t\t\t\t\"bairro\": \" \",\n\t\t\t\t\t\"cep\": \"78575000\",\n\t\t\t\t\t\"cidade\": \"JUARA\",\n\t\t\t\t\t\"cnpj\": \" \",\n\t\t\t\t\t\"contato\": \"JOSE\",\n\t\t\t\t\t\"ddd\": \"065\",\n\t\t\t\t\t\"endereco\": \"001\",\n\t\t\t\t\t\"endereco_cobranca\": \"false\",\n\t\t\t\t\t\"endereco_entrega\": \"true\",\n\t\t\t\t\t\"endereco_nota\": \"true\",\n\t\t\t\t\t\"estado\": \"MT\",\n\t\t\t\t\t\"fax\": \" \",\n\t\t\t\t\t\"fone\": \" \",\n\t\t\t\t\t\"logradouro\": \"RUA CUIABA, ESQUINA COM MARANHAO\",\n\t\t\t\t\t\"numero\": \"634\",\n\t\t\t\t\t\"pais\": \"1058\",\n\t\t\t\t\t\"ramal\": \" \",\n\t\t\t\t\t\"consulta_web\": false\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"suframa\": \" \",\n\t\t\t\"desc_cofins\": true,\n\t\t\t\"desc_pis\": true,\n\t\t\t\"naocontribuinte_icms\": true,\n\t\t\t\"gera_dificms\": true,\n\t\t\t\"produtor_rural\": true,\n\t\t\t\"contribuinte_icms\": true,\n\t\t\t\"pais\": \"1058\"\n\t\t}\n\t],\n\t\"data_atualizacao\": \"2015-08-05T04:00:00.000Z\",\n\t\"limite_credito\": \"0\",\n\t\"bloqueia_vendas\": true,\n\t\"bloqueia_pedidos\": true,\n\t\"cod_filial\": \"036\",\n\t\"cadastro_credito\": \"01/01/0001\",\n\t\"naturalidade\": \" \",\n\t\"estado_civil\": \" \",\n\t\"filiacao\": \" \",\n\t\"data_bloqueio\": \"2007-03-09T04:00:00.000Z\",\n\t\"obs_fat\": \" \",\n\t\"obs_cli_fat\": \" \",\n\t\"empresa\": \" \",\n\t\"e_mail_nfe\": null\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:6017/api/millenium!pmz/clientes/alterar?$format=json",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "6017",
+							"path": [
+								"api",
+								"millenium!pmz",
+								"clientes",
+								"alterar"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "pmz-api",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3rGf3S7h",
+									"type": "string"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "pmz-api",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:6017/api/millenium!pmz/clientes/excluir?$format=json&cod_cliente=PMZ001",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "6017",
+							"path": [
+								"api",
+								"millenium!pmz",
+								"clientes",
+								"excluir"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								},
+								{
+									"key": "cod_cliente",
+									"value": "PMZ001"
+								},
+								{
+									"key": "top",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "pmz-api",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3rGf3S7h",
+									"type": "string"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "pmz-api",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:6017/api/millenium!pmz/clientes/listar?$format=json&cod_cliente=5063900",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "6017",
+							"path": [
+								"api",
+								"millenium!pmz",
+								"clientes",
+								"listar"
+							],
+							"query": [
+								{
+									"key": "$format",
+									"value": "json"
+								},
+								{
+									"key": "cod_cliente",
+									"value": "5063900"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="PEMAZA">
+    <METHOD NAME="ListarProdutos" DESCRIPTION="Listar Produtos" VERSION="3" INTFTYPE="5" THREADSAFE="0">
+      <PARAMS/>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="CODIGO" FLAGS="1" PROJECTION="0" FIELDLABEL="Codigo" CTAB="0"/>
+        <FIELD NAME="DESCRICAO" FLAGS="1" PROJECTION="0" FIELDLABEL="Descricao" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>#CALL PEMAZA:PEMAZA.PRODUTOS.LISTAR();
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

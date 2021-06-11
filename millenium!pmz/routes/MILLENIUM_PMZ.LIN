@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<root>
+  <_currentid>PMZ_003</_currentid>
+  <_name>RULES.MZ</_name>
+
+    <link category="PMZ\Controladoria\Cadastro\Grupos Contábeis" target="standard.tdataedit" _id="IPMZ_001">
+      <OBJECT>MILLENIUM!PMZ.GRUPO_CONTABIL</OBJECT>
+	  
+	  <link target="standard.tdataedit" _id="IPMZ_002" caption="Atualizar Produtos">
+        <METHOD>MILLENIUM!PMZ.GRUPO_CONTABIL.ATUALIZAR_GRUPOCONTABIL</METHOD>
+          <PARAM DATA="{$data.GRUPO_CONTABIL}">GRUPO_CONTABIL</PARAM>		  
+            <Option>CloseOnSubmit</Option>		  
+      </link>
+	  
+    </link>
+	
+    <link category="PMZ\Logistica\Consulta Estoque por Local" target="standard.tdataedit" _id="IPMZ_003" Caption="Consulta Estoque por Local">
+      <METHOD>MILLENIUM!PMZ.WMS.LISTASALDOLOCAL</METHOD>
+	</link>
+	
+    <link category="Controladoria\Fiscal\Cadastros\Perfil de Impostos\Atualizar Produtos" target="_blank,standard.tdataedit" _id="IPMZ_004" Caption="Atualizar Produtos" _parentid="CONT_16" _tag="12" _visible="FALSE">
+      <METHOD>MILLENIUM!PMZ.PERFIL_IMPOSTOS.ATUALIZAR_PERFIL_IMPOSTO_PRODUTO</METHOD>
+	</link>
+
+
+
+</root>
+
+
+
