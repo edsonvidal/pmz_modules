@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="LOCAIS_ESTOQUE">
-    <METHOD NAME="INCLUIR" DESCRIPTION="Incluir Local de Estoque" VERSION="16" INTFTYPE="1" THREADSAFE="0">
+    <METHOD NAME="Incluir" DESCRIPTION="Incluir Local de Estoque" VERSION="16" INTFTYPE="1" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP/>
