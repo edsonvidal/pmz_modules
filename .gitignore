@@ -1,2 +1,4 @@
 /millenium!pmz_integration/*.bat
 /millenium!pmz/*.bat
+/millenium!pmz_integration/services-wts/*.wts
+/millenium!pmz_integration/*.minst
