@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="TRANSFERENCIAS">
-    <METHOD NAME="Transferencia_Legado_Para_Millennium" DESCRIPTION="Transferencia Lojas e CD do Legado Para Millennium" VERSION="39" INTFTYPE="5" THREADSAFE="0">
+    <METHOD NAME="Transferencia_Legado_Para_Millennium" DESCRIPTION="Transferencia Lojas e CD do Legado Para Millennium" VERSION="46" INTFTYPE="5" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP/>
@@ -38,12 +38,12 @@
       </FIELDS>
       <ACTIONSCRIPT>/* Gerar Transferencia entre Lojas e CD do Legado, para Millennium por chamada via API  Edson Vidal (19/06/2021)*/
 
-//Consulta e valida o evento de origem
+//Consulta e valida o evento de origem - saida
 #PRIVATE()
 SELECT:EV_O EVENTO FROM EVENTOS WHERE CODIGO = '3101';
  #SELECT(EV_O._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Evento de origem n&#227;o encontrado !")},ELSE:{});
 
-//Consulta e valida o evento de destino
+//Consulta e valida o evento de destino - entrada
 #PRIVATE()
 SELECT:EV_D EVENTO FROM EVENTOS WHERE CODIGO = '3201';
  #SELECT(EV_D._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Evento de destino n&#227;o encontrado !")},ELSE:{});
@@ -469,7 +469,7 @@ SELECT:NOTA_FISCAL_O
  ,#REPLACET(FILIAL_C.IE)                       AS IE_IG
  ,#REPLACET(FILIAL_C.IPI_NAOINCIDE_ICMS)       AS IPI_NAOINCIDE_ICMS_IG
  ,N.IDNFE                                      AS IDNFE
- ,N.DIGITADA                                   AS USUARIO
+ ,'T'                                          AS USUARIO
  ,N.IDRECIBO                                   AS IDRECIBO
  ,N.IDPROTOCOLO                                AS IDPROTOCOLO
  ,NM.NF_MODELO                                 AS MODELO
@@ -510,6 +510,8 @@ LEFT JOIN NF_MODELOS NM ON NM.CODIGO=N.COD_MODELO;
   ,V_ACERTO                  = 0
 );
 
+//Tratamento para contornar validarcao 2 notas ditadas com mesma chave
+UPDATE NF SET DIGITADA = 'F' WHERE COD_OPERACAO = :MOV_O.COD_OPERACAO AND TIPO_OPERACAO =:MOV_O.TIPO_OPERACAO;
 
 //Prepara os registros de produtos para DESTINO
 #PRIVATE()
@@ -594,34 +596,34 @@ FROM #REPLACE(TBPROD) PE
 WHERE PE.PRODUTO IS NOT NULL;
 
 //Prepara os registros da Nota ORIGEM
-SELECT:NOTA_FISCAL_O
+SELECT:NOTA_FISCAL_D
   N.NUMERO_NOTA                                AS NOTA
- ,N.VALOR                                      AS VALOR
- ,N.ICMS                                       AS ICMS
- ,N.V_ICMS                                     AS V_ICMS
- ,N.IPI                                        AS IPI
- ,N.V_IPI                                      AS V_IPI
+ ,N.VALOR*-1                                   AS VALOR
+ ,N.ICMS*-1                                    AS ICMS
+ ,N.V_ICMS*-1                                  AS V_ICMS
+ ,N.IPI*-1                                     AS IPI
+ ,N.V_IPI*-1                                   AS V_IPI
  ,N.ICMSS                                      AS ICMSS
  ,N.SERIE                                      AS SERIE
  ,N.DATA                                       AS DATA
- ,N.V_PIS                                      AS V_PIS
- ,N.B_PIS                                      AS B_PIS
- ,N.V_COFINS                                   AS V_COFINS
- ,N.B_COFINS                                   AS B_COFINS
- ,N.V_ICMSS                                    AS V_ICMSS
+ ,N.V_PIS*-1                                   AS V_PIS
+ ,N.B_PIS*-1                                   AS B_PIS
+ ,N.V_COFINS*-1                                AS V_COFINS
+ ,N.B_COFINS*-1                                AS B_COFINS
+ ,N.V_ICMSS*-1                                 AS V_ICMSS
  ,N.DESC_SUFRAMA                               AS DESC_SUFRAMA
- ,'S'                                          AS TIPO_NOTA
+ ,'E'                                          AS TIPO_NOTA
  ,N.NUMERO_NOTA                                AS NUMERO_NOTA
  ,0                                            AS SEQUENCIA
  ,'R'                                          AS REGIME_UTILIZADO
  ,'F'                                          AS USA_IVA_COLB
- ,'C'                                          AS TIPO_GERADOR_IG
- ,#REPLACET(FILIAL_C.NAOCONTRIBUINTE_ICMS)     AS NAOCONTRIBUINTE_ICMS_IG
- ,#REPLACET(FILIAL_C.NAOCONTRIBUINTE_ICMS)     AS NAOCONTRIBUINTE_ICMS_IG
- ,#REPLACET(FILIAL_C.IE)                       AS IE_IG
- ,#REPLACET(FILIAL_C.IPI_NAOINCIDE_ICMS)       AS IPI_NAOINCIDE_ICMS_IG
+ ,'F'                                          AS TIPO_GERADOR_IG
+ ,#REPLACET(FILIAL_F.NAOCONTRIBUINTE_ICMS)     AS NAOCONTRIBUINTE_ICMS_IG
+ ,#REPLACET(FILIAL_F.NAOCONTRIBUINTE_ICMS)     AS NAOCONTRIBUINTE_ICMS_IG
+ ,#REPLACET(FILIAL_F.IE)                       AS IE_IG
+ ,#REPLACET(FILIAL_F.IPI_NAOINCIDE_ICMS)       AS IPI_NAOINCIDE_ICMS_IG
  ,N.IDNFE                                      AS IDNFE
- ,N.DIGITADA                                   AS USUARIO
+ ,'T'                                          AS USUARIO
  ,N.IDRECIBO                                   AS IDRECIBO
  ,N.IDPROTOCOLO                                AS IDPROTOCOLO
  ,NM.NF_MODELO                                 AS MODELO
