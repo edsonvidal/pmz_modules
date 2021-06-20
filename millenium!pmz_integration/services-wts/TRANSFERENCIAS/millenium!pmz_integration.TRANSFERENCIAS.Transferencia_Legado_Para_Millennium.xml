@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="TRANSFERENCIAS">
-    <METHOD NAME="Transferencia_Legado_Para_Millennium" DESCRIPTION="Transferencia Lojas e CD do Legado Para Millennium" VERSION="39" INTFTYPE="5" THREADSAFE="0">
+    <METHOD NAME="Transferencia_Legado_Para_Millennium" DESCRIPTION="Transferencia Lojas e CD do Legado Para Millennium" VERSION="40" INTFTYPE="5" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP/>
@@ -594,32 +594,32 @@ FROM #REPLACE(TBPROD) PE
 WHERE PE.PRODUTO IS NOT NULL;
 
 //Prepara os registros da Nota ORIGEM
-SELECT:NOTA_FISCAL_O
+SELECT:NOTA_FISCAL_D
   N.NUMERO_NOTA                                AS NOTA
- ,N.VALOR                                      AS VALOR
- ,N.ICMS                                       AS ICMS
- ,N.V_ICMS                                     AS V_ICMS
- ,N.IPI                                        AS IPI
- ,N.V_IPI                                      AS V_IPI
+ ,N.VALOR*-1                                   AS VALOR
+ ,N.ICMS*-1                                    AS ICMS
+ ,N.V_ICMS*-1                                  AS V_ICMS
+ ,N.IPI*-1                                     AS IPI
+ ,N.V_IPI*-1                                   AS V_IPI
  ,N.ICMSS                                      AS ICMSS
  ,N.SERIE                                      AS SERIE
  ,N.DATA                                       AS DATA
- ,N.V_PIS                                      AS V_PIS
- ,N.B_PIS                                      AS B_PIS
- ,N.V_COFINS                                   AS V_COFINS
- ,N.B_COFINS                                   AS B_COFINS
- ,N.V_ICMSS                                    AS V_ICMSS
+ ,N.V_PIS*-1                                   AS V_PIS
+ ,N.B_PIS*-1                                   AS B_PIS
+ ,N.V_COFINS*-1                                AS V_COFINS
+ ,N.B_COFINS*-1                                AS B_COFINS
+ ,N.V_ICMSS*-1                                 AS V_ICMSS
  ,N.DESC_SUFRAMA                               AS DESC_SUFRAMA
- ,'S'                                          AS TIPO_NOTA
+ ,'E'                                          AS TIPO_NOTA
  ,N.NUMERO_NOTA                                AS NUMERO_NOTA
  ,0                                            AS SEQUENCIA
  ,'R'                                          AS REGIME_UTILIZADO
  ,'F'                                          AS USA_IVA_COLB
- ,'C'                                          AS TIPO_GERADOR_IG
- ,#REPLACET(FILIAL_C.NAOCONTRIBUINTE_ICMS)     AS NAOCONTRIBUINTE_ICMS_IG
- ,#REPLACET(FILIAL_C.NAOCONTRIBUINTE_ICMS)     AS NAOCONTRIBUINTE_ICMS_IG
- ,#REPLACET(FILIAL_C.IE)                       AS IE_IG
- ,#REPLACET(FILIAL_C.IPI_NAOINCIDE_ICMS)       AS IPI_NAOINCIDE_ICMS_IG
+ ,'F'                                          AS TIPO_GERADOR_IG
+ ,#REPLACET(FILIAL_F.NAOCONTRIBUINTE_ICMS)     AS NAOCONTRIBUINTE_ICMS_IG
+ ,#REPLACET(FILIAL_F.NAOCONTRIBUINTE_ICMS)     AS NAOCONTRIBUINTE_ICMS_IG
+ ,#REPLACET(FILIAL_F.IE)                       AS IE_IG
+ ,#REPLACET(FILIAL_F.IPI_NAOINCIDE_ICMS)       AS IPI_NAOINCIDE_ICMS_IG
  ,N.IDNFE                                      AS IDNFE
  ,N.DIGITADA                                   AS USUARIO
  ,N.IDRECIBO                                   AS IDRECIBO
