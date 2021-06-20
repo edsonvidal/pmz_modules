@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="MOVIMENTACAO">
-    <METHOD NAME="Estoque_Entrada_Inicial" DESCRIPTION="M&#233;todo respons&#225;vel em atribuir estoque inicial dos SKUs atrav&#233;s do c&#243;digo de barras do produto." VERSION="91" INTFTYPE="1" CATEGORY="inculada uma tabela B2B, ser&#225; retornado nos campos PRECO3 e PRECO4 os pre&#231;os &#34;POR&#34; e &#34;DE&#34; para B2B associados &#224; vitrine. Este m&#233;todo pode ser usado para atualizar os pre&#231;os regularmente j&#225; que retorna apenas as mudan&#231;as desde a &#250;ltima chamada." THREADSAFE="1">
+    <METHOD NAME="Estoque_Entrada_Inicial" DESCRIPTION="M&#233;todo respons&#225;vel em atribuir estoque inicial dos SKUs atrav&#233;s do c&#243;digo de barras do produto." VERSION="92" INTFTYPE="1" CATEGORY="inculada uma tabela B2B, ser&#225; retornado nos campos PRECO3 e PRECO4 os pre&#231;os &#34;POR&#34; e &#34;DE&#34; para B2B associados &#224; vitrine. Este m&#233;todo pode ser usado para atualizar os pre&#231;os regularmente j&#225; que retorna apenas as mudan&#231;as desde a &#250;ltima chamada." THREADSAFE="1">
       <PARAMS>
         <GROUPS>
           <GROUP/>
