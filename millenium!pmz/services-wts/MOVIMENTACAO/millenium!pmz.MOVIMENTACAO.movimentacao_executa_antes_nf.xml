@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="MOVIMENTACAO">
-    <METHOD NAME="movimentacao_executa_antes_nf" DESCRIPTION="" VERSION="17" TRIGGEROF="MOVIMENTACAO.EV_MOVIMENTACAO_EXECUTA_ANTES_NF" TRIGGERTYPE="0" THREADSAFE="0">
+    <METHOD NAME="movimentacao_executa_antes_nf" DESCRIPTION="" VERSION="19" TRIGGEROF="MOVIMENTACAO.EV_MOVIMENTACAO_EXECUTA_ANTES_NF" TRIGGERTYPE="0" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP/>
@@ -19,9 +19,12 @@ FROM MOVIMENTO M
 WHERE M.COD_OPERACAO =:COD_OPERACAO
 AND M.TIPO_OPERACAO =:TIPO_OPERACAO
 AND NF.DIGITADA='F'
-AND c.CONTRIBUINTE_ICMS ='T';
+AND C.PF_PJ='PJ'
+AND M.EVENTO='20106'
+AND C.CLIENTE NOT IN (SELECT C2.CLIENTE FROM pmz_clientes_emissao_nfe_dev C2 WHERE C2.PERMITIR&lt;>'T');
 
-#SELECT(CLI._EOF,TRUE:{},ELSE:{#CHECK("SELECT 1 AS N FROM DUAL",N>0,"Cliente Pessoa Juridica, Necessario emiss&#227;o da Nota de Devolucao pelo cliente!")});
+
+#SELECT(CLI._EOF,TRUE:{#CHECK("SELECT 1 AS N FROM DUAL",N>0,"Cliente Pessoa Juridica, Necessario emiss&#227;o da Nota de Devolucao pelo cliente!")},ELSE:{});
 
 
 
