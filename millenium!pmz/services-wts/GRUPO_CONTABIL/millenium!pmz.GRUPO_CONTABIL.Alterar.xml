@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="GRUPO_CONTABIL">
-    <METHOD NAME="Alterar" DESCRIPTION="Alterar" VERSION="49" INTFTYPE="2" THREADSAFE="0">
+    <METHOD NAME="Alterar" DESCRIPTION="Alterar" VERSION="51" INTFTYPE="2" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP/>
