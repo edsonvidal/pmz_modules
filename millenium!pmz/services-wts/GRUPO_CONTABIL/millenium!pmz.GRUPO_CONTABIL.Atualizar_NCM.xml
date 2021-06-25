@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="GRUPO_CONTABIL">
-    <METHOD NAME="Atualizar_NCM" DESCRIPTION="Atualizar NCM" VERSION="43" THREADSAFE="0">
+    <METHOD NAME="Atualizar_NCM" DESCRIPTION="Atualizar NCM" VERSION="44" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP/>
