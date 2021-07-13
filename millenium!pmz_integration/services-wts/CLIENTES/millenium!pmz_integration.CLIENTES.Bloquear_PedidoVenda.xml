@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="CLIENTES">
+    <METHOD NAME="Bloquear_PedidoVenda" DESCRIPTION="" VERSION="6" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="CNPJ_CPF" SIZE="60" FLAGS="1" PROJECTION="0" HINT="CPF OU CNPJ do cliente" ORDER="2" FIELDLABEL="Cnpj Cpf" CTAB="0"/>
+        <PARAM NAME="BLOQUEAR" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" HINT="True = Bloqueia o cliente para pedido de venda e venda/ Fase= Libera cliente" ORDER="1" FIELDLABEL="Bloquear" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT>#PRIVATE()
+SELECT:CLI CLIENTE FROM CLIENTES WHERE (CGC=:CNPJ_CPF OR (CPF=:CNPJ_CPF));
+#SELECT(CLI._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Cliente n&#227;o encontrado !")},ELSE:{});
+
+
+UPDATE ICLIENTES
+   SET BLOQUEIA_PEDIDOS=:BLOQUEAR
+      ,BLOQUEIA_VENDAS=:BLOQUEAR
+ WHERE CLIENTE=:CLI.CLIENTE;
+ 
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>
