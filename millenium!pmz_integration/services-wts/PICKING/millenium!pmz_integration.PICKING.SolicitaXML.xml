@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="PICKING">
+    <METHOD NAME="SolicitaXML" DESCRIPTION="Solicita o XML e o PDF da NFe" VERSION="22" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="NUMERO" SIZE="20" FLAGS="1" PROJECTION="0" HINT="N&#250;mero da Separa&#231;&#227;o" ORDER="2" FIELDLABEL="Numero" CTAB="0"/>
+        <PARAM NAME="IDNFE" SIZE="50" FLAGS="1" PROJECTION="0" ORDER="1" FIELDLABEL="Idnfe" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="XMLNFE" FLAGS="1" PROJECTION="0" HINT="XML da Nfe - Caso j&#225; esteja dispon&#237;vel" ORDER="7" FIELDLABEL="Xmlnnfe" CTAB="0"/>
+        <FIELD NAME="STATUS" SIZE="3" FLAGS="1" PROJECTION="0" HINT="PDF da NFe - Caso j&#225; esteja dispon&#237;vel" ORDER="6" FIELDLABEL="Pdfnfe" CTAB="0"/>
+        <FIELD NAME="IDNFE" SIZE="50" FLAGS="1" PROJECTION="0" HINT="Id na NFE " ORDER="4" FIELDLABEL="Idnfe" CTAB="0"/>
+        <FIELD NAME="MENSAGEMNFE" SIZE="200" FLAGS="1" PROJECTION="0" HINT="Resposta Relativa a Recusa ou Aceite da NFe" ORDER="5" FIELDLABEL="Mensagemnfe" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>#PRIVATE()
+  SELECT:pf numero
+  FROM prefaturamentos
+  where numero = cast(#substr(cast(:numero as varchar(20)),1,15) as varchar(15))
+    union all
+  select null
+  from dual;
+
+#PRIVATE()
+  SELECT:aux #if(cast(:pf.numero as varchar(20)) is not null,cast('1' as varchar(1)),
+                                                             cast(#substr(cast(:numero as varchar(20)),1,1) as varchar(1))) as tipo,
+             #if(cast(:pf.numero as varchar(20)) is not null,cast(:numero as varchar(20)),
+                                                             cast(#substr(cast(:numero as varchar(20)),2,20) as varchar(20)) ) as NUMERO
+  FROM DUAL;
+
+SELECT dc.conteudo as XMLNFE, nf.status, nf.IDNFE, nf.MENSAGEMNFE
+#SELECT(idnfe,null:{from (select distinct nf.cod_operacao,nf.tipo_operacao,nf.idnfe,nf.status,nf.id, nf.mensagemnfe
+                          from prefaturamentos f
+                          INNER JOIN produto_prefat pf on pf.prefaturamento = f.prefaturamento
+                          INNER JOIN nf on nf.cod_operacao = pf.saida and nf.tipo_operacao="S"
+                          WHERE f.numero = :aux.NUMERO and nf.cancelada=false) nf },
+              else:{FROM nf})
+INNER JOIN documentos dc on dc.origem = nf.cod_operacao and
+                            dc.tipo_origem=nf.tipo_operacao and
+                            dc.tipo_documento='DANFE' and
+                            dc.idnota=nf.id
+ WHERE [nf.IDNFE=:IDNFE];
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

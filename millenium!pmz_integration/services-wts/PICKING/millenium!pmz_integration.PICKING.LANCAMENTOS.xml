@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="PICKING">
+    <METHOD NAME="LANCAMENTOS" DESCRIPTION="" VERSION="2" INTFTYPE="9" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="N_DOCUMENTO" SIZE="35" PROJECTION="0" HINT="!Numero do Titulo/ Lan&#231;amento" FIELDLABEL="N Documento" CTAB="0"/>
+        <PARAM NAME="DATA_EMISSAO" FORMAT="D" SIZE="10" PROJECTION="0" HINT="!Data de Emiss&#227;o" FIELDLABEL="Data Emissao" CTAB="0"/>
+        <PARAM NAME="DATA_VENCIMENTO" FORMAT="D" SIZE="10" PROJECTION="0" HINT="!Data de Vencimento" FIELDLABEL="Data Vencimento" CTAB="0"/>
+        <PARAM NAME="VALOR_INICIAL" FORMAT="M" SIZE="17" FLAGS="1" DECIMALS="4" PROJECTION="0" HINT="Valor Inicial" FIELDLABEL="Valor Inicial" CTAB="0"/>
+        <PARAM NAME="NUMPARC" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" HINT="Quantidades de Parcelas" FIELDLABEL="Numparc" CTAB="0"/>
+        <PARAM NAME="PARCELA" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" HINT="Numero da Parcela" FIELDLABEL="Parcela" CTAB="0"/>
+        <PARAM NAME="DUPLICATA" SIZE="50" PROJECTION="0" HINT="!Nosso Numero" FIELDLABEL="Duplicata" CTAB="0"/>
+        <PARAM NAME="TIPO_PGTO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" HINT="Tipo de Pagamento" FIELDLABEL="Tipo Pgto" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT></ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>
