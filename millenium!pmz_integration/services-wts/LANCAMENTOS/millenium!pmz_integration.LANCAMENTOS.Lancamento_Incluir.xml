@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="LANCAMENTOS">
-    <METHOD NAME="Lancamento_Incluir" DESCRIPTION="Lan&#231;amento Incluir" VERSION="135" THREADSAFE="0">
+    <METHOD NAME="Lancamento_Incluir" DESCRIPTION="Lan&#231;amento Incluir" VERSION="143" INTFTYPE="1" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP/>
@@ -15,24 +15,24 @@
         <PARAM NAME="DATA_EMISSAO" FORMAT="D" SIZE="10" FLAGS="1" DEFAULT="TODAY" PROJECTION="0" HINT="Data de emiss&#227;o" ORDER="10" FIELDLABEL="Data Emiss&#227;o" CTAB="0"/>
         <PARAM NAME="DATA_VENCIMENTO" FORMAT="D" SIZE="10" FLAGS="1" DEFAULT="TODAY+1" PROJECTION="0" HINT="Data de vencimento" ORDER="11" FIELDLABEL="Data Vencimento" CTAB="0"/>
         <PARAM NAME="VALOR_INICIAL" FORMAT="M" SIZE="17" FLAGS="1" DECIMALS="4" DEFAULT="100" PROJECTION="0" HINT="Valor do t&#237;tulo" ORDER="9" FIELDLABEL="Valor Inicial" CTAB="0"/>
-        <PARAM NAME="TIPO_PGTO" FORMAT="N" SIZE="8" FLAGS="1" DEFAULT="1" PROJECTION="0" HINT="Id do tipo de pagamento" ORDER="8" FIELDLABEL="Tipo Pgto" CTAB="0"/>
-        <PARAM NAME="COD_BANCO" SIZE="3" FLAGS="1" DEFAULT="237" PROJECTION="0" HINT="C&#243;digo do banco" ORDER="13" FIELDLABEL="Codigo do Banco" CTAB="0"/>
-        <PARAM NAME="AGENCIA" SIZE="12" FLAGS="1" DEFAULT="1234" PROJECTION="0" HINT="C&#243;digo da Agencia" ORDER="14" FIELDLABEL="Ag&#234;ncia" CTAB="0"/>
-        <PARAM NAME="OBS" SIZE="255" FLAGS="1" DEFAULT="TESTE API" PROJECTION="0" HINT="OBS do t&#237;tulo" ORDER="20" FIELDLABEL="Obs" CTAB="0"/>
-        <PARAM NAME="DEVOLVIDO" FORMAT="B" SIZE="1" FLAGS="1" DEFAULT="FALSE" PROJECTION="0" HINT="Informar se o t&#237;tulo est&#225; devolvido" ORDER="23" FIELDLABEL="Devolvido" CTAB="0"/>
-        <PARAM NAME="CARTORIO" FORMAT="B" SIZE="1" FLAGS="1" DEFAULT="FALSE" PROJECTION="0" HINT="Informar se o t&#237;tulo est&#225; em cart&#243;rio" ORDER="24" FIELDLABEL="Cart&#243;rio" CTAB="0"/>
-        <PARAM NAME="PROTESTO" FORMAT="B" SIZE="1" FLAGS="1" DEFAULT="FALSE" PROJECTION="0" HINT="Informar se o t&#237;tulo est&#225; em protesto" ORDER="27" FIELDLABEL="Protesto" CTAB="0"/>
-        <PARAM NAME="PREVISAO" FORMAT="B" SIZE="1" FLAGS="1" DEFAULT="FALSE" PROJECTION="0" HINT="Informar se o t&#237;tulo &#233; previs&#227;o" ORDER="25" FIELDLABEL="Previs&#227;o" CTAB="0"/>
-        <PARAM NAME="DUPLICATA" SIZE="40" FLAGS="1" DEFAULT="1234567890" PROJECTION="0" HINT="N&#250;mero da duplicada" ORDER="18" FIELDLABEL="N&#250;mero da Duplicata" CTAB="0"/>
-        <PARAM NAME="NSU" SIZE="40" FLAGS="1" DEFAULT="1234567890" PROJECTION="0" HINT="NSU do t&#237;tulo" ORDER="21" FIELDLABEL="Nsu" CTAB="0"/>
-        <PARAM NAME="TITULO" FORMAT="B" SIZE="1" FLAGS="17" DEFAULT="FALSE" PROJECTION="0" HINT="T = T&#237;tulo provisionado para pagamento futuro, F=Despesa direta" ORDER="6" FIELDLABEL="T&#237;tulo (Sim/N&#227;o)" CTAB="0"/>
-        <PARAM NAME="TIPO" SIZE="1" FLAGS="17" DEFAULT="R" PROJECTION="0" HINT="P = Pagamento, R = Recebimento " ORDER="7" LOOKUP="list:'P','Pagar';'R','Receber';" FIELDLABEL="Tipo (Pagar/Receber)" CTAB="0"/>
-        <PARAM NAME="AUTORIZACAO" SIZE="40" FLAGS="1" DEFAULT="1234567890" PROJECTION="0" HINT="C&#243;digo da autoriza&#231;&#227;o" ORDER="22" FIELDLABEL="Autoriza&#231;&#227;o" CTAB="0"/>
-        <PARAM NAME="DATA_CHEQUE" FORMAT="D" SIZE="10" FLAGS="1" DEFAULT="TODAY" PROJECTION="0" HINT="Data do cheque" ORDER="16" FIELDLABEL="Data Cheque" CTAB="0"/>
-        <PARAM NAME="N_CHEQUE" SIZE="30" FLAGS="1" DEFAULT="666666" PROJECTION="0" HINT="N&#250;mero do cheque" ORDER="19" FIELDLABEL="N&#250;mero do Cheque" CTAB="0"/>
-        <PARAM NAME="C_C" SIZE="30" FLAGS="1" DEFAULT="222222" PROJECTION="0" HINT="C C do cheque" ORDER="15" FIELDLABEL="Conta corrente" CTAB="0"/>
-        <PARAM NAME="DOC_ORIGEM" SIZE="30" FLAGS="1" DEFAULT="NF: 123456" PROJECTION="0" HINT="N&#250;mero do documento de origem" ORDER="17" FIELDLABEL="Documento de Origem" CTAB="0"/>
-        <PARAM NAME="PRORROGADO" FORMAT="B" SIZE="1" FLAGS="1" DEFAULT="FALSE" PROJECTION="0" HINT="Informar se o t&#237;tulo est&#225; prorrogado" ORDER="26" FIELDLABEL="Prorrogado" CTAB="0"/>
+        <PARAM NAME="TIPO_PGTO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" HINT="Id do tipo de pagamento" ORDER="8" FIELDLABEL="Tipo Pgto" CTAB="0"/>
+        <PARAM NAME="COD_BANCO" SIZE="3" FLAGS="1" PROJECTION="0" HINT="C&#243;digo do banco" ORDER="13" FIELDLABEL="Codigo do Banco" CTAB="0"/>
+        <PARAM NAME="AGENCIA" SIZE="12" FLAGS="1" PROJECTION="0" HINT="C&#243;digo da Agencia" ORDER="14" FIELDLABEL="Ag&#234;ncia" CTAB="0"/>
+        <PARAM NAME="OBS" SIZE="255" FLAGS="1" PROJECTION="0" HINT="OBS do t&#237;tulo" ORDER="20" FIELDLABEL="Obs" CTAB="0"/>
+        <PARAM NAME="DEVOLVIDO" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" HINT="Informar se o t&#237;tulo est&#225; devolvido" ORDER="23" FIELDLABEL="Devolvido" CTAB="0"/>
+        <PARAM NAME="CARTORIO" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" HINT="Informar se o t&#237;tulo est&#225; em cart&#243;rio" ORDER="24" FIELDLABEL="Cart&#243;rio" CTAB="0"/>
+        <PARAM NAME="PROTESTO" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" HINT="Informar se o t&#237;tulo est&#225; em protesto" ORDER="27" FIELDLABEL="Protesto" CTAB="0"/>
+        <PARAM NAME="PREVISAO" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" HINT="Informar se o t&#237;tulo &#233; previs&#227;o" ORDER="25" FIELDLABEL="Previs&#227;o" CTAB="0"/>
+        <PARAM NAME="DUPLICATA" SIZE="40" FLAGS="1" PROJECTION="0" HINT="N&#250;mero da duplicada" ORDER="18" FIELDLABEL="N&#250;mero da Duplicata" CTAB="0"/>
+        <PARAM NAME="NSU" SIZE="40" FLAGS="1" PROJECTION="0" HINT="NSU do t&#237;tulo" ORDER="21" FIELDLABEL="Nsu" CTAB="0"/>
+        <PARAM NAME="TITULO" FORMAT="B" SIZE="1" FLAGS="17" PROJECTION="0" HINT="T = T&#237;tulo provisionado para pagamento futuro, F=Despesa direta" ORDER="6" FIELDLABEL="T&#237;tulo (Sim/N&#227;o)" CTAB="0"/>
+        <PARAM NAME="TIPO" SIZE="1" FLAGS="17" PROJECTION="0" HINT="P = Pagamento, R = Recebimento " ORDER="7" LOOKUP="list:'P','Pagar';'R','Receber';" FIELDLABEL="Tipo (Pagar/Receber)" CTAB="0"/>
+        <PARAM NAME="AUTORIZACAO" SIZE="40" FLAGS="1" PROJECTION="0" HINT="C&#243;digo da autoriza&#231;&#227;o" ORDER="22" FIELDLABEL="Autoriza&#231;&#227;o" CTAB="0"/>
+        <PARAM NAME="DATA_CHEQUE" FORMAT="D" SIZE="10" FLAGS="1" PROJECTION="0" HINT="Data do cheque" ORDER="16" FIELDLABEL="Data Cheque" CTAB="0"/>
+        <PARAM NAME="N_CHEQUE" SIZE="30" FLAGS="1" PROJECTION="0" HINT="N&#250;mero do cheque" ORDER="19" FIELDLABEL="N&#250;mero do Cheque" CTAB="0"/>
+        <PARAM NAME="C_C" SIZE="30" FLAGS="1" PROJECTION="0" HINT="C C do cheque" ORDER="15" FIELDLABEL="Conta corrente" CTAB="0"/>
+        <PARAM NAME="DOC_ORIGEM" SIZE="30" FLAGS="1" PROJECTION="0" HINT="N&#250;mero do documento de origem" ORDER="17" FIELDLABEL="Documento de Origem" CTAB="0"/>
+        <PARAM NAME="PRORROGADO" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" HINT="Informar se o t&#237;tulo est&#225; prorrogado" ORDER="26" FIELDLABEL="Prorrogado" CTAB="0"/>
       </PARAMS>
       <FIELDS>
         <GROUPS>
@@ -100,7 +100,7 @@ FROM DUAL;
  ,GERADOR=:TIPO_GERADOR
  #SELECT(TIPO_GERADOR
    ,'C':{,COD              = :DEST_C.COD}
-   ,'F':{,FORNECEDOR       = :DEST_F.COD}
+   ,'F':{,COD              = :DEST_F.COD}
    ,ELSE:{}
   )
  ,PCONTA=:CC.CONTA_CONTABIL

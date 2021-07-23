@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="GRUPOS_LOJAS">
+    <METHOD NAME="Incluir" DESCRIPTION="Inclus&#227;o de grupo de Lojas com Limite de Credito" VERSION="14" INTFTYPE="1" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="CODIGO" SIZE="10" FLAGS="1" PROJECTION="0" ORDER="1" FIELDLABEL="Codigo" CTAB="0"/>
+        <PARAM NAME="NOME" SIZE="40" FLAGS="1" PROJECTION="0" ORDER="3" FIELDLABEL="Nome" CTAB="0"/>
+        <PARAM NAME="CLIENTE" FORMAT="N" SIZE="8" PROJECTION="0" FIELDLABEL="Cliente" CTAB="0"/>
+        <PARAM NAME="FORNECEDOR" FORMAT="N" SIZE="8" PROJECTION="0" FIELDLABEL="Fornecedor" CTAB="0"/>
+        <PARAM NAME="LIMITE_CREDITO" FORMAT="M" SIZE="17" FLAGS="1" DECIMALS="4" PROJECTION="0" ORDER="2" FIELDLABEL="Limite Credito" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="codigo" FLAGS="1" PROJECTION="0" ORDER="5" FIELDLABEL="Codigo" CTAB="0"/>
+        <FIELD NAME="grupo_loja" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="6" FIELDLABEL="Trans Id" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>#CALL MILLENIUM.GRUPO_LOJAS.INCLUIR (COD_GRUPO=:CODIGO
+                                    ,NOME=:NOME
+                                    ,CLIENTE='T'
+                                    ,FORNECEDOR='F'
+                                    ,LIMITE_CREDITO=:LIMITE_CREDITO);
+                                    
+select COD_GRUPO as CODIGO , GRUPO_LOJA from GRUPO_LOJAS where  COD_GRUPO = :CODIGO;
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

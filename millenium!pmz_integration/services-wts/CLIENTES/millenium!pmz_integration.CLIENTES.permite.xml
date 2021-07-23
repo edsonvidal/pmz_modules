@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="CLIENTES">
+    <METHOD NAME="permite" DESCRIPTION="" VERSION="2" INTFTYPE="9" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="DIVIDA_EM_NEGOCIACAO" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" ORDER="1" FIELDLABEL="Divida Em Negociacao" CTAB="0"/>
+        <PARAM NAME="LISTA_BRANCA" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" ORDER="2" FIELDLABEL="Lista Branca" CTAB="0"/>
+        <PARAM NAME="PMZ_PERMITIR" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" ORDER="3" FIELDLABEL="Pmz Permitir" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT></ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

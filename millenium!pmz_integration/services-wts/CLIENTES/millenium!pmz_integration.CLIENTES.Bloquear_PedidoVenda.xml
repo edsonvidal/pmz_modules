@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="CLIENTES">
+    <METHOD NAME="Bloquear_PedidoVenda" DESCRIPTION="" VERSION="13" INTFTYPE="2" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="CNPJ_CPF" SIZE="60" FLAGS="1" PROJECTION="0" HINT="CPF OU CNPJ do cliente" ORDER="3" FIELDLABEL="Cnpj Cpf" CTAB="0"/>
+        <PARAM NAME="BLOQUEIA_PEDIDOS" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" HINT="True = Bloqueia o cliente para pedido de venda e venda/ Fase= Libera cliente" ORDER="2" FIELDLABEL="Bloquear" CTAB="0"/>
+        <PARAM NAME="BLOQUEIA_VENDAS" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" ORDER="1" FIELDLABEL="Bloqueia Vendas" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="cliente" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="5" FIELDLABEL="Cliente" CTAB="0"/>
+        <FIELD NAME="trans_id" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="6" FIELDLABEL="Trans Id" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>#PRIVATE()
+SELECT:CLI CLIENTE FROM CLIENTES WHERE (CGC=:CNPJ_CPF OR (CPF=:CNPJ_CPF));
+#SELECT(CLI._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Cliente n&#227;o encontrado !")},ELSE:{});
+
+
+UPDATE ICLIENTES
+   SET BLOQUEIA_PEDIDOS=:BLOQUEIA_PEDIDOS
+      ,BLOQUEIA_VENDAS=:BLOQUEIA_VENDAS
+ WHERE CLIENTE=:CLI.CLIENTE;
+
+ 
+ //Retornando campos chave do resultado do processo
+SELECT CLIENTE, TRANS_ID FROM CLIENTES WHERE CLIENTE = :CL.CLIENTE;
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

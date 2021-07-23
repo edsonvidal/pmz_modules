@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="CONDICOES_PGTO">
-    <METHOD NAME="Inclui" DESCRIPTION="Incluir Condi&#231;&#227;o de Pagamento" VERSION="146" INTFTYPE="1" THREADSAFE="1">
+    <METHOD NAME="Inclui" DESCRIPTION="Incluir Condi&#231;&#227;o de Pagamento" VERSION="150" INTFTYPE="1" THREADSAFE="1">
       <PARAMS>
         <GROUPS>
           <GROUP/>

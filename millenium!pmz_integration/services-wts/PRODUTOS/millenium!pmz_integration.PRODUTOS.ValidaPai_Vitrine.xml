@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="PRODUTOS">
-    <METHOD NAME="ValidaPai_Vitrine" DESCRIPTION="" VERSION="11" THREADSAFE="0">
+    <METHOD NAME="ValidaPai_Vitrine" DESCRIPTION="" VERSION="12" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP/>
