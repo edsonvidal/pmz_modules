@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="TABELAS_PRECO">
-    <METHOD NAME="Atualizar_Preco_de_Tabela" DESCRIPTION="Atualizar Pre&#231;o de Tabela de Pre&#231;o" VERSION="24" THREADSAFE="1">
+    <METHOD NAME="Atualizar_Preco_de_Tabela" DESCRIPTION="Atualizar Pre&#231;o de Tabela de Pre&#231;o" VERSION="32" THREADSAFE="1">
       <PARAMS>
         <GROUPS>
           <GROUP/>

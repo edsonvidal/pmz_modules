@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="MOVIMENTACAO">
-    <METHOD NAME="Estoque_Entrada_Inicial" DESCRIPTION="M&#233;todo respons&#225;vel em atribuir estoque inicial dos SKUs atrav&#233;s do c&#243;digo de barras do produto." VERSION="92" INTFTYPE="1" CATEGORY="inculada uma tabela B2B, ser&#225; retornado nos campos PRECO3 e PRECO4 os pre&#231;os &#34;POR&#34; e &#34;DE&#34; para B2B associados &#224; vitrine. Este m&#233;todo pode ser usado para atualizar os pre&#231;os regularmente j&#225; que retorna apenas as mudan&#231;as desde a &#250;ltima chamada." THREADSAFE="1">
+    <METHOD NAME="Estoque_Entrada_Inicial" DESCRIPTION="M&#233;todo respons&#225;vel em atribuir estoque inicial dos SKUs atrav&#233;s do c&#243;digo de barras do produto." VERSION="93" INTFTYPE="1" CATEGORY="inculada uma tabela B2B, ser&#225; retornado nos campos PRECO3 e PRECO4 os pre&#231;os &#34;POR&#34; e &#34;DE&#34; para B2B associados &#224; vitrine. Este m&#233;todo pode ser usado para atualizar os pre&#231;os regularmente j&#225; que retorna apenas as mudan&#231;as desde a &#250;ltima chamada." THREADSAFE="1">
       <PARAMS>
         <GROUPS>
           <GROUP/>
@@ -17,42 +17,14 @@
         <FIELD NAME="TIPO_OPERACAO" SIZE="1" FLAGS="1" PROJECTION="0" ORDER="6" FIELDLABEL="Tipo Operacao" CTAB="0"/>
         <FIELD NAME="ROMANEIO" FORMAT="N" SIZE="8" FLAGS="1" PROJECTION="0" ORDER="5" FIELDLABEL="Romaneio" CTAB="0"/>
       </FIELDS>
-      <ACTIONSCRIPT>//M&#233;todo respons&#225;vel pela inclus&#227;o inicial das lojas para o ERP Millennium(Edson Vidal/Magdiel Araujo 09-06-2021)
+      <ACTIONSCRIPT>//M&#233;todo respons&#225;vel pela atualiza&#231;&#227;o do saldo em estoque no ERP Millennium(Edson Vidal/Magdiel Araujo 10-06-2021)
 
-#PRIVATE() SELECT:TODAY #DATE() AS D FROM DUAL;
-#PRIVATE() #CALL:DOCUMENTO MILLENIUM.UTILS.DEFAULT(NOME="ROMANEIO", TAMANHO=6);
 
-#PRIVATE()
-  SELECT:EV
-    EVENTO
-  FROM EVENTOS
-    WHERE CODIGO ='9999';
-  #SELECT(EV._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Evento 9999 n&#227;o encontrado!")},ELSE:{});
 
-#PRIVATE()
-  SELECT:FL
-    FL.FILIAL AS FILIAL
-   ,FL.CONTA  AS CONTA
-  FROM FILIAIS FL
-    WHERE FL.COD_FILIAL = :COD_FILIAL;
-  #SELECT(FL._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Filial n&#227;o encontrada!")},ELSE:{});
-
-#SET(TBITEM, ${#CREATETABLE( ID                 VARCHAR(50)
-                            ,LOCAL              VARCHAR(50)
-                            ,QUANTIDADE         DOUBLE PRECISION
-                            ,PRECO              DOUBLE PRECISION
-                            )
-});
-
-#SET(TBPROD, ${#CREATETABLE( PRODUTO            INTEGER
-                            ,COR                INTEGER
-                            ,ESTAMPA            INTEGER
-                            ,TAMANHO            VARCHAR(5)
-                            ,QUANTIDADE         DOUBLE PRECISION
-                            ,IDLOCAL            INTEGER
-                            ,PRECO              DOUBLE PRECISION
-                            ,TIPO               VARCHAR(2)
-                            )
+#SET(TBITEM, ${#CREATETABLE(ID                 VARCHAR(50)
+                           ,LOCAL              VARCHAR(50)
+                           ,QUANTIDADE         DOUBLE PRECISION
+                           )
 });
 
 #PRIVATE()
@@ -61,110 +33,46 @@
        ID
       ,LOCAL
       ,QUANTIDADE
-      ,PRECO
     )
     VALUES (
        :RS.ID
       ,:RS.LOCAL
       ,:RS.QUANTIDADE
-      ,:RS.PRECO
     );
+
 
 #PRIVATE()
 #EACH()
-SELECT:P
-   E.ID              AS ID
+SELECT:L
+  E.LOCAL AS LOCAL
+FROM #REPLACE(TBITEM) E
+GROUP BY
+  E.LOCAL
+
+#BEGIN
+  #CALL MILLENIUM!PMZ_INTEGRATION.LOCAIS_ESTOQUE.VALIDAR_LOCAL(COD_FILIAL=:COD_FILIAL, LOCAL=:L.LOCAL);
+#END;
+
+#PRIVATE()
+SELECT:SALDOS
+   E.ID              AS BARRA
   ,E.LOCAL           AS LOCAL
-  ,E.PRECO           AS PRECO
   ,SUM(E.QUANTIDADE) AS QUANTIDADE
 FROM #REPLACE(TBITEM) E
 GROUP BY
   E.ID
- ,E.PRECO
- ,E.LOCAL
- 
-  #BEGIN
-  
-    #CALL:LC MILLENIUM.LOCAIS_ESTOQUE.LISTA(FILIAL=:FL.FILIAL,LOCAL=:P.LOCAL);
-      #SELECT(LC._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Local n&#227;o econtrado !!!")},ELSE:{});
+ ,E.LOCAL;
 
-    #CALL:I MILLENIUM.CODIGO_BARRAS.DECODIFICA_BARRA(BARRA=:P.ID);
-      #SELECT(I._EOF, TRUE:{#CHECK("SELECT COUNT(*) AS N FROM DUAL",N>0,"Produto n&#227;o econtrado !")},ELSE:{});
-
-    INSERT INTO #REPLACE(TBPROD) (
-          PRODUTO
-         ,COR
-         ,ESTAMPA
-         ,TAMANHO
-         ,IDLOCAL
-         ,QUANTIDADE
-         ,PRECO
-         ,TIPO
-         )
-        VALUES (
-         :I.PRODUTO
-        ,:I.COR
-        ,:I.ESTAMPA
-        ,:I.TAMANHO
-        ,:LC.IDLOCAL
-        ,:P.QUANTIDADE
-        ,:P.PRECO
-        ,:I.TIPO
-        );
-  #END;
-
-#PRIVATE()
-SELECT:PRODUTOS_EXEC
-   E.PRODUTO                     AS PRODUTO
-  ,E.COR                         AS COR
-  ,E.ESTAMPA                     AS ESTAMPA
-  ,E.TAMANHO                     AS TAMANHO
-  ,E.IDLOCAL                     AS IDLOCAL
-  ,E.PRECO                       AS PRECO
-  ,E.TIPO                        AS TIPO
-  ,SUM(QUANTIDADE)               AS QUANTIDADE
-FROM #REPLACE(TBPROD) E
-GROUP BY
-   E.PRODUTO
-  ,E.COR
-  ,E.ESTAMPA
-  ,E.TAMANHO
-  ,E.IDLOCAL
-  ,E.PRECO
-  ,E.TIPO
-ORDER BY E.PRODUTO;
-
-#PRIVATE()
-SELECT:PRD SUM(QUANTIDADE) AS QTDE
-FROM #REPLACE(TBPROD) P
-;
-
-  #CALL:MOV MILLENIUM.MOVIMENTACAO.EXECUTA(
-     EVENTO                  = :EV.EVENTO
-    ,ROMANEIO                = :DOCUMENTO.RESULT
-    ,FILIAL                  = :FL.FILIAL
-    ,CONTA                   = :FL.CONTA
-    ,DATA                    = :TODAY.D
-    //,FORNECEDOR              = :FORNECEDOR
-    ,TOTAL                   = 0
-    ,QTDE                    = :PRD.QTDE
-    ,VALOR_FINAL             = 0
-    ,DATA_BASE               = :TODAY.D
-    ,DATA_ATUALIZACAO        = :TODAY.D
-    ,PRODUTOS                = :PRODUTOS_EXEC
-    ,MODALIDADE_FRETE        = 0
-    ,NUMERACAO_NOTA_AUTO     = FALSE
-  );
+#CALL MILLENIUM_ECO.PRODUTOS.ATUALIZASALDODEESTOQUE(
+   SALDOS=:SALDOS
+  ,IGNORA_EMPENHO = TRUE
+  ,COD_FILIAL =:COD_FILIAL
+  ,IGNORA_PROD_SEM_CADASTRO = FALSE
+);
 
 
-//Retornando campos chave do resultado do processo
-SELECT
-  M.COD_OPERACAO  AS COD_OPERACAO
- ,M.TIPO_OPERACAO AS TIPO_OPERACAO
- ,M.ROMANEIO      AS ROMANEIO
-FROM MOVIMENTO M
-WHERE M.COD_OPERACAO = :MOV.COD_OPERACAO
-  AND M.TIPO_OPERACAO = :MOV.TIPO_OPERACAO;
+
+
 </ACTIONSCRIPT>
     </METHOD>
   </OBJECT>

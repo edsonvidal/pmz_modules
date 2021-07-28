@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="GERADORES">
-    <METHOD NAME="Alterar" DESCRIPTION="" VERSION="30" INTFTYPE="2" TRIGGEROF="GERADORES.ALTERAR" TRIGGERTYPE="0" THREADSAFE="0">
+    <METHOD NAME="Alterar" DESCRIPTION="" VERSION="32" INTFTYPE="2" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP NAME="Cadastral / Governo"/>
@@ -12,8 +12,8 @@
         <PARAM NAME="VOID" FORMAT="N" SIZE="8" PROJECTION="0" FIELDLABEL="Void" CTAB="0"/>
       </PARAMS>
       <FIELDS/>
-      <ACTIONSCRIPT>#check("select count(*) as n from enderecos_cadastro where gerador = :WTSSYS_OBJECT  and endereco_cobranca = 'F' and endereco_entrega = 'F' and endereco_nota = 'F'",n>0,"Valida&#231;&#227;o PMZ: N&#227;o foi definido um endere&#231;o de Nota, Entrega ou Cobran&#231;a para o gerador!");
-#check("select count(*) as n from enderecos_cadastro where gerador = :WTSSYS_OBJECT  and endereco=0 and endereco_nota='F'",n>0,"Valida&#231;&#227;o PMZ: N&#227;o foi definido um endere&#231;o de Nota no endere&#231;o Principal!");
+      <ACTIONSCRIPT>//#check("select count(*) as n from enderecos_cadastro where gerador = :WTSSYS_OBJECT  and endereco_cobranca = 'F' and endereco_entrega = 'F' and endereco_nota = 'F'",n>0,"Valida&#231;&#227;o PMZ: N&#227;o foi definido um endere&#231;o de Nota, Entrega ou Cobran&#231;a para o gerador!");
+//#check("select count(*) as n from enderecos_cadastro where gerador = :WTSSYS_OBJECT  and endereco=0 and endereco_nota='F'",n>0,"Valida&#231;&#227;o PMZ: N&#227;o foi definido um endere&#231;o de Nota no endere&#231;o Principal!");
 SELECT * FROM DUAL;
 
 </ACTIONSCRIPT>
