@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="PICKING">
+    <METHOD NAME="FinalizaConferencia" DESCRIPTION="Finaliza a confer&#234;ncia autorizando o faturamento" VERSION="48" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="NUMERO" SIZE="20" FLAGS="1" PROJECTION="0" HINT="N&#250;mero da Separa&#231;&#227;o" ORDER="1" FIELDLABEL="Numero" CTAB="0"/>
+        <PARAM NAME="PRODUTOS" FORMAT="R" FLAGS="1" PROJECTION="0" HINT="Produtos da Separa&#231;&#227;o" ORDER="2" FIELDLABEL="Produtos" NESTEDNAME="millenium_log.PRODUTOS.PRODUTO" CTAB="0"/>
+        <PARAM NAME="VOLUMES" FORMAT="R" FLAGS="1" PROJECTION="0" HINT="Quantidade Total de Volumes Separados" ORDER="3" FIELDLABEL="Quantidade Volumes" NESTEDNAME="millenium_log.PRODUTOS.VOLUMES" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT>#CALL MILLENIUM_LOG.PICKING.FINALIZACONFERENCIA(NUMERO=:NUMERO,PRODUTOS=:PRODUTOS,VOLUMES=:VOLUMES);
+
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

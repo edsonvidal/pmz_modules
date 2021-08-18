@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="PICKING">
+    <METHOD NAME="FinalizaPincking" DESCRIPTION="" VERSION="9" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="CONFIRMACAO_STATUS" SIZE="15" FLAGS="1" PROJECTION="0" HINT="'FATURADO' para informar que o pedido foi faturado ou 'CANCELADO' para informar que o pedido foi cancelado." FIELDLABEL="Confirmacao Status" CTAB="0"/>
+        <PARAM NAME="NUMERO" SIZE="20" FLAGS="1" PROJECTION="0" FIELDLABEL="Numero" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT>#SELECT (CONFIRMACAO_STATUS,
+                                'FATURARADO':{SELECT:PREF PREFATURAMENTO, PEDIDOV FROM PREFATURAMENTOS WHERE NUMERO=:NUMERO;
+                                           UPDATE PREFATURAMENTOS SET CONFERIDO='T' WHERE NUMERO=:NUMERO;
+                                           UPDATE PREFATURAMENTOS SET TRANSPORTADORA=-2000000000 WHERE TRANSPORTADORA IS NULL AND NUMERO=:NUMERO;
+                                           #CALL MILLENIUM_LOG.PICKING.FATURAR (:NUMERO)},
+                                'CANCELADO':{SELECT:PED PEDIDOV FROM PREFATURAMENTOS WHERE NUMERO=:NUMERO;
+                                             UPDATE PREFATURAMENTO SET EXPEDICAO='F' WHERE NUMERO=:NUMERO;
+                                            #CALL MILLENIUM.PEDIDO_VENDA.QUITAR(PEDIDOV=:PED.PEDIDOV)},
+ELSE:{#CHECK("SELECT 1 AS N FROM DUAL",N>0,"O par&#226;metro CONFIRMACAO STATUS deve ser preenchido com FATURARADO ou CANCELADO conforme documenta&#231;&#227;o")});
+
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

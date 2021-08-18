@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="PICKING">
+    <METHOD NAME="VOLUMES" DESCRIPTION="" VERSION="2" INTFTYPE="9" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="PESO" FORMAT="N" SIZE="7" FLAGS="1" DECIMALS="3" PROJECTION="0" HINT="Valor referente ao peso total do volume em gramas." FIELDLABEL="Peso" CTAB="0"/>
+        <PARAM NAME="NUMERO_OBJETO" SIZE="50" FLAGS="1" PROJECTION="0" HINT="Valor referente ao n&#250;mero do objeto." FIELDLABEL="Numero Objeto" CTAB="0"/>
+        <PARAM NAME="URL_TRACKING_OBJETO" SIZE="512" FLAGS="1" PROJECTION="0" HINT="Valor referente a url do objeto." FIELDLABEL="Url Tracking Objeto" CTAB="0"/>
+        <PARAM NAME="UNIDADE_PESO" SIZE="2" FLAGS="1" DEFAULT="GR" PROJECTION="0" FIELDLABEL="Unidade Peso" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT></ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="LOCAIS_ESTOQUE">
+    <METHOD NAME="Validar_Local" DESCRIPTION="" VERSION="8" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="COD_FILIAL" SIZE="50" FLAGS="1" PROJECTION="0" FIELDLABEL="Cod Filial" CTAB="0"/>
+        <PARAM NAME="LOCAL" SIZE="50" FLAGS="1" PROJECTION="0" FIELDLABEL="Local" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT>// Verifica se existe o local de estoque informado, se n&#227;o existir o local &#233; criado - Magdiel (18-08-2021)
+
+#PRIVATE()
+SELECT:FIL FILIAL FROM FILIAIS WHERE COD_FILIAL=:COD_FILIAL;
+
+#PRIVATE()
+SELECT:LOC LOCAL FROM LOCAIS_ESTOQUE WHERE LOCAL=:LOCAL AND FILIAL=:FIL.FILIAL;
+
+
+#SELECT(LOC._EOF,TRUE:{#CALL MILLENIUM.LOCAIS_ESTOQUE.INCLUI(
+                                                             LOCAL=:LOCAL
+                                                             ,FILIAL=:FIL.FILIAL
+                                                             ,EHPAI='F'
+                                                             ,TIPO_LOCAL = '02'
+                                                             )},
+                 ELSE:{});
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

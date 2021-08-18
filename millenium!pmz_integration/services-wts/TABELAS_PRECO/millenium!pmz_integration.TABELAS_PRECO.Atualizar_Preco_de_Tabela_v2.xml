@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="TABELAS_PRECO">
+    <METHOD NAME="Atualizar_Preco_de_Tabela_v2" DESCRIPTION="" VERSION="6" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="PRODUTOS" FORMAT="R" FLAGS="1" PROJECTION="0" FIELDLABEL="Produtos" NESTEDNAME="MILLENIUM!PMZ_INTEGRATION.TABELAS_PRECO.PRODUTO" CTAB="0"/>
+      </PARAMS>
+      <FIELDS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <FIELD NAME="COD_PRODUTO" SIZE="20" FLAGS="1" PROJECTION="0" FIELDLABEL="Cod Produto Erros" CTAB="0"/>
+        <FIELD NAME="ERRO" SIZE="100" FLAGS="1" PROJECTION="0" FIELDLABEL="Erros" CTAB="0"/>
+      </FIELDS>
+      <ACTIONSCRIPT>
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

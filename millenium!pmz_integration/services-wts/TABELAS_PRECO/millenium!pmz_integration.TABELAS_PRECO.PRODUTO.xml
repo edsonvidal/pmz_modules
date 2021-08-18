@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="TABELAS_PRECO">
+    <METHOD NAME="PRODUTO" DESCRIPTION="" VERSION="3" INTFTYPE="9" THREADSAFE="1">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="COD_PRODUTO" SIZE="15" FLAGS="1" DEFAULT="1-550-MMJ50569" PROJECTION="0" HINT="C&#243;digo externo do produto" FIELDLABEL="Cod Produto" CTAB="0"/>
+        <PARAM NAME="COD_TPRECO" SIZE="5" FLAGS="1" DEFAULT="001AM" PROJECTION="0" HINT="C&#243;digo externo da tabela de pre&#231;o" FIELDLABEL="Cod Tpreco" CTAB="0"/>
+        <PARAM NAME="DATA_VALIDADE_INICIAL" FORMAT="D" SIZE="10" FLAGS="1" DEFAULT="01/01/2021" PROJECTION="0" HINT="Data de validade inicial" FIELDLABEL="Data Validade Inicial" CTAB="0"/>
+        <PARAM NAME="DATA_VALIDADE_FINAL" FORMAT="D" SIZE="10" FLAGS="1" DEFAULT="31/12/2021" PROJECTION="0" HINT="Data de validade final" FIELDLABEL="Data Validade Final" CTAB="0"/>
+        <PARAM NAME="PRECO" FORMAT="M" SIZE="17" FLAGS="1" DECIMALS="4" DEFAULT="100" PROJECTION="0" FIELDLABEL="Preco" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT></ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

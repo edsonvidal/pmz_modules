@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="PICKING">
+    <METHOD NAME="CancelaConferencia" DESCRIPTION="Cancela a conferencia de um prefaturamento (Separa&#231;&#227;o)" VERSION="14" INTFTYPE="17" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="NUMERO" SIZE="20" FLAGS="1" PROJECTION="0" HINT="N&#250;mero da Separa&#231;&#227;o" FIELDLABEL="Numero" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT>#PRIVATE()
+SELECT:pf numero FROM prefaturamentos where numero = cast(#substr(cast(:numero as varchar(20)),1,15) as varchar(15))
+union all select null from dual;
+
+#PRIVATE()
+SELECT:aux #if(cast(:pf.numero as varchar(20)) is not null,cast('1' as varchar(1)), cast(#substr(cast(:numero as varchar(20)),1,1) as varchar(1))) as tipo,
+           #if(cast(:pf.numero as varchar(20)) is not null,cast(:numero as varchar(20)), cast(#substr(cast(:numero as varchar(20)),2,20) as varchar(20)) ) as NUMERO
+           FROM DUAL;
+           
+#CHECK("SELECT COUNT(*) as N FROM PREFATURAMENTO#SELECT(aux.tipo,1:'S',else:'_T') WHERE NUMERO=:aux.NUMERO AND PODECONFERIR = FALSE",n>0,"N&#227;o encontrado ou n&#227;o est&#225; aguardando confer&#234;ncia");
+#CHECK("SELECT COUNT(*) as N FROM PREFATURAMENTO#SELECT(aux.tipo,1:'S',else:'_T') WHERE NUMERO=:aux.NUMERO AND CONFERINDO = FALSE",n>0,"N&#227;o est&#225; em confer&#234;ncia");
+#CHECK("SELECT COUNT(*) as N FROM PREFATURAMENTO#SELECT(aux.tipo,1:'S',else:'_T') WHERE NUMERO=:aux.NUMERO AND ENTREGUE = TRUE",n>0,"J&#225; est&#225; entregue");
+
+UPDATE PREFATURAMENTO#SELECT(aux.tipo,1:'S',else:'_T') SET
+CONFERINDO = FALSE,
+CONFERIDO = FALSE
+WHERE NUMERO = :aux.NUMERO;
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>
