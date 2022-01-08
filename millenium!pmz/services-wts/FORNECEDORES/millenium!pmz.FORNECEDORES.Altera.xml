@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="FORNECEDORES">
+    <METHOD NAME="Altera" DESCRIPTION="Alterar Fornecedor" VERSION="384" INTFTYPE="2" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="PMZ_VOID" PROJECTION="0" FIELDLABEL="Pmz Void" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT>SELECT * FROM DUAL;
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

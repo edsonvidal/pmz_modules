@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
 <root>
   <OBJECT NAME="CLIENTES">
-    <METHOD NAME="Alterar" DESCRIPTION="Atualizar Dados do Cliente" VERSION="95" INTFTYPE="2" THREADSAFE="1">
+    <METHOD NAME="Alterar" DESCRIPTION="Atualizar Dados do Cliente" VERSION="97" INTFTYPE="2" THREADSAFE="0">
       <PARAMS>
         <GROUPS>
           <GROUP/>
         </GROUPS>
         <PARAM NAME="PMZ_VOID" FORMAT="N" SIZE="8" PROJECTION="0" FIELDLABEL="Void2" CTAB="0"/>
-        <PARAM NAME="PERMITIR" FORMAT="B" SIZE="1" FLAGS="1" PROJECTION="0" ORDER="1" FIELDLABEL="Permitir Emissao Nfe Dev" CTAB="0"/>
       </PARAMS>
       <FIELDS/>
       <ACTIONSCRIPT>SELECT * FROM DUAL;
