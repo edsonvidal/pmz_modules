@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<root>
+  <fact size="1000000" transforms="" caption="PMZ Memorando">
+    <tables>
+      <table name="v_pmz_valores_fechamento"/>
+	  <table name="PMZ_TIPO_ORIGEM_VALORES_FECHAMENTO"/>
+	  
+    </tables>
+    <relations>
+	 <relation cardinality="N-1" forced="0">
+        <condition  left="v_pmz_valores_fechamento.tipo_origem" right="pmz_tipo_origem_valores_fechamento.tipo_origem"/>
+      </relation>
+    </relations>
+    <wtsmappings/>
+	<outriggers/>	
+    <attributes>
+
+      <level name="lancamento" main="1" keyattribute="lancamento" displayattribute="lancamento">
+  
+        <attribute name="TIPO_ORIGEM" caption="" cangroup="1"/>
+        <attribute name="ORIGEM" caption="" cangroup="1"/>
+        <attribute name="DESC_ORIGEM" caption="descricao" cangroup="1"/>
+        <attribute name="DOCUMENTO" caption="documento" cangroup="1"/>
+        <attribute name="LANCAMENTO" caption="" cangroup="1"/>
+        <attribute name="VALOR_FECHAMENTO" caption="" cangroup="1"/>
+        <attribute name="ENTRADA_INICIAL" caption="" cangroup="1"/>
+        <attribute name="TOTAL_VENDAS" caption="" cangroup="1"/>
+        <attribute name="TOTAL_DEVOLUCAO" caption="" cangroup="1"/>
+        <attribute name="SANGRIA" caption="" cangroup="1"/>
+        <attribute name="REFORCO" caption="" cangroup="1"/>
+        <attribute name="RECEBIMENTO" caption="" cangroup="1"/>
+        <attribute name="OUTRO_RECEBIMENTO" caption="" cangroup="1"/>
+        <attribute name="ENTRADAS" caption="" cangroup="1"/>
+        <attribute name="SAIDAS" caption="" cangroup="1"/>
+        <attribute name="PAGAMENTO" caption="" cangroup="1"/>
+        <attribute name="TIPO" caption="" cangroup="1"/>
+        <attribute name="CONTA" caption="" cangroup="1"/>
+        <attribute name="REGISTRO_DIARIO" caption="" cangroup="1"/>
+        <attribute name="DATA" caption="" cangroup="1"/>
+        <attribute name="TIPO_PGTO" caption="" cangroup="1"/>
+        <attribute name="USUARIO" caption="usuario" cangroup="1"/>
+        <attribute name="TIPO_ORIGEM_LANCAMENTO" caption="" cangroup="1"/>
+        <attribute name="ORIGEM_LANCAMENTO" caption="" cangroup="1"/>
+        <attribute name="LANCAMENTO_BAIXA" caption="" cangroup="1"/>
+        <attribute name="CONTA_BAIXA_DIFERENTE" caption="" cangroup="1"/>
+		<attribute name="VALOR_DIGITADO_FECHAMENTO" caption="" cangroup="1"/>
+		
+      </level>
+	  
+	 <level name="tipo_origem" caption="Tipo Origem" tablename="pmz_tipo_origem_valores_fechamento" keyattribute="tipo_origem" displayattribute="descricao" codeattribute="">
+      <attribute name="tipo_origem" fieldname="tipo_origem" cangroup="1"/>
+      <attribute name="descricao" fieldname="descricao" caption="Descricao" tablename="pmz_tipo_origem_valores_fechamento" cangroup="1"/>
+    </level>
+
+    </attributes>
+    <conditions>
+		CONTA_BAIXA_DIFERENTE=0
+    </conditions>	
+  </fact>
+</root>

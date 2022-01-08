@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<root>
+	<fact size="1000000" transforms="" caption="Lan&#231;amento">
+		<attributes>
+			<level name="lancamento" main="1" caption="Lan&#231;amento" keyattribute="lancamento" displayattribute="n_documento">
+				<attribute name="EH_DEVOLUCAO_VENDA" fieldname="(SELECT IIF(COUNT(*)>0,'T','F') FROM LANCAMENTOS L INNER JOIN MOVIMENTO M ON M.COD_OPERACAO = L.ORIGEM AND M.TIPO_OPERACAO = L.TIPO_ORIGEM INNER JOIN EVENTOS E ON E.EVENTO = M.EVENTO WHERE E.TIPO_ENTRADA ='V' AND E.TIPO_EVENTO='E' AND M.COD_OPERACAO=${ORIGEM} AND M.TIPO_OPERACAO=${TIPO_ORIGEM})" subselect="1" datatype="boolean" caption="EH_DEVOLUCAO_VENDA" cangroup="1" degenerate="1"/>
+				</level>								
+		</attributes>
+	</fact>
+</root>

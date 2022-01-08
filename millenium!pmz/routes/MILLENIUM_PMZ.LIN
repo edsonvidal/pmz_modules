@@ -2,8 +2,7 @@
 <root>
   <_currentid>PMZ_003</_currentid>
   <_name>RULES.MZ</_name>
-
-    <link category="PMZ\Controladoria\Cadastro\Grupos Contábeis" target="standard.tdataedit" _id="IPMZ_001">
+    <link category="PMZ\Controladoria\Cadastro\Grupos Contábeis" target="standard.tdataedit" _id="IPMZ_001" Caption="Grupos Contábeis">
       <OBJECT>MILLENIUM!PMZ.GRUPO_CONTABIL</OBJECT>
 	  
 	  <link target="standard.tdataedit" _id="IPMZ_002" caption="Atualizar Produtos">
@@ -20,9 +19,48 @@
 	
     <link category="Controladoria\Fiscal\Cadastros\Perfil de Impostos\Atualizar Produtos" target="_blank,standard.tdataedit" _id="IPMZ_004" Caption="Atualizar Produtos" _parentid="CONT_16" _tag="12" _visible="FALSE">
       <METHOD>MILLENIUM!PMZ.PERFIL_IMPOSTOS.ATUALIZAR_PERFIL_IMPOSTO_PRODUTO</METHOD>
+	   <PARAM DATA="{$data.PERFIL_IMPOSTO}">PERFIL_IMPOSTO</PARAM>		  
+            <Option>CloseOnSubmit</Option>		  
+	</link>
+
+    <link category="PMZ\Pedido de Venda\Aprovação de Crédito para Pedido" target="standard.tdataedit" _id="IPMZ_005" Caption="Aprovação de Crédito para Pedido">
+      <METHOD>MILLENIUM!PMZ.PEDIDO_VENDA.LISTAPEDIDOSSEMLIMITECRED</METHOD>
+	     		<link target="_blank,standard.tdataedit" _id="IPMZ_006" caption="Aprovar Pedido" >
+			        <METHOD>MILLENIUM!PMZ.PEDIDO_VENDA.LIBERARPEDIDO</METHOD>
+                    <PARAM DATA="{$data.PEDIDOV[]}" >MULTI.ITEM</PARAM>
+			        <Message>Você tem certeza que deseja liberar o Pedido?</Message>
+					<Option>CloseOnSubmit</Option>
+	                </link>
+					
+					<link target="_blank,standard.tdataedit" _id="IPMZ_007" caption="Cancelar Pedido" >
+			        <METHOD>MILLENIUM!PMZ.PEDIDO_VENDA.CANCELARPEDIDO</METHOD>
+                    <PARAM DATA="{$data.PEDIDOV[]}" >MULTI.ITEM</PARAM>
+			        <Message>Você tem certeza que deseja Cancelar o Pedido?</Message>
+					<Option>CloseOnSubmit</Option>
+	                </link>
+	  
+	</link>
+	
+	<link category="PMZ\Comercial\Solicitação de Crédito" target="standard.tdataedit" _id="IPMZ_008">
+      <OBJECT>MILLENIUM!PMZ.PMZ_SOLICITACAO_CREDITO</OBJECT>
+	   <link target="standard.tdataedit" _id="IPMZ_009" caption="Confirmar Recebimento">
+        <METHOD>MILLENIUM!PMZ.PMZ_SOLICITACAO_CREDITO.GERARADIANTAMENTO</METHOD>
+          <PARAM DATA="{$data.SOLICITACAO_CREDITO}">SOLICITACAO_CREDITO</PARAM>	
+		  <PARAM DATA="{$data.FILIAL}">FILIAL</PARAM>			  
+            <Option>CloseOnSubmit</Option>		  
+      </link>
+	      </link>
+
+	  
+    <link category="PMZ\Comercial\Consulta Movimentações de Caixa" target="standard.tdataedit" _id="IPMZ_011" Caption="Consulta Movimentações de Caixa">
+      <METHOD>MILLENIUM!PMZ.REGISTRO_DIARIO_CAIXAS.LISTAMOVIMENTOCAIXA</METHOD>
 	</link>
 
 
+	  
+	
+	
+	
 
 </root>
 

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<root>
+  <cube>
+	<objects>
+		<object fullname="pmz_clientes"/>
+	    <object fullname="registro_diario_pmz"/>
+		<object fullname="v_pmz_valores_fechamento"/>
+	    <object fullname="data_abertura$data" caption="Data Abertura" />
+		<object fullname="data_fechamento$data" caption="Data Fechamento" />
+	</objects>
+	
+    <relations>
+      <relation left="registro_diario_pmz$registro_diario_pmz.filial" right="filial$filial.FILIAL"/>
+      <relation left="registro_diario_pmz$registro_diario_pmz.conta" right="conta$conta.CONTA"/>
+	  <relation left="registro_diario_pmz$registro_diario_pmz.DATA_ABERTURA" right="data_abertura$data.data"/> 
+	  <relation left="registro_diario_pmz$registro_diario_pmz.DATA_FECHAMENTO" right="data_fechamento$data.data"/> 
+	  
+	  <relation left="cliente$cliente.cliente" right="pmz_clientes$pmz_clientes.cliente" cardinality="0-N"/>
+	   
+      <relation left="v_pmz_valores_fechamento$v_pmz_valores_fechamento.tipo_pgto" right="tipo_pgto$tipo_pgto.tipo_pgto"/>
+      <relation left="v_pmz_valores_fechamento$v_pmz_valores_fechamento.tipo_origem_lancamento" right="movimento$movimento.tipo_operacao"/>
+      <relation left="v_pmz_valores_fechamento$v_pmz_valores_fechamento.origem_lancamento" right="movimento$movimento.cod_operacao"/>
+	</relations>  
+	
+	<perspectives>
+
+      <perspective name="pmz_fxc" caption="PMZ - Fechamento de Caixa">
+        <items>
+		  <dimension name="registro_diario_pmz"/> 
+		  
+          <measure name="valor_fechamento" expression="sum(registro_diario_pmz.documento.valor_fechamento)" caption="Valor Fechamento"/>
+		  <measure name="valor_fechamento_digitado" expression="sum(registro_diario_pmz.documento.valor_digitado_fechamento)" caption="Valor Fechamento Digitado"/>
+			
+        </items>
+      </perspective>
+      <perspective name="pmz_fec_caixa" caption="Movimenta&#231;&#227;o Financeira PMZ">
+        <items>
+          <dimension name="conta"/>
+          <dimension name="filial"/>
+          <dimension name="registro_diario_pmz"/>
+          <dimension name="tipo_pgto"/>
+          <dimension name="movimento"/>
+          <dimension name="data"/>
+          <dimension name="v_pmz_valores_fechamento"/>
+
+          <measure name="valor_fechamento" expression="sum(v_pmz_valores_fechamento.valor_fechamento)" caption="valor fechamento"/>
+          <measure name="entrada_inicial" expression="sum(v_pmz_valores_fechamento.entrada_inicial)" caption="valor abertura"/>
+          <measure name="total_vendas" expression="sum(v_pmz_valores_fechamento.total_vendas)" caption="valor venda"/>
+          <measure name="total_devolucao" expression="sum(v_pmz_valores_fechamento.total_devolucao)" caption="valor devolucao"/>
+          <measure name="sangria" expression="sum(v_pmz_valores_fechamento.sangria)" caption="valor sangria"/>
+          <measure name="reforco" expression="sum(v_pmz_valores_fechamento.reforco)" caption="valor reforco"/>
+          <measure name="recebimento" expression="sum(v_pmz_valores_fechamento.recebimento)" caption="valor recebimento"/>
+          <measure name="outro_recebimento" expression="sum(v_pmz_valores_fechamento.outro_recebimento)" caption="valor outros recebimento"/>
+          <measure name="entradas" expression="sum(v_pmz_valores_fechamento.entradas)" caption="valor entradas"/>
+          <measure name="saidas" expression="sum(v_pmz_valores_fechamento.saidas)" caption="valor saidas"/>
+          <measure name="pagamento" expression="sum(v_pmz_valores_fechamento.pagamento)" caption="valor pagamento"/>
+		  <measure name="fechamento_digitado" expression="sum(v_pmz_valores_fechamento.valor_digitado_fechamento)" caption="valor fechamento digitado"/>
+
+        </items>
+      </perspective>
+
+	</perspectives>
+	
+  </cube>
+</root>

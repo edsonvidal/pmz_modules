@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<root>
+  <OBJECT NAME="PEDIDO_VENDA">
+    <METHOD NAME="Inclui" DESCRIPTION="" VERSION="2" TRIGGEROF="PEDIDO_VENDA.INCLUI" TRIGGERTYPE="0" THREADSAFE="0">
+      <PARAMS>
+        <GROUPS>
+          <GROUP/>
+        </GROUPS>
+        <PARAM NAME="PEDIDOV" FORMAT="N" SIZE="8" PROJECTION="0" FIELDLABEL="Pedidov" CTAB="0"/>
+        <PARAM NAME="MPMZ_VOID" FORMAT="N" SIZE="8" PROJECTION="0" FIELDLABEL="Mpmz Void" CTAB="0"/>
+      </PARAMS>
+      <FIELDS/>
+      <ACTIONSCRIPT>#CHECK(" SELECT COUNT(DISTINCT(L1.TIPO_PGTO)) AS N FROM LANCAMENTOS L1
+         	WHERE L1.ORIGEM =:WTSSYS_OBJECT AND L1.TIPO ='R'
+                  AND L1.TIPO_ORIGEM ='V'
+		          AND EXISTS
+                      (SELECT * FROM LANCAMENTOS L WHERE L.ORIGEM =L1.ORIGEM
+								AND L.TIPO_ORIGEM=L1.TIPO_ORIGEM
+								AND L.TIPO_PGTO IN (3,503) AND L.TIPO ='R' ) ", N>1, "Pedidos Pagos em Boletos n&#227;o podem Misturar Forma de Pagamento");
+
+</ACTIONSCRIPT>
+    </METHOD>
+  </OBJECT>
+</root>

@@ -24,7 +24,7 @@ AND M.EVENTO='20106'
 AND C.CLIENTE NOT IN (SELECT C2.CLIENTE FROM pmz_clientes_emissao_nfe_dev C2 WHERE C2.PERMITIR&lt;>'T');
 
 
-#SELECT(CLI._EOF,TRUE:{#CHECK("SELECT 1 AS N FROM DUAL",N>0,"Cliente Pessoa Juridica, Necessario emiss&#227;o da Nota de Devolucao pelo cliente!")},ELSE:{});
+//#SELECT(CLI._EOF,TRUE:{#CHECK("SELECT 1 AS N FROM DUAL",N>0,"Cliente Pessoa Juridica, Necessario emiss&#227;o da Nota de Devolucao pelo cliente!")},ELSE:{});
 
 
 

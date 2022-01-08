@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<root>
+	<dimension size="1000000" caption="">
+		<tables>
+			<table name="pmz_clientes"/>
+		</tables>
+		
+		<attributes>
+			<attribute name="cliente" cangroup="1" />		
+            <attribute name="DIVIDA_EM_NEGOCIACAO" caption="Divida em Negociacao" fieldname="DIVIDA_EM_NEGOCIACAO" datatype="boolean" cangroup="1"/>
+            <attribute name="LISTA_BRANCA" caption="Lista Branca" fieldname="LISTA_BRANCA" datatype="boolean" cangroup="1"/>			
+				
+		</attributes>
+	</dimension>
+</root>
